@@ -1,0 +1,34 @@
+﻿<script>
+    $(document).ready(function() {
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "progressBar ": true,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+        if ("@TempData["alertNotification"]" != "") {
+            switch ("@TempData["alertNotification"]") {
+                case "success":
+                    toastr.success('This is a success notification from toastr.')
+                    break;
+                case 'error':
+                    toastr.error('This is an error notification provided by toastr.')
+                    break;
+
+            };
+        }
+    });
+</script>

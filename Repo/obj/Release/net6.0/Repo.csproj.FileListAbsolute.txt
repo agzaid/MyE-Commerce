@@ -1,0 +1,17 @@
+D:\Programming\Projects\MVC\NewAsianGoodies\Repo\bin\Release\net6.0\Repo.deps.json
+D:\Programming\Projects\MVC\NewAsianGoodies\Repo\bin\Release\net6.0\Repo.runtimeconfig.json
+D:\Programming\Projects\MVC\NewAsianGoodies\Repo\bin\Release\net6.0\Repo.dll
+D:\Programming\Projects\MVC\NewAsianGoodies\Repo\bin\Release\net6.0\Repo.pdb
+D:\Programming\Projects\MVC\NewAsianGoodies\Repo\bin\Release\net6.0\Data.dll
+D:\Programming\Projects\MVC\NewAsianGoodies\Repo\bin\Release\net6.0\Data.pdb
+D:\Programming\Projects\MVC\NewAsianGoodies\Repo\obj\Release\net6.0\Repo.csproj.AssemblyReference.cache
+D:\Programming\Projects\MVC\NewAsianGoodies\Repo\obj\Release\net6.0\Repo.GeneratedMSBuildEditorConfig.editorconfig
+D:\Programming\Projects\MVC\NewAsianGoodies\Repo\obj\Release\net6.0\Repo.AssemblyInfoInputs.cache
+D:\Programming\Projects\MVC\NewAsianGoodies\Repo\obj\Release\net6.0\Repo.AssemblyInfo.cs
+D:\Programming\Projects\MVC\NewAsianGoodies\Repo\obj\Release\net6.0\Repo.csproj.CoreCompileInputs.cache
+D:\Programming\Projects\MVC\NewAsianGoodies\Repo\obj\Release\net6.0\Repo.csproj.CopyComplete
+D:\Programming\Projects\MVC\NewAsianGoodies\Repo\obj\Release\net6.0\Repo.dll
+D:\Programming\Projects\MVC\NewAsianGoodies\Repo\obj\Release\net6.0\refint\Repo.dll
+D:\Programming\Projects\MVC\NewAsianGoodies\Repo\obj\Release\net6.0\Repo.pdb
+D:\Programming\Projects\MVC\NewAsianGoodies\Repo\obj\Release\net6.0\Repo.genruntimeconfig.cache
+D:\Programming\Projects\MVC\NewAsianGoodies\Repo\obj\Release\net6.0\ref\Repo.dll

@@ -1,0 +1,9 @@
+﻿
+.toastr {
+    position: absolute;
+    bottom: 0;
+    margin: 0 auto;
+    right: 1em;
+    left: 0;
+    width: 100%;
+}

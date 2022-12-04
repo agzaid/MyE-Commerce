@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Data.Entities.Shop.Product>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/datatables/css/dataTables.bootstrap4.css" />
+
+<h1>List of Products</h1>
+<br/>
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+@*<p>@Html.Raw(ViewBag.columns)</p>*@
+
+<div class="container">
+    <table class="table table-striped table-bordered dt-resposive nowrap AG-data-table"
+           id="Products"
+           data-AG-columns='@Html.Raw(ViewBag.columns)'
+           data-AG-message='@Html.Raw(ViewBag.Message)'
+           data-AG-load-url='@Url.Action("LoadDataTable","Product")'
+           data-AG-edit='@Url.Action("Edit","Product")'
+           data-AG-delete='@Url.Action("Delete","Product")'>
+        <thead>
+            <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                <th>ID</th>
+                @foreach (var item in ViewBag.stringColumns)
+                {
+                    <th>@item</th>
+                }
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody class="fw-bold">
+        </tbody>
+        <tfoot>
+            <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Display Order</th>
+                <th>Quantity</th>
+                <th>Status</th>
+                <th>Discreption</th>
+                <th>Actions</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+@section Scripts
+    {
+    <script src="~/datatables/js/jquery.dataTables.js"></script>
+    <script src="~/datatables/js/dataTables.bootstrap4.js"></script>
+    <script src="~/js/ProductDatatable.js"></script>
+  
+    @*<script>
+        var alert = $(".alert");
+        if(alert!="")
+            toastr.info('Page Loaded!');
+    </script>*@
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project>
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword />
+    <_PublishTargetUrl>D:\Programming\Projects\MVC\New folder</_PublishTargetUrl>
+    <History>True|2022-11-13T14:28:30.3239723Z;True|2022-11-13T15:09:45.4949651+02:00;True|2022-11-08T17:44:57.5515366+02:00;True|2022-11-08T17:38:10.7831284+02:00;True|2022-11-08T15:47:12.5008950+02:00;</History>
+  </PropertyGroup>
+</Project>

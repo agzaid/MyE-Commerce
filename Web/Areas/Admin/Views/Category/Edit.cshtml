@@ -1,0 +1,236 @@
+﻿@model Web.Areas.Admin.Models.Shop.CategoryVM.CreateCategoryViewModel
+
+@section Header{
+    @*<link href="~/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />*@
+    <link href="~/assets/js/Select2ToTree/select2totree.css" rel="stylesheet" type="text/css" />
+}
+
+    @TempData["alertNotification"]
+
+    @section Breadcrumb{
+    <div class="page-title d-flex flex-column me-5 ms-lg-15">
+        <!--begin::Title-->
+        <h1 class="d-flex flex-column text-dark fw-bolder fs-2 mb-0">
+            Categories
+        </h1>
+        <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 pt-1">
+            <li class="breadcrumb-item text-muted">
+                <a asp-action="Index" asp-controller="Home" class="text-muted text-hover-primary">
+                    Home
+                </a>
+            </li>
+            <li class="breadcrumb-item">
+                <span class="bullet bg-gray-300 w-5px h-2px"></span>
+            </li>
+            <li class="breadcrumb-item text-muted">
+                eCommerce
+            </li>
+            <li class="breadcrumb-item">
+                <span class="bullet bg-gray-300 w-5px h-2px"></span>
+            </li>
+            <li class="breadcrumb-item text-muted">
+                <a asp-action="Index" asp-controller="Category" class="text-muted text-hover-primary">
+                    Categories
+                </a>
+            </li>
+            <li class="breadcrumb-item">
+                <span class="bullet bg-gray-300 w-5px h-2px"></span>
+            </li>
+            <li class="breadcrumb-item text-muted">
+                EditCategory
+            </li>
+        </ul>
+    </div>
+}
+    <form id="productForm" method="post" asp-action="Edit" asp-controller="Category" enctype="multipart/form-data" class="form d-flex flex-column flex-lg-row" data-kt-redirect="products.html">
+        <!--begin::Aside column-->
+        <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
+            <!--begin::Thumbnail settings-->
+            <div class="card card-flush py-4">
+                <!--begin::Card header-->
+                <div class="card-header">
+                    <!--begin::Card title-->
+                    <div class="card-title">
+                        <h2>Thumbnail</h2>
+                    </div>
+                    <!--end::Card title-->
+                </div>
+                <!--end::Card header-->
+                <!--begin::Card body-->
+                <div class="card-body text-center pt-0">
+                    <!--begin::Image input-->
+                    <div class="image-input image-input-empty image-input-outline mb-3" data-kt-image-input="true" style="background-image: url(@Model.ThumbnailImage)">
+                        <!--begin::Preview existing avatar-->
+                        <div class="image-input-wrapper w-150px h-150px"></div>
+                        <!--end::Preview existing avatar-->
+                        <!--begin::Label-->
+                        <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
+                            <i class="bi bi-pencil-fill fs-7"></i>
+                            <!--begin::Inputs-->
+                            <input asp-for="ThumbnailFormFile" type="file" accept=".png, .jpg, .jpeg" />
+                            <input type="hidden" name="avatar_remove" />
+                            <!--end::Inputs-->
+                        </label>
+                        <!--end::Label-->
+                        <!--begin::Cancel-->
+                        <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
+                            <i class="bi bi-x fs-2"></i>
+                        </span>
+                        <!--end::Cancel-->
+                        <!--begin::Remove-->
+                        <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
+                            <i class="bi bi-x fs-2"></i>
+                        </span>
+                        <!--end::Remove-->
+                    </div>
+                    <!--end::Image input-->
+                    <!--begin::Description-->
+                    <div class="text-muted fs-7">
+                        <span asp-validation-for="ThumbnailFormFile" class="text-danger"></span>
+                    </div>
+                    <!--end::Description-->
+                </div>
+                <!--end::Card body-->
+            </div>
+            <!--end::Thumbnail settings-->
+            <!--begin::Status-->
+            <div class="card card-flush py-4">
+                <!--begin::Card header-->
+                <div class="card-header">
+                    <!--begin::Card title-->
+                    <div class="card-title">
+                        <h2>Status</h2>
+                    </div>
+                    <!--end::Card title-->
+                    <!--begin::Card toolbar-->
+                    <div class="card-toolbar">
+                        <div class="rounded-circle bg-success w-15px h-15px" id="kt_ecommerce_add_product_status"></div>
+                    </div>
+                    <!--begin::Card toolbar-->
+                </div>
+                <!--end::Card header-->
+                <!--begin::Card body-->
+                <div class="card-body pt-0">
+                    <!--begin::Select2-->
+                    <select asp-for="Status" asp-items="@Model.ListOfStatus" class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Status Description"></select>
+                    <!--end::Select2-->
+                    <!--begin::Description-->
+                    <div class="text-muted fs-7">
+                        <span asp-validation-for="Status" class="text-danger"></span>
+                    </div>
+                    <!--end::Description-->
+                </div>
+                <!--end::Card body-->
+            </div>
+            <!--end::Status-->
+        </div>
+        <!--end::Aside column-->
+        <!--begin::Main column-->
+        <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
+            <!--begin:::Tabs-->
+            <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-bold mb-n2">
+                <!--begin:::Tab item-->
+                <li class="nav-item">
+                    <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab" href="#kt_ecommerce_add_product_english">Engilsh</a>
+                </li>
+                <!--end:::Tab item-->
+            </ul>
+            <!--end:::Tabs-->
+            <!--begin::Tab content-->
+            <div class="tab-content">
+                <!--begin::Tab pane-->
+                <div class="tab-pane fade show active" id="kt_ecommerce_add_product_english" role="tab-panel">
+                    <div class="d-flex flex-column gap-7 gap-lg-10">
+                        <!--begin::General options-->
+                        <div class="card card-flush py-4">
+                            <!--begin::Card header-->
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <h2>General</h2>
+                                </div>
+                            </div>
+                            <!--end::Card header-->
+                            <!--begin::Card body-->
+                            <div class="card-body pt-0">
+                                <!--begin::Input group-->
+                                <div class="mb-10 fv-row">
+                                    <!--begin::Label-->
+                                    <label class="required form-label" asp-for="CategoryName"></label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="text" asp-for="CategoryName" class="form-control mb-2"/>
+                                    <!--end::Input-->
+                                    <!--begin::Description-->
+                                    <span asp-validation-for="CategoryName" class="text-danger"></span>
+                                    <!--end::Description-->
+                                </div>
+                                <!--end::Input group-->
+                            </div>
+                            <!--end::Card header-->
+                        </div>
+                        <!--end::General options-->
+                    </div>
+                </div>
+                <!--end::Tab pane-->
+            </div>
+            <!--end::Tab content-->
+            <div class="d-flex justify-content-end">
+                <!--begin::Button-->
+                <a asp-action="index" asp-controller="category" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">Cancel</a>
+                <!--end::Button-->
+                <!--begin::Button-->
+                <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-primary">
+                    <span class="indicator-label">Save Changes</span>
+                    <span class="indicator-progress">
+                        Please wait...
+                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                    </span>
+                </button>
+                <!--end::Button-->
+            </div>
+        </div>
+        <!--end::Main column-->
+    </form>
+
+    @section Scripts {
+
+        <script>
+             function file() {
+                return "DocumentPhotos";
+            }
+            $(document).ready(function() {
+                new Dropzone("#kt_ecommerce_add_product_media",
+                    {
+                        url: "@Url.Action("Create","Product")",
+                        method: "post",
+                        autoProcessQueue: false,
+                        paramName: file,
+                        uploadMultiple: true,
+                        maxFiles: 10,
+                        maxFilesize: 10,
+                        addRemoveLinks: !0,
+                        parallelUploads: 100,
+                        init: function() {
+                            console.log("active");
+                            var wrapperThis = this;
+                             //$("#kt_ecommerce_add_product_submit").click(
+                                $('#productForm').submit(function(e) {
+                               // e.preventDefault();
+                                debugger;
+                                var arr = [];
+                                wrapperThis.files.forEach(s => arr.push(s.dataURL));
+                                //$('#GalleryFormFiles').val(arr);
+                                //arr.forEach(s =>document.createElement('input').setAttribute("Id","GalleryImages").value(s));
+                                arr.forEach(function(val, i) {
+                                    $('#kt_ecommerce_add_product_media').append(`<input type="hidden" name="RawGalleryImages[`+i+`]" value="`+val+`">'`)
+                                });
+                            });
+                        },
+                        accept: function(e, t) {
+                            "wow.jpg" == e.name ? t("Naha, you don't.") : t()
+                        }
+                    });
+            });
+        </script>
+    }
+
