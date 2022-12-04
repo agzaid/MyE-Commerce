@@ -3,47 +3,6 @@
     ViewData["Title"] = "Register";
 }
 
-@*<h1>Register</h1>
-
-<form asp-controller="Identity" asp-action="Register" method="post" enctype="multipart/form-data">
-
-    <div class="form-group col-4">
-        <label asp-for="FirstName"></label>
-        <input type="text" asp-for="FirstName" class="form-control" />
-        <span class="text-danger" asp-validation-for="FirstName"></span>
-    </div>
-    <div class="form-group col-4">
-        <label asp-for="LastName"></label>
-        <input type="text" asp-for="LastName" class="form-control" />
-        <span class="text-danger" asp-validation-for="LastName"></span>
-    </div>
-    <div class="form-group col-4">
-        <label asp-for="PhoneNumber"></label>
-        <input type="text" asp-for="PhoneNumber" class="form-control" />
-    </div>
-    <div class="form-group col-4">
-        <label asp-for="SecondPhoneNumber"></label>
-        <input type="text" asp-for="SecondPhoneNumber" class="form-control" />
-    </div>
-    <div class="form-group col-4">
-        <label asp-for="Email"></label>
-        <input type="text" asp-for="Email" class="form-control" />
-    </div>
-    <div class="form-group col-4">
-        <label asp-for="Password"></label>
-        <input type="password" asp-for="Password" class="form-control" />
-    </div>
-    <div class="form-group col-4">
-        <label asp-for="ConfirmPassword"></label>
-        <input type="password" asp-for="ConfirmPassword" class="form-control" />
-    </div>
-
-    <button type="submit" class="btn btn-primary">Register!</button>
-</form>
-
-<div class="alert alert-info">
-    If you already have account please <a asp-action="Login">Login</a>
-</div>*@
 <style>
     .gradient-custom {
         /* fallback for old browsers */
@@ -103,13 +62,13 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-4">
-                                    <h6 class="mb-2 pb-1">Gender: </h6>
+                                    <h6>Gender:</h6>
                                     <div class="form-check form-check-inline">
                                         @foreach (var item in Model.GenderList)
                                         {
                                             <div class="form-check mb-0 me-4">
                                                 <label class="form-check-label"> @item.Text </label>
-                                                <input class="form-check-input" type="radio" asp-for="GenderId" value="@item.Value" checked />
+                                                <input class="form-check-input" type="radio" asp-for="GenderId" value="@item.Value"  />
                                             </div>
                                         }
                                         <span class="text-danger" asp-validation-for="GenderId"></span>
@@ -155,7 +114,7 @@
                         </form>
 
                         <div class="alert alert-info mt-4">
-                            If you already have account please <a asp-action="Login">Login</a>
+                            If you already have account please! <a asp-action="Login">Login</a>
                         </div>
                     </div>
                 </div>
@@ -163,3 +122,12 @@
         </div>
     </div>
 </section>
+
+<script>
+    $(function () {
+        var $radios = $('input:radio[name=GenderId]');
+        if ($radios.is(':checked') === false) {
+            $radios.filter('[value="1"]').prop('checked', true);
+        }
+    });
+</script>

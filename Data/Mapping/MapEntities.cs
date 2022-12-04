@@ -14,8 +14,8 @@ namespace Data.Mapping
     {
         public static void MapUser(this ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AppUser>().HasMany(s=>s.UsersAddresses).WithOne(f=>f.AppUser);
-        } 
+            //modelBuilder.Entity<AppUser>().HasMany(s=>s.UsersAddresses).WithOne(f=>f.AppUser);
+        }
         public static void MapProduct(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>().HasKey(s => s.ID);
@@ -28,7 +28,14 @@ namespace Data.Mapping
         public static void MapAddress(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Address>().HasKey(s => s.ID);
-            modelBuilder.Entity<Address>().HasMany(s=>s.UsersAddresses).WithOne(f=>f.Address);
+            //modelBuilder.Entity<Address>().HasMany(s=>s.UsersAddresses).WithOne(f=>f.Address);
+        }
+        public static void MapUsersAddress(this ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserAddress>().HasKey(s => new { s.AddressId, s.AppUserId });
+
+            modelBuilder.Entity<UserAddress>().HasOne(s => s.Address).WithMany(s => s.UsersAddresses).HasForeignKey(s => s.AddressId);
+            modelBuilder.Entity<UserAddress>().HasOne(s => s.AppUser).WithMany(s => s.UsersAddresses).HasForeignKey(s => s.AppUserId);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Data.Entities.User
         public bool IsDeleted { get; set; }
 
         #region Navigation Properties
-        public List<UserAddress> UsersAddresses{ get; set; }
+        public List<UserAddress> UsersAddresses { get; set; } = new();
 
         #endregion
     }

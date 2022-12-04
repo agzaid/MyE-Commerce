@@ -35,7 +35,8 @@ namespace Repo
         //public DbSet<Order> Product { get; set; }
         //public DbSet<Order> Order { get; set; }
         //public DbSet<OrderDetails> OrderDetails { get; set; }
-        public DbSet<Customer> Customer { get; set; }
+
+        //public DbSet<Customer> Customer { get; set; }
         protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
             base.OnModelCreating(modelbuilder);
@@ -43,6 +44,7 @@ namespace Repo
             modelbuilder.MapProduct();
             modelbuilder.MapCategory();
             modelbuilder.MapAddress();
+            modelbuilder.MapUsersAddress();
             //modelbuilder.MapCustomer();
             //modelbuilder.MapOrder();
             //modelbuilder.MapOrderDetails();

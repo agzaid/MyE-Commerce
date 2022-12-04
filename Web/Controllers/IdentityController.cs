@@ -9,10 +9,12 @@ namespace Web.Controllers
     public class IdentityController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
 
-        public IdentityController(UserManager<AppUser> userManager)
+        public IdentityController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         [HttpGet]
@@ -37,7 +39,7 @@ namespace Web.Controllers
                         UserName = String.Join("", model.FirstName, model.LastName),
                         PhoneNumber = model.PhoneNumber,
                         SecondPhoneNumber = model.SecondPhoneNumber,
-                        Age= model.Age,
+                        Age = model.Age,
                         Gender = (Gender)model.GenderId
                     };
                     var result = await _userManager.CreateAsync(user, model.Password);
@@ -59,12 +61,33 @@ namespace Web.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            return View();
+            return View(new LoginViewModel());
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Login(RegisterViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            else
+            {
+                var user = await _userManager.FindByNameAsync(model.UserName);
+                if (user == null)
+                {
+                    user = await _userManager.FindByEmailAsync(model.UserName);
+                }
+                var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("Login", "Login Failed");
+                }
+            }
             return View();
         }
 
@@ -75,8 +98,8 @@ namespace Web.Controllers
 
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {
-            var user= await _userManager.FindByNameAsync(userId);
-            var result= await _userManager.ConfirmEmailAsync(user, token);
+            var user = await _userManager.FindByNameAsync(userId);
+            var result = await _userManager.ConfirmEmailAsync(user, token);
             if (result.Succeeded)
             {
                 return RedirectToAction("Login");
