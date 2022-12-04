@@ -1,5 +1,6 @@
 ﻿using Data;
 using Data.Entities;
+using Data.Entities.Address;
 using Data.Entities.Shop;
 using Data.Entities.User;
 using Data.Mapping;
@@ -26,6 +27,9 @@ namespace Repo
         //}
         #endregion
         public DbSet<AppUser> AppUser { get; set; }
+        public DbSet<Address> Address { get; set; }
+        public DbSet<Country> Country { get; set; }
+        public DbSet<UserAddress> UsersAddresses { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<Category> Category { get; set; }
         //public DbSet<Order> Product { get; set; }
@@ -38,6 +42,7 @@ namespace Repo
             modelbuilder.MapUser();
             modelbuilder.MapProduct();
             modelbuilder.MapCategory();
+            modelbuilder.MapAddress();
             //modelbuilder.MapCustomer();
             //modelbuilder.MapOrder();
             //modelbuilder.MapOrderDetails();

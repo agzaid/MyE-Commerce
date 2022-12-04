@@ -1,4 +1,5 @@
-﻿using Data.Entities.Shop;
+﻿using Data.Entities.Address;
+using Data.Entities.Shop;
 using Data.Entities.User;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,7 +14,7 @@ namespace Data.Mapping
     {
         public static void MapUser(this ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<AppUser>().HasKey(s => s.Id);
+            modelBuilder.Entity<AppUser>().HasMany(s=>s.UsersAddresses).WithOne(f=>f.AppUser);
         } 
         public static void MapProduct(this ModelBuilder modelBuilder)
         {
@@ -23,6 +24,11 @@ namespace Data.Mapping
         public static void MapCategory(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Category>().HasKey(s => s.ID);
+        }
+        public static void MapAddress(this ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Address>().HasKey(s => s.ID);
+            modelBuilder.Entity<Address>().HasMany(s=>s.UsersAddresses).WithOne(f=>f.Address);
         }
     }
 }
