@@ -1,4 +1,5 @@
-﻿using Data.Entities.Enums;
+﻿using Data.Entities.Address;
+using Data.Entities.Enums;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,8 @@ namespace Data.Entities.User
         public bool IsDeleted { get; set; }
 
         #region Navigation Properties
-        //public Customer Customer { get; set; }
+        public List<UserAddress> UsersAddresses{ get; set; }
+
         #endregion
     }
 }
