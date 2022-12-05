@@ -10,11 +10,13 @@ namespace Web.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public IdentityController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public IdentityController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
         }
 
         [HttpGet]
@@ -48,7 +50,8 @@ namespace Web.Controllers
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     if (result.Succeeded)
                     {
-                        Url.ActionLink("ConfirmEmail", "Identity", new { userId = user.Id, @token = token });
+                        //Url.ActionLink("ConfirmEmail", "Identity", new { userId = user.Id, @token = token });
+                        await _userManager.AddToRoleAsync(user, "Admin");
                         return RedirectToAction("Login");
                     }
                     ModelState.AddModelError("Register", string.Join("", result.Errors.Select(s => s.Description)));

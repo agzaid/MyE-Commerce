@@ -9,10 +9,10 @@
     }
 
     .login {
-        height: 1000px;
+        height: 100%;
         width: 100%;
         background: radial-gradient(#653d84, #332042);
-        position: relative;
+        position: absolute;
     }
 
     .login_box {
@@ -147,7 +147,7 @@
 <section class="login">
     <div class="login_box">
         <div class="left">
-            <div class="top_link"><a asp-action="index" asp-controller="Home">Return home</a></div>
+            <a asp-action="index" asp-controller="Home">Return home</a>
             <div class="contact">
                 <form asp-action="Login" method="post">
                     <div class="row">
