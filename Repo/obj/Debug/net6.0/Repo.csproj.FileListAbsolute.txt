@@ -66,3 +66,20 @@ D:\Programming\Projects\MVC\New Asian Goodies Clone\Repo\obj\Debug\net6.0\refint
 D:\Programming\Projects\MVC\New Asian Goodies Clone\Repo\obj\Debug\net6.0\Repo.pdb
 D:\Programming\Projects\MVC\New Asian Goodies Clone\Repo\obj\Debug\net6.0\Repo.genruntimeconfig.cache
 D:\Programming\Projects\MVC\New Asian Goodies Clone\Repo\obj\Debug\net6.0\ref\Repo.dll
+D:\MyProject\AsianStore\Repo\bin\Debug\net6.0\Repo.deps.json
+D:\MyProject\AsianStore\Repo\bin\Debug\net6.0\Repo.runtimeconfig.json
+D:\MyProject\AsianStore\Repo\bin\Debug\net6.0\Repo.dll
+D:\MyProject\AsianStore\Repo\bin\Debug\net6.0\Repo.pdb
+D:\MyProject\AsianStore\Repo\bin\Debug\net6.0\Data.dll
+D:\MyProject\AsianStore\Repo\bin\Debug\net6.0\Data.pdb
+D:\MyProject\AsianStore\Repo\obj\Debug\net6.0\Repo.csproj.AssemblyReference.cache
+D:\MyProject\AsianStore\Repo\obj\Debug\net6.0\Repo.GeneratedMSBuildEditorConfig.editorconfig
+D:\MyProject\AsianStore\Repo\obj\Debug\net6.0\Repo.AssemblyInfoInputs.cache
+D:\MyProject\AsianStore\Repo\obj\Debug\net6.0\Repo.AssemblyInfo.cs
+D:\MyProject\AsianStore\Repo\obj\Debug\net6.0\Repo.csproj.CoreCompileInputs.cache
+D:\MyProject\AsianStore\Repo\obj\Debug\net6.0\Repo.csproj.CopyComplete
+D:\MyProject\AsianStore\Repo\obj\Debug\net6.0\Repo.dll
+D:\MyProject\AsianStore\Repo\obj\Debug\net6.0\refint\Repo.dll
+D:\MyProject\AsianStore\Repo\obj\Debug\net6.0\Repo.pdb
+D:\MyProject\AsianStore\Repo\obj\Debug\net6.0\Repo.genruntimeconfig.cache
+D:\MyProject\AsianStore\Repo\obj\Debug\net6.0\ref\Repo.dll

@@ -2308,19 +2308,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Agzaid\\.nuget\\packages\\": {}
+    "C:\\Users\\AhmedGamal\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Programming\\Projects\\MVC\\New Asian Goodies Clone\\Data\\Data.csproj",
+      "projectUniqueName": "D:\\MyProject\\AsianStore\\Data\\Data.csproj",
       "projectName": "Data",
-      "projectPath": "D:\\Programming\\Projects\\MVC\\New Asian Goodies Clone\\Data\\Data.csproj",
-      "packagesPath": "C:\\Users\\Agzaid\\.nuget\\packages\\",
-      "outputPath": "D:\\Programming\\Projects\\MVC\\New Asian Goodies Clone\\Data\\obj\\",
+      "projectPath": "D:\\MyProject\\AsianStore\\Data\\Data.csproj",
+      "packagesPath": "C:\\Users\\AhmedGamal\\.nuget\\packages\\",
+      "outputPath": "D:\\MyProject\\AsianStore\\Data\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Agzaid\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\AhmedGamal\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

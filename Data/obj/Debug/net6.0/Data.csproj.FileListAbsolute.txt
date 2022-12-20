@@ -54,3 +54,17 @@ D:\Programming\Projects\MVC\New Asian Goodies Clone\Data\obj\Debug\net6.0\refint
 D:\Programming\Projects\MVC\New Asian Goodies Clone\Data\obj\Debug\net6.0\Data.pdb
 D:\Programming\Projects\MVC\New Asian Goodies Clone\Data\obj\Debug\net6.0\Data.genruntimeconfig.cache
 D:\Programming\Projects\MVC\New Asian Goodies Clone\Data\obj\Debug\net6.0\ref\Data.dll
+D:\MyProject\AsianStore\Data\bin\Debug\net6.0\Data.deps.json
+D:\MyProject\AsianStore\Data\bin\Debug\net6.0\Data.runtimeconfig.json
+D:\MyProject\AsianStore\Data\bin\Debug\net6.0\Data.dll
+D:\MyProject\AsianStore\Data\bin\Debug\net6.0\Data.pdb
+D:\MyProject\AsianStore\Data\obj\Debug\net6.0\Data.csproj.AssemblyReference.cache
+D:\MyProject\AsianStore\Data\obj\Debug\net6.0\Data.GeneratedMSBuildEditorConfig.editorconfig
+D:\MyProject\AsianStore\Data\obj\Debug\net6.0\Data.AssemblyInfoInputs.cache
+D:\MyProject\AsianStore\Data\obj\Debug\net6.0\Data.AssemblyInfo.cs
+D:\MyProject\AsianStore\Data\obj\Debug\net6.0\Data.csproj.CoreCompileInputs.cache
+D:\MyProject\AsianStore\Data\obj\Debug\net6.0\Data.dll
+D:\MyProject\AsianStore\Data\obj\Debug\net6.0\refint\Data.dll
+D:\MyProject\AsianStore\Data\obj\Debug\net6.0\Data.pdb
+D:\MyProject\AsianStore\Data\obj\Debug\net6.0\Data.genruntimeconfig.cache
+D:\MyProject\AsianStore\Data\obj\Debug\net6.0\ref\Data.dll

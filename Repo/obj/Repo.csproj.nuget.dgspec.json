@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Programming\\Projects\\MVC\\New Asian Goodies Clone\\Repo\\Repo.csproj": {}
+    "D:\\MyProject\\AsianStore\\Repo\\Repo.csproj": {}
   },
   "projects": {
-    "D:\\Programming\\Projects\\MVC\\New Asian Goodies Clone\\Repo\\Repo.csproj": {
+    "D:\\MyProject\\AsianStore\\Repo\\Repo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Programming\\Projects\\MVC\\New Asian Goodies Clone\\Repo\\Repo.csproj",
+        "projectUniqueName": "D:\\MyProject\\AsianStore\\Repo\\Repo.csproj",
         "projectName": "Repo",
-        "projectPath": "D:\\Programming\\Projects\\MVC\\New Asian Goodies Clone\\Repo\\Repo.csproj",
-        "packagesPath": "C:\\Users\\Agzaid\\.nuget\\packages\\",
-        "outputPath": "D:\\Programming\\Projects\\MVC\\New Asian Goodies Clone\\Repo\\obj\\",
+        "projectPath": "D:\\MyProject\\AsianStore\\Repo\\Repo.csproj",
+        "packagesPath": "C:\\Users\\AhmedGamal\\.nuget\\packages\\",
+        "outputPath": "D:\\MyProject\\AsianStore\\Repo\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Agzaid\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\AhmedGamal\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

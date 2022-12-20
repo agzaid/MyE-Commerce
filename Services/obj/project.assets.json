@@ -2810,19 +2810,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Agzaid\\.nuget\\packages\\": {}
+    "C:\\Users\\AhmedGamal\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Programming\\Projects\\MVC\\New Asian Goodies Clone\\Services\\Services.csproj",
+      "projectUniqueName": "D:\\MyProject\\AsianStore\\Services\\Services.csproj",
       "projectName": "Services",
-      "projectPath": "D:\\Programming\\Projects\\MVC\\New Asian Goodies Clone\\Services\\Services.csproj",
-      "packagesPath": "C:\\Users\\Agzaid\\.nuget\\packages\\",
-      "outputPath": "D:\\Programming\\Projects\\MVC\\New Asian Goodies Clone\\Services\\obj\\",
+      "projectPath": "D:\\MyProject\\AsianStore\\Services\\Services.csproj",
+      "packagesPath": "C:\\Users\\AhmedGamal\\.nuget\\packages\\",
+      "outputPath": "D:\\MyProject\\AsianStore\\Services\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Agzaid\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\AhmedGamal\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2836,11 +2836,11 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\Programming\\Projects\\MVC\\New Asian Goodies Clone\\Data\\Data.csproj": {
-              "projectPath": "D:\\Programming\\Projects\\MVC\\New Asian Goodies Clone\\Data\\Data.csproj"
+            "D:\\MyProject\\AsianStore\\Data\\Data.csproj": {
+              "projectPath": "D:\\MyProject\\AsianStore\\Data\\Data.csproj"
             },
-            "D:\\Programming\\Projects\\MVC\\New Asian Goodies Clone\\Repo\\Repo.csproj": {
-              "projectPath": "D:\\Programming\\Projects\\MVC\\New Asian Goodies Clone\\Repo\\Repo.csproj"
+            "D:\\MyProject\\AsianStore\\Repo\\Repo.csproj": {
+              "projectPath": "D:\\MyProject\\AsianStore\\Repo\\Repo.csproj"
             }
           }
         }

@@ -12,8 +12,8 @@ using Repo;
 namespace Repo.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20221003140958_addedProduct")]
-    partial class addedProduct
+    [Migration("20221220092426_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,91 @@ namespace Repo.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("Data.Entities.Address.Address", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<string>("AddressLine1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AddressLine2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PostalCode")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Region")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StreetNumber")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UnitNumber")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("Address");
+                });
+
+            modelBuilder.Entity("Data.Entities.Address.Country", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<string>("CountryName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Country");
+                });
+
+            modelBuilder.Entity("Data.Entities.Address.UserAddress", b =>
+                {
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("bit");
+
+                    b.HasKey("AddressId", "AppUserId");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("UsersAddresses");
+                });
 
             modelBuilder.Entity("Data.Entities.Shop.Category", b =>
                 {
@@ -38,23 +123,17 @@ namespace Repo.Migrations
                     b.Property<int>("DisplayOrder")
                         .HasColumnType("int");
 
-                    b.Property<string>("ImageSrc")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ParentId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Published")
-                        .HasColumnType("bit");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
+
+                    b.Property<string>("ThumbnailImage")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
@@ -68,6 +147,9 @@ namespace Repo.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -101,6 +183,8 @@ namespace Repo.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("Product");
                 });
 
@@ -110,6 +194,9 @@ namespace Repo.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Age")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -125,6 +212,9 @@ namespace Repo.Migrations
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
 
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
@@ -158,6 +248,9 @@ namespace Repo.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("SecondPhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -179,44 +272,6 @@ namespace Repo.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("Data.Entities.User.Customer", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("AppUserId")
-                        .IsUnique()
-                        .HasFilter("[AppUserId] IS NOT NULL");
-
-                    b.ToTable("Customer");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -352,13 +407,43 @@ namespace Repo.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Data.Entities.User.Customer", b =>
+            modelBuilder.Entity("Data.Entities.Address.Address", b =>
                 {
+                    b.HasOne("Data.Entities.Address.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Country");
+                });
+
+            modelBuilder.Entity("Data.Entities.Address.UserAddress", b =>
+                {
+                    b.HasOne("Data.Entities.Address.Address", "Address")
+                        .WithMany("UsersAddresses")
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Data.Entities.User.AppUser", "AppUser")
-                        .WithOne("Customer")
-                        .HasForeignKey("Data.Entities.User.Customer", "AppUserId");
+                        .WithMany("UsersAddresses")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Address");
 
                     b.Navigation("AppUser");
+                });
+
+            modelBuilder.Entity("Data.Entities.Shop.Product", b =>
+                {
+                    b.HasOne("Data.Entities.Shop.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId");
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -412,9 +497,19 @@ namespace Repo.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Data.Entities.Address.Address", b =>
+                {
+                    b.Navigation("UsersAddresses");
+                });
+
+            modelBuilder.Entity("Data.Entities.Shop.Category", b =>
+                {
+                    b.Navigation("Products");
+                });
+
             modelBuilder.Entity("Data.Entities.User.AppUser", b =>
                 {
-                    b.Navigation("Customer");
+                    b.Navigation("UsersAddresses");
                 });
 #pragma warning restore 612, 618
         }
