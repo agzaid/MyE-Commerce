@@ -112,8 +112,10 @@
                 <!--begin::Card body-->
                 <div class="card-body pt-0">
                     <!--begin::Select2-->
-                    <select asp-for="Status" asp-items="@Model.ListOfStatus" class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Status Description"></select>
+                    @*<select asp-for="Status" asp-items="@Model.ListOfStatus" class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Status Description"></select>*@
                     <!--end::Select2-->
+                    <select asp-for="Status" asp-items="@Model.ListOfStatus" class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Status Description">
+                    </select>
                     <!--begin::Description-->
                     <div class="text-muted fs-7">
                         <span asp-validation-for="Status" class="text-danger"></span>

@@ -10,6 +10,7 @@ using Web.Areas.Admin.Models.Shop;
 using System.Text.Json;
 using Web.Areas.Admin.Models.Shop.product;
 using Services.Shop.CategoryRepo;
+using Data.Entities.Enums;
 
 namespace Web.Areas.Admin.Controllers
 {
@@ -63,6 +64,7 @@ namespace Web.Areas.Admin.Controllers
                 Text = s.Name,
                 Value = s.ID.ToString(),
             }).ToList();
+            product.Status = RecordStatus.Published;
             return View(product);
         }
         [HttpPost]
