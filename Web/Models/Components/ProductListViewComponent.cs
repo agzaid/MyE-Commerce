@@ -3,7 +3,7 @@ using Services.Shop;
 
 namespace Web.Models.Components
 {
-    public class ProductListViewComponent :ViewComponent
+    public class ProductListViewComponent : ViewComponent
     {
         private readonly IProductService _productService;
 

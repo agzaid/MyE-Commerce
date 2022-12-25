@@ -1,0 +1,13 @@
+﻿@model Data.Entities.User.AppUser
+
+ <div class="nav-item dropdown">
+    <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle"><img width="25px" height="25px" style="border-radius:50%" src="@(Model.Image??"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png")" class="avatar"> Welcome @Model.UserName<b class="caret"></b></a>
+            <div class="dropdown-menu">
+                <a href="#" class="dropdown-item"><i class="fa fa-user-o"></i> Profile</a>
+                <a href="#" class="dropdown-item"><i class="fa fa-calendar-o"></i> Calendar</a>
+                <a href="#" class="dropdown-item"><i class="fa fa-sliders"></i> Settings</a>
+                <div class="divider dropdown-divider"></div>
+        <a asp-action="LogOut" asp-controller="Identity" class="dropdown-item"><i class="material-icons">&#xE8AC;</i> Logout</a>
+
+            </div>
+</div>

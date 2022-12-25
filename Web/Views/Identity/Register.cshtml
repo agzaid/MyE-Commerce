@@ -1,6 +1,7 @@
 ﻿@model Web.Models.UserAuthentication.RegisterViewModel
 @{
     ViewData["Title"] = "Register";
+    var roles = new List<string> { "Memeber", "Admin" };
 }
 
 <style>
@@ -68,7 +69,7 @@
                                         {
                                             <div class="form-check mb-0 me-4">
                                                 <label class="form-check-label"> @item.Text </label>
-                                                <input class="form-check-input" type="radio" asp-for="GenderId" value="@item.Value"  />
+                                                <input class="form-check-input" type="radio" asp-for="GenderId" value="@item.Value" />
                                             </div>
                                         }
                                         <span class="text-danger" asp-validation-for="GenderId"></span>
@@ -83,9 +84,9 @@
                                     </div>
                                     <div class="col-md-6 mb-4 pb-2">
                                         <div class="form-outline">
-                                    <label class="form-label" asp-for="SecondPhoneNumber"></label>
-                                    <input asp-for="SecondPhoneNumber" class="form-control form-control-lg" />
-                                    <span class="text-danger" asp-validation-for="SecondPhoneNumber"></span>
+                                            <label class="form-label" asp-for="SecondPhoneNumber"></label>
+                                            <input asp-for="SecondPhoneNumber" class="form-control form-control-lg" />
+                                            <span class="text-danger" asp-validation-for="SecondPhoneNumber"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -105,6 +106,11 @@
                                     <label class="form-label" asp-for="ConfirmPassword"></label>
                                     <input asp-for="ConfirmPassword" class="form-control form-control-lg" />
                                     <span class="text-danger" asp-validation-for="ConfirmPassword"></span>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label" asp-for="Role"></label>
+                                    <select asp-for="Role" class="form-control form-control-lg col-6" asp-items="roles.Select(s=>new SelectListItem{Text= s, Value= s})"></select>
+                                    <span class="text-danger" asp-validation-for="Role"></span>
                                 </div>
                             </div>
                             <div class="mt-4 pt-2">

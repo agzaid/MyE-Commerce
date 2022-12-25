@@ -57,6 +57,7 @@ namespace Web.Models.UserAuthentication
         [Display(Name = "Gender")]
         public int GenderId { get; set; }
         public List<SelectListItem> GenderList { get; set; } = new List<SelectListItem>();
+        public string Role { get; set; }
 
     }
 }

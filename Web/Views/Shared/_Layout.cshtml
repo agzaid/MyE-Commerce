@@ -28,8 +28,11 @@
 <body>
     @if (true)
     {
-        <div class="text-center" style="background-color:black"><a style="color:#fff;" asp-area="admin" asp-controller="manage" asp-action="index">
-            admin</a></div>
+        <div class="text-center" style="background-color:black">
+            <a style="color:#fff;" asp-area="admin" asp-controller="manage" asp-action="index">
+                admin
+            </a>
+        </div>
     }
     <div class="hero_area">
         <!-- header section strats -->
@@ -121,7 +124,7 @@
     </div>
 
     @await RenderSectionAsync("Scripts", required: false)
-       
-    
+
+
 </body>
 </html>

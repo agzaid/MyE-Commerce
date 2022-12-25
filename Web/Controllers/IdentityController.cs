@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models.UserAuthentication;
 using Data.Entities.Enums;
+using Services.Injection.CommonResult;
 
 namespace Web.Controllers
 {
@@ -22,7 +23,7 @@ namespace Web.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-            var model = new RegisterViewModel();
+            var model = new RegisterViewModel() { Role = "member" };
             return View(model);
         }
         [HttpPost]
@@ -31,6 +32,17 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (!await _roleManager.RoleExistsAsync(model.Role))
+                {
+                    var role = new IdentityRole { Name = model.Role };
+                    var roleResult = await _roleManager.CreateAsync(role);
+                    if (!roleResult.Succeeded)
+                    {
+                        var errors = roleResult.Errors.Select(s => s.Description);
+                        ModelState.AddModelError("Role", string.Join(", ", errors));
+                        return View(model);
+                    }
+                }
                 if ((await _userManager.FindByEmailAsync(model.Email)) == null)
                 {
                     var user = new AppUser()
@@ -50,8 +62,16 @@ namespace Web.Controllers
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     if (result.Succeeded)
                     {
+                        if (model.Role.Contains("Admin"))
+                        {
+                            await _userManager.AddToRoleAsync(user, "Admin");
+                        }
+                        else
+                        {
+                            await _userManager.AddToRoleAsync(user, model.Role);
+                        }
+                        //await _userManager.AddToRoleAsync(user, "Admin");
                         //Url.ActionLink("ConfirmEmail", "Identity", new { userId = user.Id, @token = token });
-                        await _userManager.AddToRoleAsync(user, "Admin");
                         return RedirectToAction("Login");
                     }
                     ModelState.AddModelError("Register", string.Join("", result.Errors.Select(s => s.Description)));
@@ -76,19 +96,28 @@ namespace Web.Controllers
             }
             else
             {
-                var user = await _userManager.FindByNameAsync(model.UserName);
-                if (user == null)
+                try
                 {
-                    user = await _userManager.FindByEmailAsync(model.UserName);
+                    var user = await _userManager.FindByNameAsync(model.UserName);
+                    if (user == null)
+                    {
+                        user = await _userManager.FindByEmailAsync(model.UserName);
+                    }
+                    var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Login", "Login Failed");
+                    }
                 }
-                var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
-                if (result.Succeeded)
+                catch (Exception ex)
                 {
+                    ModelState.AddModelError("Login", string.Join("", ex.InnerException));
                     return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    ModelState.AddModelError("Login", "Login Failed");
+                    throw;
                 }
             }
             return View();
@@ -97,6 +126,12 @@ namespace Web.Controllers
         public IActionResult AccessDenied()
         {
             return View();
+        }
+
+        public async Task<IActionResult> LogOut()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index","Home");
         }
 
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
