@@ -26,7 +26,7 @@
 </head>
 
 <body>
-    @if (true)
+    @if (User.IsInRole("Admin"))
     {
         <div class="text-center" style="background-color:black">
             <a style="color:#fff;" asp-area="admin" asp-controller="manage" asp-action="index">
