@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Login";
 }
-<style>
+@*<style>
     img {
         width: 100%;
     }
@@ -142,8 +142,9 @@
         margin-top: -3px;
     }
 
-</style>
+</style>*@
 
+@*
 <section class="login">
     <div class="login_box">
         <div class="left">
@@ -179,6 +180,73 @@
             <div class="right-text">
                 <h2>LONYX</h2>
                 <h5>A UX BASED CREATIVE AGENCEY</h5>
+            </div>
+        </div>
+    </div>
+</section>
+*@
+
+<style>
+    .gradient-custom {
+        /* fallback for old browsers */
+        background: #20c997;
+        /* Chrome 10-25, Safari 5.1-6 */
+        background: -webkit-linear-gradient(to bottom right, #20c997, #17a2b8);
+        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        background: linear-gradient(to bottom right, #20c997, #17a2b8)
+    }
+
+    .card-registration .select-input.form-control[readonly]:not([disabled]) {
+        font-size: 1rem;
+        line-height: 2.15;
+        padding-left: .75em;
+        padding-right: .75em;
+    }
+    .card-registration .select-arrow {
+        top: 13px;
+    }
+
+    .divAnimate1 {
+        width: 100px;
+        height: 100px;
+        position: relative;
+    }
+</style>
+<section class="gradient-custom">
+    <div class="container py-5 h-100">
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-12 col-lg-9 col-xl-7 ">
+                <div class="card shadow-2-strong card-registration animate__animated animate__bounceInDown" style="border-radius: 15px;">
+                    <div class="card-body p-4 p-md-5">
+                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Login Form</h3>
+                        <form asp-action="Login" method="post">
+                            <div class="row">
+                                <div class="col-md-12 mb-12">
+                                    <div class="form-outline">
+                                        <label asp-for="UserName"></label>
+                                        <input type="text" asp-for="UserName" class="form-control" />
+                                        <span class="text-danger" asp-validation-for="UserName"></span>
+                                    </div>
+                                    <div class="form-outline">
+                                        <label asp-for="Password"></label>
+                                        <input type="password" asp-for="Password" class="form-control" />
+                                        <span class="text-danger" asp-validation-for="Password"></span>
+                                    </div>
+                                    <div class="form-outline d-flex">
+                                        <label asp-for="RememberMe"></label>
+                                        <input type="checkbox" asp-for="RememberMe" class="form-control" />
+                                        <span class="text-danger" asp-validation-for="RememberMe"></span>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Login</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="alert alert-info mt-4">
+                            If you already have account please! <a asp-action="Login">Login</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
