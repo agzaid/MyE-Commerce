@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Services.Shop;
+using Data.Entities.Enums;
 
 namespace Web.Models.Components
 {
@@ -13,7 +14,7 @@ namespace Web.Models.Components
         }
         public IViewComponentResult Invoke()
         {
-            var model = _productService.GetMany(s => true, null);
+            var model = _productService.GetMany(s => true, null).Where(s=>s.Status == RecordStatus.Published);
             return View(model);
         }
     }
