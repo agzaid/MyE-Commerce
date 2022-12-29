@@ -20,6 +20,7 @@ namespace Data.Mapping
         {
             modelBuilder.Entity<Product>().HasKey(s => s.ID);
             modelBuilder.Entity<Product>().HasOne(s => s.Category).WithMany(b => b.Products);
+            modelBuilder.Entity<Product>().HasOne(s => s.ShoppingCartItem).WithOne(d => d.Product).HasForeignKey<ShoppingCartItem>(d=>d.ProductID);
         }
         public static void MapCategory(this ModelBuilder modelBuilder)
         {
@@ -37,5 +38,6 @@ namespace Data.Mapping
             modelBuilder.Entity<UserAddress>().HasOne(s => s.Address).WithMany(s => s.UsersAddresses).HasForeignKey(s => s.AddressId);
             modelBuilder.Entity<UserAddress>().HasOne(s => s.AppUser).WithMany(s => s.UsersAddresses).HasForeignKey(s => s.AppUserId);
         }
+
     }
 }

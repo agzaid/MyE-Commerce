@@ -32,6 +32,9 @@ namespace Repo
         public DbSet<UserAddress> UsersAddresses { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<Category> Category { get; set; }
+        public DbSet<ShoppingCart> ShoppingCart { get; set; }
+        public DbSet<ShoppingCartItem> ShoppingCartItem { get; set; }
+
         //public DbSet<Order> Product { get; set; }
         //public DbSet<Order> Order { get; set; }
         //public DbSet<OrderDetails> OrderDetails { get; set; }

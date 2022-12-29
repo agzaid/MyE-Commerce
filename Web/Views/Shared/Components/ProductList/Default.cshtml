@@ -7,7 +7,7 @@
         <div class="box">
             <div class="option_container">
                 <div class="options">
-                    <a href="" class="option1">
+                    <a class="option1" href="#" onclick="AddingItem(@item.ID)">
                         Add To Cart
                     </a>
                     <a asp-action="Details" asp-controller="Product" asp-route-id="@item.ID" class="option2">
@@ -29,3 +29,20 @@
         </div>
     </div>
 }
+
+<script>
+    $(document).ready(function () {
+
+
+
+
+        
+    });
+
+    function AddingItem(id) {
+        debugger;
+        alert(id);
+        $("#cartIcon").css("display", "none");
+    }
+        
+</script>

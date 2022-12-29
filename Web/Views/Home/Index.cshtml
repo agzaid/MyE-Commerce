@@ -376,7 +376,7 @@
         </div>
         <div class="row">
             @*view component*@
-            @await Component.InvokeAsync("ProductList")
+            @await Component.InvokeAsync("ProductList",new { CartIconID = "cartIcon" })
         </div>
         <div class="btn-box">
             <a href="">

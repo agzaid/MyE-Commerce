@@ -1,5 +1,6 @@
 ﻿using Data.Entities.Address;
 using Data.Entities.Enums;
+using Data.Entities.Shop;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace Data.Entities.User
 
         #region Navigation Properties
         public List<UserAddress> UsersAddresses { get; set; } = new();
-
+        public List<ShoppingCart> ShoppingCarts { get; set; } = new();
         #endregion
     }
 }

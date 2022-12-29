@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repo;
 
@@ -11,9 +12,10 @@ using Repo;
 namespace Repo.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221229101858_shoppingcart_and_shoppingCartItem")]
+    partial class shoppingcart_and_shoppingCartItem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,21 +226,16 @@ namespace Repo.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ProductID")
+                    b.Property<int>("ProductItemID")
                         .HasColumnType("int");
 
                     b.Property<int>("Qauantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("ShoppingCartId")
-                        .HasColumnType("int");
-
                     b.HasKey("ID");
 
-                    b.HasIndex("ProductID")
+                    b.HasIndex("ProductItemID")
                         .IsUnique();
-
-                    b.HasIndex("ShoppingCartId");
 
                     b.ToTable("ShoppingCartItem");
                 });
@@ -462,6 +459,21 @@ namespace Repo.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("ShoppingCartShoppingCartItem", b =>
+                {
+                    b.Property<int>("ShoppingCartItemsID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ShoppingCartUsersID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ShoppingCartItemsID", "ShoppingCartUsersID");
+
+                    b.HasIndex("ShoppingCartUsersID");
+
+                    b.ToTable("ShoppingCartShoppingCartItem");
+                });
+
             modelBuilder.Entity("Data.Entities.Address.Address", b =>
                 {
                     b.HasOne("Data.Entities.Address.Country", "Country")
@@ -514,19 +526,11 @@ namespace Repo.Migrations
                 {
                     b.HasOne("Data.Entities.Shop.Product", "Product")
                         .WithOne("ShoppingCartItem")
-                        .HasForeignKey("Data.Entities.Shop.ShoppingCartItem", "ProductID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Data.Entities.Shop.ShoppingCart", "ShoppingCart")
-                        .WithMany("ShoppingCartItems")
-                        .HasForeignKey("ShoppingCartId")
+                        .HasForeignKey("Data.Entities.Shop.ShoppingCartItem", "ProductItemID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Product");
-
-                    b.Navigation("ShoppingCart");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -580,6 +584,21 @@ namespace Repo.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ShoppingCartShoppingCartItem", b =>
+                {
+                    b.HasOne("Data.Entities.Shop.ShoppingCartItem", null)
+                        .WithMany()
+                        .HasForeignKey("ShoppingCartItemsID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Entities.Shop.ShoppingCart", null)
+                        .WithMany()
+                        .HasForeignKey("ShoppingCartUsersID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Data.Entities.Address.Address", b =>
                 {
                     b.Navigation("UsersAddresses");
@@ -593,11 +612,6 @@ namespace Repo.Migrations
             modelBuilder.Entity("Data.Entities.Shop.Product", b =>
                 {
                     b.Navigation("ShoppingCartItem");
-                });
-
-            modelBuilder.Entity("Data.Entities.Shop.ShoppingCart", b =>
-                {
-                    b.Navigation("ShoppingCartItems");
                 });
 
             modelBuilder.Entity("Data.Entities.User.AppUser", b =>
