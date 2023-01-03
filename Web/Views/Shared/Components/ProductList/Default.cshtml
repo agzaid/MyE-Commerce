@@ -42,7 +42,24 @@
     function AddingItem(id) {
         debugger;
         alert(id);
-        $("#cartIcon").css("display", "none");
+        $("#badge").html("3");
+        AjaxCall(id);
+    }
+    function AjaxCall(id){
+        $.ajax({
+            url: 'cart/addtocart',
+            type: 'POST',
+            data: {
+                id: id
+            },
+            dataType: 'json',
+            success: function (data) {
+                alert('Data: ' + data);
+            },
+            error: function (request, error) {
+                alert("Request: " + JSON.stringify(request));
+            }
+        });
     }
         
 </script>

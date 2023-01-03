@@ -8,7 +8,7 @@ namespace Data.Entities.Shop
 {
     public class ShoppingCartItem : BaseEntity
     {
-        public int Qauantity { get; set; }
+        public int Quantity { get; set; }
 
         
         #region Navigation Property

@@ -48,6 +48,7 @@ namespace Repo
             modelbuilder.MapCategory();
             modelbuilder.MapAddress();
             modelbuilder.MapUsersAddress();
+            //modelbuilder.MapShoppingCart();
             //modelbuilder.MapCustomer();
             //modelbuilder.MapOrder();
             //modelbuilder.MapOrderDetails();
