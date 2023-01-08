@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repo;
 
@@ -11,9 +12,10 @@ using Repo;
 namespace Repo.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230104092538_removedRelationFromShoppingCart_AspUsers")]
+    partial class removedRelationFromShoppingCart_AspUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,7 +66,7 @@ namespace Repo.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("Address", (string)null);
+                    b.ToTable("Address");
                 });
 
             modelBuilder.Entity("Data.Entities.Address.Country", b =>
@@ -86,7 +88,7 @@ namespace Repo.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Country", (string)null);
+                    b.ToTable("Country");
                 });
 
             modelBuilder.Entity("Data.Entities.Address.UserAddress", b =>
@@ -104,7 +106,7 @@ namespace Repo.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("UsersAddresses", (string)null);
+                    b.ToTable("UsersAddresses");
                 });
 
             modelBuilder.Entity("Data.Entities.Shop.Category", b =>
@@ -135,7 +137,7 @@ namespace Repo.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Category", (string)null);
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("Data.Entities.Shop.Product", b =>
@@ -183,7 +185,7 @@ namespace Repo.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Product", (string)null);
+                    b.ToTable("Product");
                 });
 
             modelBuilder.Entity("Data.Entities.Shop.ShoppingCart", b =>
@@ -208,7 +210,7 @@ namespace Repo.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ShoppingCart", (string)null);
+                    b.ToTable("ShoppingCart");
                 });
 
             modelBuilder.Entity("Data.Entities.Shop.ShoppingCartItem", b =>
@@ -241,7 +243,7 @@ namespace Repo.Migrations
 
                     b.HasIndex("ShoppingCartId");
 
-                    b.ToTable("ShoppingCartItem", (string)null);
+                    b.ToTable("ShoppingCartItem");
                 });
 
             modelBuilder.Entity("Data.Entities.User.AppUser", b =>

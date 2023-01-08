@@ -14,7 +14,10 @@ namespace Data.Mapping
     {
         public static void MapUser(this ModelBuilder modelBuilder)
         {
+            //to make phone number unique in column
+            //modelBuilder.Entity<AppUser>().HasIndex(x => new { x.PhoneNumber }).IsUnique();
             //modelBuilder.Entity<AppUser>().HasMany(s=>s.UsersAddresses).WithOne(f=>f.AppUser);
+
             //modelBuilder.Entity<AppUser>().HasMany(s=>s.ShoppingCarts).WithOne(f=>f.AppUser).HasForeignKey(s=>s.AppUserId);
             //modelBuilder.Entity<AppUser>().HasMany(u => u.ShoppingCarts).with().HasForeignKey(h => h.appus);
         }
@@ -43,7 +46,7 @@ namespace Data.Mapping
         public static void MapShoppingCart(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ShoppingCart>().HasKey(s => s.ID);
-            modelBuilder.Entity<ShoppingCart>().HasOne(s => s.AppUser).WithMany(s => s.ShoppingCarts).HasForeignKey(s => s.AppUserId).OnDelete(DeleteBehavior.Cascade); ;
+            //modelBuilder.Entity<ShoppingCart>().HasOne(s => s.AppUser).WithMany(s => s.ShoppingCarts).HasForeignKey(s => s.AppUserId).OnDelete(DeleteBehavior.Cascade); ;
         }
 
 

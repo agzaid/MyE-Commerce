@@ -25,27 +25,8 @@ builder.Services.AddDbContext<ApplicationDBContext>(
 });
 builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDBContext>()
     .AddDefaultTokenProviders();
-builder.Services.Configure<IdentityOptions>(options =>
-{
-    //options.Password.RequiredLength = 3;
-    options.Password.RequireDigit= true;
-    options.Password.RequireLowercase= false;
-    options.Password.RequireNonAlphanumeric= false;
-    options.Password.RequireUppercase= false;
 
-    options.SignIn.RequireConfirmedPhoneNumber= false;
-    options.SignIn.RequireConfirmedEmail= false;
-
-});
-builder.Services.ConfigureApplicationCookie(option =>
-{
-    option.LoginPath = "/Identity/Login";
-    option.AccessDeniedPath = "/Identity/AccessDenied";
-    option.LogoutPath = "/Identity/Logout";
-    option.ExpireTimeSpan= TimeSpan.FromDays(1);
-});
-
-//builder.Services.Configure<>
+builder.Services.IdentityConfiguration();
 
 //builder.Services.AddSingleton<LocService>();
 builder.Services.AddLocalization(opt => opt.ResourcesPath = "Resources");
@@ -59,7 +40,10 @@ builder.Services.AddMvc().AddViewLocalization()
         };
     });
 
-builder.Services.LocalizationOptions();
+builder.Services
+        .LocalizationOptions()
+        .InjectServices();
+
 //builder.Services.Configure<RequestLocalizationOptions>(
 //        options =>
 //        {
@@ -85,7 +69,7 @@ await builder.Services.AddBackOfficeAppServicesConfiguration("KAJ.Web.BackOffice
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
-builder.Services.InjectServices();
+//builder.Services.InjectServices();
 
 var app = builder.Build();
 

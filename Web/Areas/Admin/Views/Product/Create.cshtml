@@ -303,7 +303,7 @@
                                     <label class="required form-label" asp-for="Quantity"></label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input asp-for="Quantity" class="form-control mb-2" placeholder="Product price" value="" />
+                                    <input asp-for="Quantity" class="form-control mb-2" placeholder="Quantity" value="" />
                                     <!--end::Input-->
                                     <!--begin::Description-->
                                     <span asp-validation-for="Quantity" class="text-danger"></span>
@@ -321,7 +321,7 @@
             <!--end::Tab content-->
             <div class="d-flex justify-content-end">
                 <!--begin::Button-->
-                <a href="products.html" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">Cancel</a>
+                <a asp-action="index" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">Cancel</a>
                 <!--end::Button-->
                 <!--begin::Button-->
                 <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-primary">

@@ -13,7 +13,7 @@ namespace Data.Entities.Shop
 
         #region Navigation Property
         public string AppUserId { get; set; }
-        public AppUser AppUser { get; set; }
+        //public AppUser AppUser { get; set; }
         public List<ShoppingCartItem> ShoppingCartItems { get; set; } = new();
 
         #endregion

@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Services.Shop;
 using Services.Shop.CategoryRepo;
+using System.Net;
 using System.Security.Claims;
+using Services.Injection;
 
 namespace Web.Controllers
 {
@@ -28,13 +30,14 @@ namespace Web.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId == null)
             {
-                userId = "AnonymousUser";
+                //"10.243.2.49"
+                string IPAddress = CommonMethod.GetIPAddress();
+                userId = string.Join('_', "AnonymousUser", IPAddress);
             }
 
             var product = await _productService.GetOne(s => s.ID == id, null);
             var shoppingCart = new ShoppingCart()
             {
-                ID = 0,
                 AppUserId = userId,
                 StatusOfCompletion = ShoppingCartStatus.PendingForPreview.ToString(),
                 CreatedDate= DateTime.UtcNow,
@@ -52,7 +55,9 @@ namespace Web.Controllers
 
              _cartService.Insert(shoppingCart);
 
-            return View();
+            return ViewComponent("MyViewComponent");
         }
+
+       
     }
 }
