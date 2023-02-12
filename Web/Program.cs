@@ -44,6 +44,7 @@ builder.Services
         .LocalizationOptions()
         .InjectServices();
 
+#region RequestLocalizationOptions
 //builder.Services.Configure<RequestLocalizationOptions>(
 //        options =>
 //        {
@@ -59,6 +60,7 @@ builder.Services
 
 //            options.RequestCultureProviders.Insert(0, new QueryStringRequestCultureProvider());
 //        });
+#endregion
 
 builder.Services.Configure<RouteOptions>(options =>
 {
@@ -72,7 +74,6 @@ builder.Services.AddAutoMapper(typeof(Program).Assembly);
 //builder.Services.InjectServices();
 
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
