@@ -48,6 +48,11 @@ namespace Data.Mapping
             modelBuilder.Entity<ShoppingCart>().HasKey(s => s.ID);
             //modelBuilder.Entity<ShoppingCart>().HasOne(s => s.AppUser).WithMany(s => s.ShoppingCarts).HasForeignKey(s => s.AppUserId).OnDelete(DeleteBehavior.Cascade); ;
         }
+        public static void MapCustomer(this ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Customer>().HasKey(s => s.ID);
+            //modelBuilder.Entity<ShoppingCart>().HasOne(s => s.AppUser).WithMany(s => s.ShoppingCarts).HasForeignKey(s => s.AppUserId).OnDelete(DeleteBehavior.Cascade); ;
+        }
 
 
     }

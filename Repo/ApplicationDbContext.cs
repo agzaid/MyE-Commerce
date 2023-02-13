@@ -34,12 +34,12 @@ namespace Repo
         public DbSet<Category> Category { get; set; }
         public DbSet<ShoppingCart> ShoppingCart { get; set; }
         public DbSet<ShoppingCartItem> ShoppingCartItem { get; set; }
+        public DbSet<Customer> Customer { get; set; }
 
         //public DbSet<Order> Product { get; set; }
         //public DbSet<Order> Order { get; set; }
         //public DbSet<OrderDetails> OrderDetails { get; set; }
 
-        //public DbSet<Customer> Customer { get; set; }
         protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
             base.OnModelCreating(modelbuilder);
@@ -49,7 +49,7 @@ namespace Repo
             modelbuilder.MapAddress();
             modelbuilder.MapUsersAddress();
             modelbuilder.MapShoppingCart();
-            //modelbuilder.MapCustomer();
+            modelbuilder.MapCustomer();
             //modelbuilder.MapOrder();
             //modelbuilder.MapOrderDetails();
         }
