@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Repo.Repository;
 using Services.Shop;
 using Services.Shop.CategoryRepo;
+using Services.Shop.CustomerRepo;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -45,6 +46,7 @@ namespace Services.Injection
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICartService, CartService>();
+            services.AddScoped<ICustomerService, CustomerService>();
 
             return services;
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.Entities.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,7 @@ namespace Data.Entities.User
         public string SecondPhoneNumber { get; set; }
         public int OrdersRequested { get; set; }
         public int CashCollected { get; set; }
+        public RecordStatus Status{ get; set; }
 
         #region Navigation Properties
         // public virtual List<Order> Orders { get; set; } = new();

@@ -75,6 +75,7 @@ $(document).ready(function () {
         var o = { "data": c[0].toLowerCase() + c.slice(1), "name": c, "autowidth": true };
         columnsRendered.push(o);
     }
+
     function myToastr(message) {
         switch (message) {
             case "Create":
