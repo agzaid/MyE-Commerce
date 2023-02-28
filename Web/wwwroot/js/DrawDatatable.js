@@ -21,6 +21,8 @@ $(document).ready(function () {
 
     myToastr(AGelemMessage);
 
+    highlighColumn(AGelemID);
+
     $("#" + AGelemID).dataTable({
         "serverSide": true,
         "filter": true,
@@ -29,43 +31,59 @@ $(document).ready(function () {
             "type": "POST",
             "datatype": "json"
         },
-        "columnDefs": [{
-            "targets": [0],
-            "visible": false,
-            "searchable": false
-        },
-        {
-            targets: 1,
-            data: name,
-            orderable: true,
-            className: 'text-start',
-            render: function (data, type, row) {
-                if (row.thumbnailImage) {
-                    return `<div class="d-flex align-items-center"><a class="symbol symbol-50px"><span class="symbol-label" style="background-image:url(` + row.thumbnailImage + `);"></span></a><div class="ms-5"><a href="` + urlEdit + `/` + row.id + `"class="text-gray-800 text-hover-primary fs-5 fw-bolder" data-kt-ecommerce-productfilter="product_name">` + row.name + `</a></div></div > `
-                } else {
-                    return '<a href="' + '/' + row.id + '" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kaj-filter="item_name">' + row.name + '</a><input type="hidden" data-kaj-filter="item_id" value="' + row.id + '">';;
+        "columnDefs": [
+            {
+                "targets": 0,
+                "visible": false,
+                "searchable": false,
+
+            },
+            {
+                "targets": "multipleRows",
+                data: name,
+                render: function (data, type, row) {
+                    if (data.includes(" ")) {
+                        var multiRows = [];
+                        var c = data.split(" ");
+                        for (var i = 0; i < c.length; i++) {
+                            multiRows.push(c[i] + '<br>');
+                        }
+                        return multiRows;
+                    }
                 }
             },
-        },
-        {
-            targets: -2,
-            data: null,
-            orderable: false,
-            className: 'text-end',
-            render: function (data, type, row) {
-                switch (data) {
-                    case 1:
-                        return '<div class="badge badge-light-success">' + 'Published' + '</div>';
-                    case 2:
-                        return '<div class="badge badge-light-primary">' + 'InActive' + '</div>';
-                    case 3:
-                        return '<div class="badge badge-light-danger">' + 'Deleted' + '</div>';
-                    default:
-                        return '';
-                }
+            {
+                targets: 1,
+                data: name,
+                orderable: true,
+                className: 'text-start',
+                render: function (data, type, row) {
+                    if (row.thumbnailImage) {
+                        return `<div class="d-flex align-items-center"><a class="symbol symbol-50px"><span class="symbol-label" style="background-image:url(` + row.thumbnailImage + `);"></span></a><div class="ms-5"><a href="` + urlEdit + `/` + row.id + `"class="text-gray-800 text-hover-primary fs-5 fw-bolder" data-kt-ecommerce-productfilter="product_name">` + row.name + `</a></div></div > `
+                    } else {
+                        return '<a href="' + '/' + row.id + '" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kaj-filter="item_name">' + row.name + '</a><input type="hidden" data-kaj-filter="item_id" value="' + row.id + '">';;
+                    }
+                },
+            },
+            {
+                targets: -2,
+                data: null,
+                orderable: false,
+                className: 'text-end',
+                render: function (data, type, row) {
+                    switch (data) {
+                        case 1:
+                            return '<div class="badge badge-light-success">' + 'Published' + '</div>';
+                        case 2:
+                            return '<div class="badge badge-light-primary">' + 'InActive' + '</div>';
+                        case 3:
+                            return '<div class="badge badge-light-danger">' + 'Deleted' + '</div>';
+                        default:
+                            return '';
+                    }
 
+                }
             }
-        }
         ],
         "columns": columnsRendered
     });
@@ -97,6 +115,15 @@ $(document).ready(function () {
             default:
                 toastr.info('Empty');
         }
+    }
+
+    function highlighColumn(id) {
+        $(id + 'tbody').on('mouseenter', 'td', function () {
+            var colIdx = table.cell(this).index().column;
+
+            $(table.cells().nodes()).removeClass('highlight');
+            $(table.column(colIdx).nodes()).addClass('highlight');
+        });
     }
 
 });
