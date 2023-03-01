@@ -10,6 +10,9 @@ using Web.Areas.Admin.Models.Shop.product;
 using Services.Shop.CustomerRepo;
 using Data.Entities.User;
 using Web.Areas.Admin.Models.Users;
+using Data.Entities.Enums;
+using Web.Areas.Admin.Models.Shop;
+using Services.Injection;
 
 namespace Web.Areas.Admin.Controllers
 {
@@ -46,7 +49,34 @@ namespace Web.Areas.Admin.Controllers
 
             return View();
         }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            var customer = new IndexCustomersViewModel();
+            
+            customer.Status = RecordStatus.Published;
+            return View(customer);
+        }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateAsync(CreateProductViewModel model)
+        {
+            var Message = new List<string>();
+            if (ModelState.IsValid)
+            {
+                var customer = new Customer()
+                {
+                    
+                    CreatedDate = DateTime.UtcNow,
+                    ModifiedDate = DateTime.UtcNow,
+                    Status = model.Status,
+                };
+                _customerService.Insert(customer);
+                Message.Add("Create");
+            }
+            return RedirectToAction("index", new { message = Message });
+        }
 
 
 

@@ -1,0 +1,308 @@
+﻿@model Web.Areas.Admin.Models.Users.IndexCustomersViewModel
+
+@section Header{
+    @*<link href="~/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />*@
+    <link href="~/assets/js/Select2ToTree/select2totree.css" rel="stylesheet" type="text/css" />
+}
+
+@TempData["alertNotification"]
+
+@section Breadcrumb{
+    <div class="page-title d-flex flex-column me-5 ms-lg-15">
+        <!--begin::Title-->
+        <h1 class="d-flex flex-column text-dark fw-bolder fs-2 mb-0">
+            Products
+        </h1>
+        <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 pt-1">
+            <li class="breadcrumb-item text-muted">
+                <a asp-action="Index" asp-controller="Home" class="text-muted text-hover-primary">
+                    Home
+                </a>
+            </li>
+            <li class="breadcrumb-item">
+                <span class="bullet bg-gray-300 w-5px h-2px"></span>
+            </li>
+            <li class="breadcrumb-item text-muted">
+                eCommerce
+            </li>
+            <li class="breadcrumb-item">
+                <span class="bullet bg-gray-300 w-5px h-2px"></span>
+            </li>
+            <li class="breadcrumb-item text-muted">
+                <a asp-action="Index" asp-controller="Product" class="text-muted text-hover-primary">
+                    Products
+                </a>
+            </li>
+            <li class="breadcrumb-item">
+                <span class="bullet bg-gray-300 w-5px h-2px"></span>
+            </li>
+            <li class="breadcrumb-item text-muted">
+                AddProduct
+            </li>
+        </ul>
+    </div>
+}
+<form id="productForm" method="post" asp-action="create" asp-controller="Customer" enctype="multipart/form-data" class="form d-flex flex-column flex-lg-row" data-kt-redirect="products.html">
+    <!--begin::Aside column-->
+    <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
+        <!--begin::Thumbnail settings-->
+        <!--end::Thumbnail settings-->
+        <!--begin::Status-->
+        <div class="card card-flush py-4">
+            <!--begin::Card header-->
+            <div class="card-header">
+                <!--begin::Card title-->
+                <div class="card-title">
+                    <h2>Status</h2>
+                </div>
+                <!--end::Card title-->
+                <!--begin::Card toolbar-->
+                <div class="card-toolbar">
+                    <div class="rounded-circle bg-success w-15px h-15px" id="kt_ecommerce_add_product_status"></div>
+                </div>
+                <!--begin::Card toolbar-->
+            </div>
+            <!--end::Card header-->
+            <!--begin::Card body-->
+            <div class="card-body pt-0">
+                <!--begin::Select2-->
+                <select asp-for="Status" asp-items="@Model.ListOfStatus" class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Status Description"></select>
+                <!--end::Select2-->
+                <!--begin::Description-->
+                <div class="text-muted fs-7">
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+                <!--end::Description-->
+            </div>
+            <!--end::Card body-->
+        </div>
+        <!--end::Status-->
+        <!--begin::Category & tags-->
+        <div class="card card-flush py-4">
+            <!--begin::Card header-->
+            <!--begin::Card header-->
+            <div class="card-header">
+                <div class="card-title">
+                    <h2>Previous Orders Requested</h2>
+                </div>
+            </div>
+            <!--end::Card header-->
+            <!--begin::Card body-->
+            <div class="card-body pt-0">
+                <!--begin::Input group-->
+                <div class="mb-10 fv-row">
+                    <!--begin::Label-->
+                    <label class="required form-label">Number Of Orders</label>
+                    <!--end::Label-->
+                    <!--begin::Input-->
+                    <input asp-for="OrdersRequested" class="form-control mb-2" placeholder="" value="" />
+                    <!--end::Input-->
+                    <!--begin::Description-->
+                    <span asp-validation-for="OrdersRequested" class="text-danger"></span>
+                    <!--end::Description-->
+                </div>
+                <!--end::Input group-->
+            </div>
+            <!--end::Card header-->
+           
+            <!--end::Card body-->
+        </div>
+        <div class="card card-flush py-4">
+            <!--begin::Card header-->
+             <!--begin::Card header-->
+            <div class="card-header">
+                <div class="card-title">
+                    <h2>Cash Collected</h2>
+                </div>
+            </div>
+            <!--end::Card header-->
+            <!--begin::Card body-->
+            <div class="card-body pt-0">
+                <!--begin::Input group-->
+                <div class="mb-10 fv-row">
+                    <!--begin::Label-->
+                    <label class="required form-label">Cash Collected</label>
+                    <!--end::Label-->
+                    <!--begin::Input-->
+                    <input asp-for="CashCollected" class="form-control mb-2" placeholder="" value="" />
+                    <!--end::Input-->
+                    <!--begin::Description-->
+                    <span asp-validation-for="CashCollected" class="text-danger"></span>
+                    <!--end::Description-->
+                </div>
+                <!--end::Input group-->
+            </div>
+            <!--end::Card header-->
+           
+            <!--end::Card body-->
+        </div>
+        <!--end::Category & tags-->
+    </div>
+    <!--end::Aside column-->
+    <!--begin::Main column-->
+    <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
+        <!--begin:::Tabs-->
+        <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-bold mb-n2">
+            <!--begin:::Tab item-->
+            <li class="nav-item">
+                <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab" href="#kt_ecommerce_add_product_english">Engilsh</a>
+            </li>
+            <!--end:::Tab item-->
+        </ul>
+        <!--end:::Tabs-->
+        <!--begin::Tab content-->
+        <div class="tab-content">
+            <!--begin::Tab pane-->
+            <div class="tab-pane fade show active" id="kt_ecommerce_add_product_english" role="tab-panel">
+                <div class="d-flex flex-column gap-7 gap-lg-10">
+                    <!--begin::General options-->
+                    <div class="card card-flush py-4">
+                        <!--begin::Card header-->
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h2>General</h2>
+                            </div>
+                        </div>
+                        <!--end::Card header-->
+                        <!--begin::Card body-->
+                        <div class="card-body pt-0">
+                            <!--begin::Input group-->
+                            <div class="mb-10 fv-row">
+                                <!--begin::Label-->
+                                <label class="required form-label" asp-for="Name"></label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <input type="text" asp-for="Name" class="form-control mb-2" placeholder="Customer name" />
+                                <!--end::Input-->
+                                <!--begin::Description-->
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                                <!--end::Description-->
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="mb-10 fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-invalid">
+                                <!--begin::Label-->
+                                <label asp-for="Address" class="form-label"></label>
+                                <!--end::Label-->
+                                <!--begin::Editor-->
+                                <input type="text" asp-for="Address" class="form-control mb-2" placeholder="Address" />
+                                <!--end::Input-->
+                                <!--begin::Description-->
+                                <span asp-validation-for="Address" class="text-danger"></span>
+
+                                <div id="lang-ShortDescription">
+                                    @Html.Raw(Model.Address)
+                                </div>
+                                <!--end::Editor-->
+
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="mb-10 fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-invalid">
+                                <!--begin::Label-->
+                                <label asp-for="City" class="form-label"></label>
+                                <!--end::Label-->
+                                <!--begin::Editor-->
+                                <input type="text" asp-for="City" class="form-control mb-2" placeholder="City" />
+                                <!--end::Input-->
+                                <!--begin::Description-->
+                                <span asp-validation-for="City" class="text-danger"></span>
+
+                                <div id="lang-ShortDescription">
+                                    @Html.Raw(Model.City)
+                                </div>
+                                <!--end::Editor-->
+
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="mb-10 fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-invalid col-4">
+                                <!--begin::Label-->
+                                <label asp-for="PhoneNumber" class="required form-label"></label>
+                                <!--end::Label-->
+                                <!--begin::Editor-->
+                                <input type="number" asp-for="PhoneNumber" class="form-control mb-2" placeholder="" />
+                                <!--end::Input-->
+                                <!--begin::Description-->
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+
+                                <div id="lang-ShortDescription">
+                                    @Html.Raw(Model.PhoneNumber)
+                                </div>
+                                <!--end::Editor-->
+                                <!--begin::Label-->
+                                <label asp-for=" SecondPhoneNumber" class="form-label"></label>
+                                <!--end::Label-->
+                                <!--begin::Editor-->
+                                <input type="number" asp-for="SecondPhoneNumber" class="form-control mb-2" placeholder="" />
+                                <!--end::Input-->
+                                <!--begin::Description-->
+                                <span asp-validation-for="SecondPhoneNumber" class="text-danger"></span>
+
+                                <div id="lang-ShortDescription">
+                                    @Html.Raw(Model.SecondPhoneNumber)
+                                </div>
+                                <!--end::Editor-->
+
+                            </div>
+                            <!--end::Input group-->
+
+                        </div>
+                        <!--end::Card header-->
+                    </div>
+                    <!--end::General options-->
+                    <!--begin::Media-->
+                    <!--end::Media-->
+                    <!--begin::Pricing-->
+                    <div class="card card-flush py-4">
+                        <!--begin::Card header-->
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h2>Here will be for location integration</h2>
+                            </div>
+                        </div>
+                        <!--end::Card header-->
+                        <!--begin::Card body-->
+                        <div class="card-body pt-0">
+                            <!--begin::Input group-->
+                            <div class="mb-10 fv-row">
+                                <!--begin::Label-->
+                                <label class="required form-label">Number Of Orders</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <input asp-for="OrdersRequested" class="form-control mb-2" placeholder="" value="" />
+                                <!--end::Input-->
+                                <!--begin::Description-->
+                                <span asp-validation-for="OrdersRequested" class="text-danger"></span>
+                                <!--end::Description-->
+                            </div>
+                            <!--end::Input group-->
+                        </div>
+                        <!--end::Card header-->
+                        <!--begin::Card header-->
+                       
+                        <!--end::Card header-->
+                    </div>
+                    <!--end::Pricing-->
+                </div>
+            </div>
+            <!--end::Tab pane-->
+        </div>
+        <!--end::Tab content-->
+        <div class="d-flex justify-content-end">
+            <!--begin::Button-->
+            <a asp-action="index" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">Cancel</a>
+            <!--end::Button-->
+            <!--begin::Button-->
+            <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-primary">
+                <span class="indicator-label">Save Changes</span>
+                <span class="indicator-progress">
+                    Please wait...
+                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+            </button>
+            <!--end::Button-->
+        </div>
+    </div>
+    <!--end::Main column-->
+</form>

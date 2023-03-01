@@ -27,7 +27,11 @@ namespace Web.Areas.Admin.Models.Users
         public string Address { get; set; }
         public string Location { get; set; }
         public string City { get; set; }
+
+        [Display(Name = "First Phone Number")]
         public string PhoneNumber { get; set; }
+
+        [Display(Name = "First Phone Number")]
         public string SecondPhoneNumber { get; set; }
         public int OrdersRequested { get; set; }
         public int CashCollected { get; set; }
