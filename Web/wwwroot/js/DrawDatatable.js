@@ -15,12 +15,14 @@ $(document).ready(function () {
     c.forEach(CreateColumn);
 
     columnsRendered.push({
-        "render": function (data, type, row) { return `<a href="` + urlEdit + `/` + row.id + `" class="btn btn-warning">Edit</a> <a class="btn btn-danger" href="` + urlDelete + `/` + row.id + `">Delete</a>` },
+        "render": function (data, type, row) { return `<a href="` + urlEdit + `/` + row.id + `" class="btn btn-warning" title="Edit"><i class="bi bi-pencil-square"></i></a> <a class="btn btn-danger" title="Delete" href="` + urlDelete + `/` + row.id + `"><i class="fa fa-trash" aria-hidden="true"></i></a>` },
         "orderable": false
     });
 
+    //for calling toastr message
     myToastr(AGelemMessage);
 
+    //for highlighting columns on mouse enter but not working yet
     highlighColumn(AGelemID);
 
     $("#" + AGelemID).dataTable({
@@ -36,9 +38,9 @@ $(document).ready(function () {
                 "targets": 0,
                 "visible": false,
                 "searchable": false,
-
             },
             {
+                //for putting multiple rows in one column using class name of multipleRows and adding that to td element
                 "targets": "multipleRows",
                 data: name,
                 render: function (data, type, row) {
@@ -50,7 +52,12 @@ $(document).ready(function () {
                         }
                         return multiRows;
                     }
-                }
+                },
+                //createdCell: function (td, cellData, rowData, row, col) {
+                //    if (cellData < 1) {
+                //        $(td).addClass("text-center")
+                //    }
+                //}
             },
             {
                 targets: 1,
@@ -68,7 +75,7 @@ $(document).ready(function () {
             {
                 targets: -2,
                 data: null,
-                orderable: false,
+                orderable: true,
                 className: 'text-end',
                 render: function (data, type, row) {
                     switch (data) {

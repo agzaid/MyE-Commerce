@@ -31,20 +31,20 @@
                 }*@
 
               @*added mixed class name for targeting specific column with class name*@
-                @*<th class="mixed">ID</th>*@
+                
                 <th>ID</th>
                 <th>Name</th>
-                <th>Address</th>
+                <th class ="multipleRows">Address</th>
                 <th class="multipleRows">City</th>
-                <th>PhoneNumber</th>
-                <th>SecondPhoneNumber</th>
+                <th class="multipleRows">PhoneNumber</th>
+                @*<th>SecondPhoneNumber</th>*@
                 <th>OrdersRequested</th>
                 <th>CashCollected</th>
                 <th>Status</th>
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody class="fw-bold">
+        <tbody class="fw-bold text-center">
         </tbody>
         <tfoot>
             <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
@@ -53,7 +53,7 @@
                 <th>Address</th>
                 <th>City</th>
                 <th>PhoneNumber</th>
-                <th>SecondPhoneNumber</th>
+                @*<th>SecondPhoneNumber</th>*@
                 <th>OrdersRequested</th>
                 <th>CashCollected</th>
                 <th>Status</th>

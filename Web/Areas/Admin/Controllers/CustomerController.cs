@@ -29,14 +29,14 @@ namespace Web.Areas.Admin.Controllers
                 ViewBag.Message = message[0];
             }
             var customer = _customerService.GetMany(s => true, null);
-            
+
             var columns = new List<string>()
             {
                 "Name",
                 "Address",
                 "City",
                 "PhoneNumber",
-                "SecondPhoneNumber",
+                //"SecondPhoneNumber",
                 "OrdersRequested",
                 "CashCollected",
                 "Status",
@@ -76,20 +76,20 @@ namespace Web.Areas.Admin.Controllers
             //for searching
             IEnumerable<Customer> customers = _customerService.GetMany(s => true, null)
                 .Where(m => string.IsNullOrEmpty(searchValue) ? true : (m.Name.Contains(searchValue) || m.Address.Contains(searchValue) || m.City.ToString().Contains(searchValue)));
-            
+
             var model = customers.Select(s => new IndexCustomersViewModel()
             {
                 ID = s.ID,
                 Name = s.Name,
-                Address= s.Address,
-                City= s.City,
-               // Location= s.Location,
-                PhoneNumber= s.PhoneNumber,
-                SecondPhoneNumber= s.SecondPhoneNumber,
-                OrdersRequested= s.OrdersRequested,
+                Address = s.Address,
+                City = s.City,
+                // Location= s.Location,
+                PhoneNumber = s.PhoneNumber + " " + s.SecondPhoneNumber,
+                //SecondPhoneNumber = s.SecondPhoneNumber,
+                OrdersRequested = s.OrdersRequested,
                 Status = s.Status,
-                CashCollected= s.CashCollected,
-               
+                CashCollected = s.CashCollected,
+
             });
             //for sorting
             //IQueryable<Product> queryProducts = (IQueryable<Product>)products;
