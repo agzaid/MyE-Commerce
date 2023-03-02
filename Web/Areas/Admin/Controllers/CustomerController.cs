@@ -21,9 +21,12 @@ namespace Web.Areas.Admin.Controllers
     public class CustomerController : Controller
     {
         private readonly ICustomerService _customerService;
-        public CustomerController(ICustomerService customerService)
+        private readonly IMapper _mapper;
+
+        public CustomerController(ICustomerService customerService, IMapper mapper)
         {
             _customerService = customerService;
+            _mapper = mapper;
         }
         public IActionResult Index(List<string> message)
         {
@@ -31,7 +34,7 @@ namespace Web.Areas.Admin.Controllers
             {
                 ViewBag.Message = message[0];
             }
-            var customer = _customerService.GetMany(s => true, null);
+            //var customer = _customerService.GetMany(s => true, null);
 
             var columns = new List<string>()
             {
@@ -53,30 +56,108 @@ namespace Web.Areas.Admin.Controllers
         public IActionResult Create()
         {
             var customer = new IndexCustomersViewModel();
-            
+
             customer.Status = RecordStatus.Published;
             return View(customer);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateAsync(CreateProductViewModel model)
+        public async Task<IActionResult> CreateAsync(IndexCustomersViewModel model)
         {
             var Message = new List<string>();
+
             if (ModelState.IsValid)
             {
                 var customer = new Customer()
                 {
-                    
-                    CreatedDate = DateTime.UtcNow,
-                    ModifiedDate = DateTime.UtcNow,
+                    Name = model.Name,
+                    Address = model.Address,
+                    CashCollected = model.CashCollected,
+                    City = model.City,
+                    Location = model.Location,
+                    OrdersRequested = model.OrdersRequested,
+                    PhoneNumber = model.PhoneNumber,
+                    SecondPhoneNumber = model.SecondPhoneNumber,
                     Status = model.Status,
+                    CreatedDate = DateTime.UtcNow,
+                    ModifiedDate = DateTime.UtcNow
                 };
                 _customerService.Insert(customer);
                 Message.Add("Create");
             }
             return RedirectToAction("index", new { message = Message });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var model = new IndexCustomersViewModel();
+            var customer = await _customerService.GetOne(s => s.ID == id, null);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            var customerViewModel = _mapper.Map<IndexCustomersViewModel>(customer);
+
+            return View(customerViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditAsync(IndexCustomersViewModel model)
+        {
+            var Message = new List<string>();
+            if (ModelState.IsValid)
+            {
+                var oldModel = await _customerService.GetOne(s => s.ID == model.ID, null);
+                if (oldModel == null) { return NotFound(); }
+
+                var customerViewModel = _mapper.Map<Customer>(oldModel);
+                customerViewModel.Name = model.Name;
+                customerViewModel.Status = model.Status;
+                customerViewModel.PhoneNumber = model.PhoneNumber;
+                customerViewModel.SecondPhoneNumber = model.SecondPhoneNumber;
+                customerViewModel.Address = model.Address;
+                customerViewModel.City = model.City;
+                customerViewModel.CashCollected = model.CashCollected;
+                customerViewModel.Location = model.Location;
+                customerViewModel.ModifiedDate = DateTime.UtcNow;
+
+                _customerService.Update(customerViewModel);
+
+                Message.Add("Edited");
+                return RedirectToAction("Index", new { message = Message });
+            }
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var Message = new List<string>();
+            var customer = await _customerService.GetOne(s => s.ID == id, null);
+
+            if (customer is not null)
+            {
+                //await _customerService.Delete(id);
+
+                customer.Status = RecordStatus.Deleted;
+                _customerService.Update(customer);
+
+                Message.Add("DeleteTrue");
+                return RedirectToAction("Index", new { message = Message });
+            }
+
+            return RedirectToAction("Index", new { message = Message });
+        }
+
 
 
 
@@ -114,7 +195,7 @@ namespace Web.Areas.Admin.Controllers
                 Address = s.Address,
                 City = s.City,
                 // Location= s.Location,
-                PhoneNumber = s.PhoneNumber + " " + s.SecondPhoneNumber,
+                PhoneNumber = s.PhoneNumber + "," + s.SecondPhoneNumber,
                 //SecondPhoneNumber = s.SecondPhoneNumber,
                 OrdersRequested = s.OrdersRequested,
                 Status = s.Status,

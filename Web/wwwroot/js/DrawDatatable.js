@@ -12,6 +12,7 @@ $(document).ready(function () {
     var c = JSON.parse(AGelemColumns);
     var columnsRendered = [{ "data": "id", "name": "ID", "autowidth": true }];
 
+    $('.AG-data-table').css('cursor', 'pointer');
     c.forEach(CreateColumn);
 
     columnsRendered.push({
@@ -44,14 +45,15 @@ $(document).ready(function () {
                 "targets": "multipleRows",
                 data: name,
                 render: function (data, type, row) {
-                    if (data.includes(" ")) {
+                    if (data.includes(",")) {
                         var multiRows = [];
-                        var c = data.split(" ");
+                        var c = data.split(",");
                         for (var i = 0; i < c.length; i++) {
                             multiRows.push(c[i] + '<br>');
                         }
                         return multiRows;
-                    }
+                    } else
+                        return data;
                 },
                 //createdCell: function (td, cellData, rowData, row, col) {
                 //    if (cellData < 1) {

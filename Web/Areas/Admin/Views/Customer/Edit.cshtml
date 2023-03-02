@@ -31,12 +31,12 @@
                 <span class="bullet bg-gray-300 w-5px h-2px"></span>
             </li>
             <li class="breadcrumb-item text-muted">
-                AddCustomer
+                Edit Customer
             </li>
         </ul>
     </div>
 }
-<form id="productForm" method="post" asp-action="create" asp-controller="Customer" enctype="multipart/form-data" class="form d-flex flex-column flex-lg-row" data-kt-redirect="products.html">
+<form id="productForm" method="post" asp-action="Edit" asp-controller="Customer" enctype="multipart/form-data" class="form d-flex flex-column flex-lg-row" data-kt-redirect="products.html">
     <!--begin::Aside column-->
     <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
         <!--begin::Thumbnail settings-->
@@ -89,7 +89,7 @@
                     <label class="required form-label">Number Of Orders</label>
                     <!--end::Label-->
                     <!--begin::Input-->
-                    <input asp-for="OrdersRequested" class="form-control mb-2" placeholder="" value="" />
+                    <input asp-for="OrdersRequested" class="form-control mb-2" placeholder=""/>
                     <!--end::Input-->
                     <!--begin::Description-->
                     <span asp-validation-for="OrdersRequested" class="text-danger"></span>
@@ -98,12 +98,11 @@
                 <!--end::Input group-->
             </div>
             <!--end::Card header-->
-           
             <!--end::Card body-->
         </div>
         <div class="card card-flush py-4">
             <!--begin::Card header-->
-             <!--begin::Card header-->
+            <!--begin::Card header-->
             <div class="card-header">
                 <div class="card-title">
                     <h2>Cash Collected</h2>
@@ -118,7 +117,7 @@
                     <label class="required form-label">Cash Collected</label>
                     <!--end::Label-->
                     <!--begin::Input-->
-                    <input asp-for="CashCollected" class="form-control mb-2" placeholder="" value="" />
+                    <input asp-for="CashCollected" class="form-control mb-2" placeholder=""/>
                     <!--end::Input-->
                     <!--begin::Description-->
                     <span asp-validation-for="CashCollected" class="text-danger"></span>
@@ -127,7 +126,6 @@
                 <!--end::Input group-->
             </div>
             <!--end::Card header-->
-           
             <!--end::Card body-->
         </div>
         <!--end::Category & tags-->
@@ -183,10 +181,10 @@
                                 <!--end::Input-->
                                 <!--begin::Description-->
                                 <span asp-validation-for="Address" class="text-danger"></span>
-
+@*
                                 <div id="lang-ShortDescription">
                                     @Html.Raw(Model.Address)
-                                </div>
+                                </div>*@
                                 <!--end::Editor-->
 
                             </div>
@@ -201,10 +199,10 @@
                                 <!--end::Input-->
                                 <!--begin::Description-->
                                 <span asp-validation-for="City" class="text-danger"></span>
-
+@*
                                 <div id="lang-ShortDescription">
                                     @Html.Raw(Model.City)
-                                </div>
+                                </div>*@
                                 <!--end::Editor-->
 
                             </div>
@@ -219,23 +217,23 @@
                                 <!--end::Input-->
                                 <!--begin::Description-->
                                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-
+@*
                                 <div id="lang-ShortDescription">
                                     @Html.Raw(Model.PhoneNumber)
-                                </div>
+                                </div>*@
                                 <!--end::Editor-->
                                 <!--begin::Label-->
-                                <label asp-for=" SecondPhoneNumber" class="form-label"></label>
+                                <label asp-for=" SecondPhoneNumber" class="form-label mt-10"></label>
                                 <!--end::Label-->
                                 <!--begin::Editor-->
                                 <input type="number" asp-for="SecondPhoneNumber" class="form-control mb-2" placeholder="" />
                                 <!--end::Input-->
                                 <!--begin::Description-->
                                 <span asp-validation-for="SecondPhoneNumber" class="text-danger"></span>
-
+@*
                                 <div id="lang-ShortDescription">
                                     @Html.Raw(Model.SecondPhoneNumber)
-                                </div>
+                                </div>*@
                                 <!--end::Editor-->
 
                             </div>
@@ -264,7 +262,7 @@
                                 <label class="required form-label">Copy your location here</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
-                                <input asp-for="Location" class="form-control mb-2" placeholder="" value="" />
+                                <input asp-for="Location" class="form-control mb-2"/>
                                 <!--end::Input-->
                                 <!--begin::Description-->
                                 <span asp-validation-for="Location" class="text-danger"></span>
@@ -274,7 +272,6 @@
                         </div>
                         <!--end::Card header-->
                         <!--begin::Card header-->
-                       
                         <!--end::Card header-->
                     </div>
                     <!--end::Pricing-->

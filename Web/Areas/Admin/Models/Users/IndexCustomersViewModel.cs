@@ -31,7 +31,7 @@ namespace Web.Areas.Admin.Models.Users
         [Display(Name = "First Phone Number")]
         public string PhoneNumber { get; set; }
 
-        [Display(Name = "First Phone Number")]
+        [Display(Name = "Second Phone Number")]
         public string SecondPhoneNumber { get; set; }
         public int OrdersRequested { get; set; }
         public int CashCollected { get; set; }

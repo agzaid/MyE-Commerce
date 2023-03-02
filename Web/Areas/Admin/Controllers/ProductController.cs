@@ -36,8 +36,6 @@ namespace Web.Areas.Admin.Controllers
             }
             var products = _productService.GetMany(s => true, new List<string>() { "Category" });
 
-
-
             var columns = new List<string>()
             {
                 "Name",
@@ -91,6 +89,7 @@ namespace Web.Areas.Admin.Controllers
             }
             return RedirectToAction("index", new { message = Message });
         }
+
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
