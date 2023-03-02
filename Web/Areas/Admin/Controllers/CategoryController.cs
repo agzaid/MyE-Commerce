@@ -5,6 +5,7 @@ using Services.Injection;
 using Services.Shop.CategoryRepo;
 using System.Text.Json;
 using Web.Areas.Admin.Models.Shop.CategoryVM;
+using Data.Entities.Enums;
 
 namespace Web.Areas.Admin.Controllers
 {
@@ -42,6 +43,7 @@ namespace Web.Areas.Admin.Controllers
         public IActionResult Create()
         {
             var category = new CreateCategoryViewModel();
+            category.Status = RecordStatus.Published;
             return View(category);
         }
 
