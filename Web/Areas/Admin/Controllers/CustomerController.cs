@@ -72,6 +72,7 @@ namespace Web.Areas.Admin.Controllers
                 var customer = new Customer()
                 {
                     Name = model.Name,
+                    CompanionName = model.CompanionName,
                     Address = model.Address,
                     CashCollected = model.CashCollected,
                     City = model.City,
@@ -121,6 +122,7 @@ namespace Web.Areas.Admin.Controllers
 
                 var customerViewModel = _mapper.Map<Customer>(oldModel);
                 customerViewModel.Name = model.Name;
+                customerViewModel.CompanionName = model.CompanionName;
                 customerViewModel.Status = model.Status;
                 customerViewModel.PhoneNumber = model.PhoneNumber;
                 customerViewModel.SecondPhoneNumber = model.SecondPhoneNumber;
@@ -191,11 +193,11 @@ namespace Web.Areas.Admin.Controllers
             var model = customers.Select(s => new IndexCustomersViewModel()
             {
                 ID = s.ID,
-                Name = s.Name,
+                Name = s.Name + (s.CompanionName == null ? null : "," + s.CompanionName),
                 Address = s.Address,
                 City = s.City,
                 // Location= s.Location,
-                PhoneNumber = s.PhoneNumber + "," + s.SecondPhoneNumber,
+                PhoneNumber = s.PhoneNumber + (s.SecondPhoneNumber == null ? null : "," + s.SecondPhoneNumber),
                 //SecondPhoneNumber = s.SecondPhoneNumber,
                 OrdersRequested = s.OrdersRequested,
                 Status = s.Status,

@@ -24,6 +24,8 @@ namespace Web.Areas.Admin.Models.Users
         public int ID { get; set; }
         [Display(Name = "Customer Name")]
         public string Name { get; set; }
+        [Display(Name = "Companion Name")]
+        public string CompanionName { get; set; }
         public string Address { get; set; }
         public string Location { get; set; }
         public string City { get; set; }

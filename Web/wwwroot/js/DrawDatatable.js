@@ -49,7 +49,7 @@ $(document).ready(function () {
                         var multiRows = [];
                         var c = data.split(",");
                         for (var i = 0; i < c.length; i++) {
-                            multiRows.push(c[i] + '<br>');
+                            multiRows.push('<td class="text-gray-200">' + c[i] + '</td><br>');
                         }
                         return multiRows;
                     } else
