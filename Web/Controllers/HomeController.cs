@@ -13,12 +13,8 @@ namespace Web.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index(List<string> message)
+        public IActionResult Index()
         {
-            if (message.Count > 0)
-            {
-                ViewBag.Message = message[0];
-            }
             return View();
         }
 

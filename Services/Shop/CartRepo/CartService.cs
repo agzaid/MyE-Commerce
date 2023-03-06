@@ -16,7 +16,7 @@ namespace Services.Shop.CategoryRepo
         {
             _repository = repository;
         }
-        
+
         public IEnumerable<ShoppingCart> GetMany(Expression<Func<ShoppingCart, bool>> expression, List<string> references)
         {
             return _repository.GetAll(expression, references);
@@ -29,14 +29,23 @@ namespace Services.Shop.CategoryRepo
 
         public bool Insert(ShoppingCart model)
         {
-            if (model is not null)
+            try
             {
-                model.CreatedDate = DateTime.Now;
-                model.ModifiedDate = DateTime.Now;
-                _repository.Insert(model);
+                if (model is not null)
+                {
+                    model.CreatedDate = DateTime.Now;
+                    model.ModifiedDate = DateTime.Now;
+                    _repository.Insert(model);
+                }
+                _repository.SaveChanges();
+                return true;
             }
-            _repository.SaveChanges();
-            return true;
+            catch (Exception ex)
+            {
+                return false;
+                throw;
+            }
+
         }
 
         public void Update(ShoppingCart model)

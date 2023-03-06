@@ -38,8 +38,8 @@ namespace Web.Controllers
             var Message = new List<string>();
             var user = new AppUser();
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (userId == null)
+            var currentUser = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (currentUser == null)
             {
                 //"10.243.2.49"
                 string IPAddress = CommonMethod.GetIPAddress();
@@ -54,13 +54,20 @@ namespace Web.Controllers
                     user = await _userManager.FindByNameAsync(guest.UserName);
                     Message.Add("Guest");
                 }
+                else
+                {
+                    Message.Add("Error");
+                    return Json(Message);
+                }
+
                 //userId = string.Join('_', "AnonymousUser", IPAddress);
-            }
+            }else
+                user = await _userManager.FindByNameAsync(currentUser);
 
             var product = await _productService.GetOne(s => s.ID == id, null);
             var shoppingCart = new ShoppingCart()
             {
-                AppUser= user,
+                AppUser = user,
                 AppUserId = user.Id,
                 StatusOfCompletion = ShoppingCartStatus.PendingForPreview.ToString(),
                 CreatedDate = DateTime.UtcNow,
@@ -76,9 +83,9 @@ namespace Web.Controllers
                 ProductID = id
             });
 
-            _cartService.Insert(shoppingCart);
+            var cart = _cartService.Insert(shoppingCart);
 
-            return RedirectToAction("Index","Home");
+            return Json(Message);
             //return ViewComponent("MyViewComponent");
         }
 
