@@ -23,7 +23,7 @@ namespace Data.Entities.User
 
         #region Navigation Properties
         public List<UserAddress> UsersAddresses { get; set; } = new();
-        //public List<ShoppingCart> ShoppingCarts { get; set; } = new();
+        public List<ShoppingCart> ShoppingCarts { get; set; } = new();
         #endregion
     }
 }

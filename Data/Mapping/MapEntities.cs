@@ -18,7 +18,7 @@ namespace Data.Mapping
             //modelBuilder.Entity<AppUser>().HasIndex(x => new { x.PhoneNumber }).IsUnique();
             //modelBuilder.Entity<AppUser>().HasMany(s=>s.UsersAddresses).WithOne(f=>f.AppUser);
 
-            //modelBuilder.Entity<AppUser>().HasMany(s=>s.ShoppingCarts).WithOne(f=>f.AppUser).HasForeignKey(s=>s.AppUserId);
+            modelBuilder.Entity<AppUser>().HasMany(s => s.ShoppingCarts).WithOne(f => f.AppUser).HasForeignKey(s => s.AppUserId);
             //modelBuilder.Entity<AppUser>().HasMany(u => u.ShoppingCarts).with().HasForeignKey(h => h.appus);
         }
         public static void MapProduct(this ModelBuilder modelBuilder)

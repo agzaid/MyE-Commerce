@@ -27,7 +27,7 @@ namespace Services.Shop.CategoryRepo
             return await _repository.Get(expression, references);
         }
 
-        public void Insert(ShoppingCart model)
+        public bool Insert(ShoppingCart model)
         {
             if (model is not null)
             {
@@ -36,6 +36,7 @@ namespace Services.Shop.CategoryRepo
                 _repository.Insert(model);
             }
             _repository.SaveChanges();
+            return true;
         }
 
         public void Update(ShoppingCart model)

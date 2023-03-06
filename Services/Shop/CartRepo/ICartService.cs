@@ -12,7 +12,7 @@ namespace Services.Shop.CategoryRepo
     {
         IEnumerable<ShoppingCart> GetMany(Expression<Func<ShoppingCart, bool>> expression, List<string> references);
         Task<ShoppingCart> GetOne(Expression<Func<ShoppingCart, bool>> expression, List<string> references);
-        void Insert(ShoppingCart product);
+        bool Insert(ShoppingCart product);
         void Update(ShoppingCart product);
         Task Delete(int id);
     }

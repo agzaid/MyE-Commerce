@@ -15,33 +15,56 @@ namespace Web.Controllers
     {
         private readonly IProductService _productService;
         private readonly ICartService _cartService;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<AppUser> _userManager;
 
-        public CartController(IProductService productService, ICartService cartService)
+        public CartController(IProductService productService, ICartService cartService, RoleManager<IdentityRole> roleManager, UserManager<AppUser> userManager)
         {
             _productService = productService;
             _cartService = cartService;
+            _roleManager = roleManager;
+            _userManager = userManager;
         }
-        public IActionResult Index()
+        public IActionResult Index(List<string> message)
         {
+            if (message.Count > 0)
+            {
+                ViewBag.Message = message[0];
+            }
             return View();
         }
         public async Task<IActionResult> AddToCart(int id)
         {
+            var Message = new List<string>();
+            var user = new AppUser();
+
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId == null)
             {
                 //"10.243.2.49"
                 string IPAddress = CommonMethod.GetIPAddress();
-                userId = string.Join('_', "AnonymousUser", IPAddress);
+                AppUser guest = new AppUser()
+                {
+                    UserName = "Guest_" + IPAddress
+                };
+                var result = await _userManager.CreateAsync(guest, "12345678");
+                if (result.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(guest, "Guest");
+                    user = await _userManager.FindByNameAsync(guest.UserName);
+                    Message.Add("Guest");
+                }
+                //userId = string.Join('_', "AnonymousUser", IPAddress);
             }
 
             var product = await _productService.GetOne(s => s.ID == id, null);
             var shoppingCart = new ShoppingCart()
             {
-                AppUserId = userId,
+                AppUser= user,
+                AppUserId = user.Id,
                 StatusOfCompletion = ShoppingCartStatus.PendingForPreview.ToString(),
-                CreatedDate= DateTime.UtcNow,
-                ModifiedDate= DateTime.UtcNow,
+                CreatedDate = DateTime.UtcNow,
+                ModifiedDate = DateTime.UtcNow,
                 ShoppingCartItems = new List<ShoppingCartItem>(),
             };
             shoppingCart.ShoppingCartItems.Add(new ShoppingCartItem
@@ -53,11 +76,12 @@ namespace Web.Controllers
                 ProductID = id
             });
 
-             _cartService.Insert(shoppingCart);
+            _cartService.Insert(shoppingCart);
 
-            return ViewComponent("MyViewComponent");
+            return RedirectToAction("Index","Home");
+            //return ViewComponent("MyViewComponent");
         }
 
-       
+
     }
 }
