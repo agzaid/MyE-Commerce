@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Data.Entities.Shop;
+using Data.Entities.User;
 
 namespace Services.Shop.CategoryRepo
 {
@@ -15,5 +16,6 @@ namespace Services.Shop.CategoryRepo
         bool Insert(ShoppingCart product);
         void Update(ShoppingCart product);
         Task Delete(int id);
+        ShoppingCart AddToShopCart(AppUser user,Product product);
     }
 }

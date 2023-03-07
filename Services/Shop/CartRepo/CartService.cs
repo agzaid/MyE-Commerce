@@ -1,4 +1,7 @@
-﻿using Data.Entities.Shop;
+﻿using Data.Entities.Enums;
+using Data.Entities.Shop;
+using Data.Entities.User;
+using Microsoft.AspNetCore.Components;
 using Repo.Repository;
 using System;
 using System.Collections.Generic;
@@ -62,6 +65,35 @@ namespace Services.Shop.CategoryRepo
 
             _repository.Delete(model);
             _repository.SaveChanges();
+        }
+
+        public ShoppingCart AddToShopCart(AppUser user, Product product)
+        {
+            var availableCart = GetOne(s => s.AppUserId == user.Id, null).Result;
+
+            if (availableCart.StatusOfCompletion == nameof(ShoppingCartStatus.PendingForPreview))
+            {
+                //availableCart.
+            }
+            var shoppingCart = new ShoppingCart()
+            {
+                AppUser = user,
+                AppUserId = user.Id,
+                StatusOfCompletion = ShoppingCartStatus.PendingForPreview.ToString(),
+                CreatedDate = DateTime.UtcNow,
+                ModifiedDate = DateTime.UtcNow,
+                ShoppingCartItems = new List<ShoppingCartItem>(),
+            };
+            shoppingCart.ShoppingCartItems.Add(new ShoppingCartItem
+            {
+                Product = product,
+                CreatedDate = DateTime.UtcNow,
+                ModifiedDate = DateTime.UtcNow,
+                Quantity = 1,
+                ProductID = product.ID,
+            });
+
+            return shoppingCart;
         }
     }
 }

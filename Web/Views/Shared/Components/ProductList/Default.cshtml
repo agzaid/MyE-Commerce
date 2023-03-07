@@ -62,7 +62,7 @@
             },
             dataType: 'json',
             success: function (data) {
-                alert('Data success: ' + data);
+                alert('Data success: ' + JSON.stringify(data.no));
             },
             error: function (request, error) {
                 alert("Request: " + JSON.stringify(request));

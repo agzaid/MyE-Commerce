@@ -38,6 +38,7 @@ namespace Web.Controllers
             var Message = new List<string>();
             var user = new AppUser();
 
+            //code for user
             var currentUser = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (currentUser == null)
             {
@@ -45,7 +46,8 @@ namespace Web.Controllers
                 string IPAddress = CommonMethod.GetIPAddress();
                 AppUser guest = new AppUser()
                 {
-                    UserName = "Guest_" + IPAddress
+                    //UserName = "Guest_" + IPAddress   //this to be used other than the line below
+                    UserName = "Guest_" + IPAddress + "_" + DateTime.Now.Minute   //this just for test so i can repeat logging in
                 };
                 var result = await _userManager.CreateAsync(guest, "12345678");
                 if (result.Succeeded)
@@ -61,32 +63,18 @@ namespace Web.Controllers
                 }
 
                 //userId = string.Join('_', "AnonymousUser", IPAddress);
-            }else
+            }
+            else
                 user = await _userManager.FindByNameAsync(currentUser);
 
             var product = await _productService.GetOne(s => s.ID == id, null);
-            var shoppingCart = new ShoppingCart()
-            {
-                AppUser = user,
-                AppUserId = user.Id,
-                StatusOfCompletion = ShoppingCartStatus.PendingForPreview.ToString(),
-                CreatedDate = DateTime.UtcNow,
-                ModifiedDate = DateTime.UtcNow,
-                ShoppingCartItems = new List<ShoppingCartItem>(),
-            };
-            shoppingCart.ShoppingCartItems.Add(new ShoppingCartItem
-            {
-                Product = product,
-                CreatedDate = DateTime.UtcNow,
-                ModifiedDate = DateTime.UtcNow,
-                Quantity = 1,
-                ProductID = id
-            });
 
+            //code for shopping cart
+            var shoppingCart = _cartService.AddToShopCart(user, product);
             var cart = _cartService.Insert(shoppingCart);
 
-            return Json(Message);
-            //return ViewComponent("MyViewComponent");
+            return Json(new { message = Message, no = shoppingCart.ShoppingCartItems.Count() });
+            //return ViewComponent("CartViewComponent");
         }
 
 
