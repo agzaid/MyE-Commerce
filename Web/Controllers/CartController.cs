@@ -46,8 +46,8 @@ namespace Web.Controllers
                 string IPAddress = CommonMethod.GetIPAddress();
                 AppUser guest = new AppUser()
                 {
-                    //UserName = "Guest_" + IPAddress   //this to be used other than the line below
-                    UserName = "Guest_" + IPAddress + "_" + DateTime.Now.Minute   //this just for test so i can repeat logging in
+                    UserName = "Guest_" + IPAddress   //this to be used other than the line below
+                                                      // UserName = "Guest_" + IPAddress + "_" + DateTime.Now.Minute   //this just for test so i can repeat logging in
                 };
                 var result = await _userManager.CreateAsync(guest, "12345678");
                 if (result.Succeeded)
@@ -65,13 +65,21 @@ namespace Web.Controllers
                 //userId = string.Join('_', "AnonymousUser", IPAddress);
             }
             else
-                user = await _userManager.FindByNameAsync(currentUser);
+                user = await _userManager.FindByIdAsync(currentUser);
 
+            var availableCart = _cartService.GetOne(s => s.AppUserId == user.Id, new List<string> { "ShoppingCartItems" }).Result;
             var product = await _productService.GetOne(s => s.ID == id, null);
 
             //code for shopping cart
-            var shoppingCart = _cartService.AddToShopCart(user, product);
-            var cart = _cartService.Insert(shoppingCart);
+            var shoppingCart = _cartService.AddToShopCart(user, product, availableCart);
+            if (availableCart != null && (shoppingCart.StatusOfCompletion == nameof(ShoppingCartStatus.PendingForPreview)))
+            {
+                _cartService.Update(shoppingCart);
+            }
+            else
+            {
+                var cart = _cartService.Insert(shoppingCart);
+            }
 
             return Json(new { message = Message, no = shoppingCart.ShoppingCartItems.Count() });
             //return ViewComponent("CartViewComponent");

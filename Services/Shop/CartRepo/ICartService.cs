@@ -16,6 +16,6 @@ namespace Services.Shop.CategoryRepo
         bool Insert(ShoppingCart product);
         void Update(ShoppingCart product);
         Task Delete(int id);
-        ShoppingCart AddToShopCart(AppUser user,Product product);
+        ShoppingCart AddToShopCart(AppUser user,Product product, ShoppingCart shoppingCart);
     }
 }

@@ -67,33 +67,53 @@ namespace Services.Shop.CategoryRepo
             _repository.SaveChanges();
         }
 
-        public ShoppingCart AddToShopCart(AppUser user, Product product)
+        public ShoppingCart AddToShopCart(AppUser user, Product product, ShoppingCart shoppingCart)
         {
-            var availableCart = GetOne(s => s.AppUserId == user.Id, null).Result;
-
-            if (availableCart.StatusOfCompletion == nameof(ShoppingCartStatus.PendingForPreview))
+            //if available cart exists and not completed yet
+            if (shoppingCart != null && (shoppingCart.StatusOfCompletion == nameof(ShoppingCartStatus.PendingForPreview)))
             {
-                //availableCart.
+                //if same product added exists already in database
+                var existProduct = shoppingCart.ShoppingCartItems.FirstOrDefault(a => a.ProductID == product.ID);
+                if (existProduct == null)
+                {
+                    shoppingCart.ShoppingCartItems.Add(new ShoppingCartItem
+                    {
+                        Product = product,
+                        CreatedDate = DateTime.UtcNow,
+                        ModifiedDate = DateTime.UtcNow,
+                        Quantity = 1,
+                        ProductID = product.ID,
+                    });
+                }
+                else
+                {
+                    existProduct.ModifiedDate = DateTime.UtcNow;
+                    existProduct.Quantity += 1;
+                }
+
+                return shoppingCart;
             }
-            var shoppingCart = new ShoppingCart()
+            else
             {
-                AppUser = user,
-                AppUserId = user.Id,
-                StatusOfCompletion = ShoppingCartStatus.PendingForPreview.ToString(),
-                CreatedDate = DateTime.UtcNow,
-                ModifiedDate = DateTime.UtcNow,
-                ShoppingCartItems = new List<ShoppingCartItem>(),
-            };
-            shoppingCart.ShoppingCartItems.Add(new ShoppingCartItem
-            {
-                Product = product,
-                CreatedDate = DateTime.UtcNow,
-                ModifiedDate = DateTime.UtcNow,
-                Quantity = 1,
-                ProductID = product.ID,
-            });
-
-            return shoppingCart;
+                var newShoppingCart = new ShoppingCart()
+                {
+                    AppUser = user,
+                    AppUserId = user.Id,
+                    StatusOfCompletion = ShoppingCartStatus.PendingForPreview.ToString(),
+                    CreatedDate = DateTime.UtcNow,
+                    ModifiedDate = DateTime.UtcNow,
+                    ShoppingCartItems = new List<ShoppingCartItem>(),
+                };
+                shoppingCart.ShoppingCartItems.Add(new ShoppingCartItem
+                {
+                    Product = product,
+                    CreatedDate = DateTime.UtcNow,
+                    ModifiedDate = DateTime.UtcNow,
+                    Quantity = 1,
+                    ProductID = product.ID,
+                });
+                return newShoppingCart;
+            }
         }
     }
 }
