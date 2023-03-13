@@ -16,7 +16,7 @@ $(document).ready(function () {
     c.forEach(CreateColumn);
 
     columnsRendered.push({
-        "render": function (data, type, row) { return `<a href="` + urlEdit + `/` + row.id + `" class="btn btn-warning" title="Edit"><i class="bi bi-pencil-square"></i></a> <a class="btn btn-danger" title="Delete" href="` + urlDelete + `/` + row.id + `"><i class="fa fa-trash" aria-hidden="true"></i></a>` },
+        "render": function (data, type, row) { return `<a href="` + urlEdit + `/` + row.id + `" class="btn btn-icon btn-active-warning btn-outline btn-outline-default btn-icon-gray-700 btn-active-icon-primary" title="Edit"><i class="bi bi-pencil-square"></i></a> <a class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" title="Delete" href="` + urlDelete + `/` + row.id + `"><i class="fa fa-trash" aria-hidden="true"></i></a>` },
         "orderable": false
     });
 
