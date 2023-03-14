@@ -106,10 +106,12 @@ namespace Web.Controllers
                     var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
                     if (result.Succeeded)
                     {
+                        TempData["Message"] = "Success";
                         return RedirectToAction("Index", "Home");
                     }
                     else
                     {
+                        TempData["Message"] = "Failed";
                         ModelState.AddModelError("Login", "Login Failed");
                     }
                 }
@@ -131,7 +133,9 @@ namespace Web.Controllers
         public async Task<IActionResult> LogOut()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index","Home");
+            TempData["Message"] = "Logout";
+
+            return RedirectToAction("Index", "Home");
         }
 
         public async Task<IActionResult> ConfirmEmail(string userId, string token)

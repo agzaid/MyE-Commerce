@@ -1,12 +1,18 @@
 ﻿
 $(document).ready(function () {
     debugger;
-    myToastr("Create");
+
+    var AGelem = $("#messageCenter");
+    var AGelemID = AGelem[0].id;
+    var AGelemMessage = $("#" + AGelemID).attr("data-AG-message");
+
+
+    myToastr(AGelemMessage);
 
     function myToastr(message) {
         switch (message) {
-            case "Create":
-                toastr.success('Created Successfully');
+            case "Success":
+                toastr.success('Login Successful');
                 break;
             case "Edit":
                 toastr.success('Edited Successfully');
@@ -14,8 +20,8 @@ $(document).ready(function () {
             case "Error":
                 toastr.error('Failed');
                 break;
-            case "DeleteTrue":
-                toastr.error('Item Deleted');
+            case "Logout":
+                toastr.error('You are Logged out');
                 break;
             case "Delete":
                 toastr.warning('Delete invalid');

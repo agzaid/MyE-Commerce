@@ -2,8 +2,8 @@
     ViewData["Title"] = "Home Page";
 }
 <section class="slider_section ">
-    <div class="slider_bg_box">
-        @ViewBag.Message
+    @TempData["Message"]
+    <div class="slider_bg_box" id="messageCenter" data-AG-message='@Html.Raw(TempData["Message"])'>
         <img src="~/images/slider-bg.jpg" alt="">
     </div>
     <div id="customCarousel1" class="carousel slide" data-ride="carousel">

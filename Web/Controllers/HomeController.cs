@@ -13,8 +13,12 @@ namespace Web.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(List<string> message)
         {
+            if (message.Count > 0)
+            {
+                TempData["Message"] = message[0];
+            }
             return View();
         }
 
