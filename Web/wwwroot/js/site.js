@@ -1,4 +1,28 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿
+$(document).ready(function () {
+    debugger;
+    myToastr("Create");
 
-// Write your JavaScript code.
+    function myToastr(message) {
+        switch (message) {
+            case "Create":
+                toastr.success('Created Successfully');
+                break;
+            case "Edit":
+                toastr.success('Edited Successfully');
+                break;
+            case "Error":
+                toastr.error('Failed');
+                break;
+            case "DeleteTrue":
+                toastr.error('Item Deleted');
+                break;
+            case "Delete":
+                toastr.warning('Delete invalid');
+                break;
+
+            default:
+                toastr.info('Empty');
+        }
+    }
+})
