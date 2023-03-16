@@ -8,6 +8,9 @@ using Services.Shop.CategoryRepo;
 using System.Net;
 using System.Security.Claims;
 using Services.Injection;
+using System.Web;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Newtonsoft.Json.Linq;
 
 namespace Web.Controllers
 {
@@ -40,13 +43,19 @@ namespace Web.Controllers
 
             //code for user
             var currentUser = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (currentUser == null)
+            var user1 = _userManager.GetUserAsync(User);
+            if (user1.Result == null)
             {
+                CookieOptions option = new CookieOptions();
+
+                    option.Expires = DateTime.Now.AddMilliseconds(10);
+
+                Response.Cookies.Append("ad", "zz", option);
                 //"10.243.2.49"
                 string IPAddress = CommonMethod.GetIPAddress();
                 AppUser guest = new AppUser()
                 {
-                    UserName = "Guest_" + IPAddress   //this to be used other than the line below
+                    UserName = "Guest_" + user1.Id   //this to be used other than the line below
                                                       // UserName = "Guest_" + IPAddress + "_" + DateTime.Now.Minute   //this just for test so i can repeat logging in
                 };
                 var result = await _userManager.CreateAsync(guest, "12345678");

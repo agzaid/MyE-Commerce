@@ -28,7 +28,7 @@ $(document).ready(function () {
                 break;
 
             default:
-                toastr.info('Empty');
+                toastr.info('Sign UP for more User Experience');
         }
     }
 })
