@@ -11,6 +11,7 @@ using Services.Injection;
 using System.Web;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json.Linq;
+using NuGet.Protocol.Core.Types;
 
 namespace Web.Controllers
 {
@@ -40,23 +41,32 @@ namespace Web.Controllers
         {
             var Message = new List<string>();
             var user = new AppUser();
-
             //code for user
             var currentUser = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user1 = _userManager.GetUserAsync(User);
-            if (user1.Result == null)
+            string userName = User.Identity.Name;
+
+            var userAgent = Request.Headers["User-Agent"].ToString();
+            string[] subs = userAgent.Split('/');
+            //var user1 = _userManager.GetUserAsync(User);
+            var userCookieExists = Request.Cookies["Guest_"+ subs[0]];
+            if (userName == null)
             {
+                //user not signed up and no cookie
+
                 CookieOptions option = new CookieOptions();
-
-                    option.Expires = DateTime.Now.AddMilliseconds(10);
-
-                Response.Cookies.Append("ad", "zz", option);
+                string guestCookie = "Guest_" + subs[0];
+                //string userDate = DateTime.UtcNow.ToString();
                 //"10.243.2.49"
-                string IPAddress = CommonMethod.GetIPAddress();
+                string userIPAddress = CommonMethod.GetIPAddress();
+                option.Expires = DateTime.Now.AddMonths(1);
+                option.IsEssential = true;
+                option.Path = "/";
+                Response.Cookies.Append(guestCookie, userIPAddress, option);
+
                 AppUser guest = new AppUser()
                 {
-                    UserName = "Guest_" + user1.Id   //this to be used other than the line below
-                                                      // UserName = "Guest_" + IPAddress + "_" + DateTime.Now.Minute   //this just for test so i can repeat logging in
+                    UserName = guestCookie  //this to be used other than the line below
+                                           // UserName = "Guest_" + IPAddress + "_" + DateTime.Now.Minute   //this just for test so i can repeat logging in
                 };
                 var result = await _userManager.CreateAsync(guest, "12345678");
                 if (result.Succeeded)
@@ -73,8 +83,15 @@ namespace Web.Controllers
 
                 //userId = string.Join('_', "AnonymousUser", IPAddress);
             }
+            else if (userCookieExists!= null)
+            {
+                // not signed up but has cookie before 
+                user = await _userManager.FindByNameAsync(userCookieExists);
+            }
             else
+            {
                 user = await _userManager.FindByIdAsync(currentUser);
+            }
 
             var availableCart = _cartService.GetOne(s => s.AppUserId == user.Id, new List<string> { "ShoppingCartItems" }).Result;
             var product = await _productService.GetOne(s => s.ID == id, null);
