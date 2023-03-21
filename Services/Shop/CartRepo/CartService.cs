@@ -69,14 +69,44 @@ namespace Services.Shop.CategoryRepo
 
         public ShoppingCart AddToShopCart(AppUser user, Product product, ShoppingCart shoppingCart)
         {
-            //if available cart exists and not completed yet
-            if (shoppingCart != null && (shoppingCart.StatusOfCompletion == nameof(ShoppingCartStatus.PendingForPreview)))
+            try
             {
-                //if same product added exists already in database
-                var existProduct = shoppingCart.ShoppingCartItems.FirstOrDefault(a => a.ProductID == product.ID);
-                if (existProduct == null)
+                //if available cart exists and not completed yet
+                if (shoppingCart != null && (shoppingCart.StatusOfCompletion == nameof(ShoppingCartStatus.PendingForPreview)))
                 {
-                    shoppingCart.ShoppingCartItems.Add(new ShoppingCartItem
+                    //if same product added exists already in database
+                    var existProduct = shoppingCart.ShoppingCartItems.FirstOrDefault(a => a.ProductID == product.ID);
+                    if (existProduct == null)
+                    {
+                        shoppingCart.ShoppingCartItems.Add(new ShoppingCartItem
+                        {
+                            Product = product,
+                            CreatedDate = DateTime.UtcNow,
+                            ModifiedDate = DateTime.UtcNow,
+                            Quantity = 1,
+                            ProductID = product.ID,
+                        });
+                    }
+                    else
+                    {
+                        existProduct.ModifiedDate = DateTime.UtcNow;
+                        existProduct.Quantity += 1;
+                    }
+
+                    return shoppingCart;
+                }
+                else
+                {
+                    var newShoppingCart = new ShoppingCart()
+                    {
+                        AppUser = user,
+                        AppUserId = user.Id,
+                        StatusOfCompletion = ShoppingCartStatus.PendingForPreview.ToString(),
+                        CreatedDate = DateTime.UtcNow,
+                        ModifiedDate = DateTime.UtcNow,
+                        ShoppingCartItems = new List<ShoppingCartItem>(),
+                    };
+                    newShoppingCart.ShoppingCartItems.Add(new ShoppingCartItem
                     {
                         Product = product,
                         CreatedDate = DateTime.UtcNow,
@@ -84,36 +114,14 @@ namespace Services.Shop.CategoryRepo
                         Quantity = 1,
                         ProductID = product.ID,
                     });
+                    return newShoppingCart;
                 }
-                else
-                {
-                    existProduct.ModifiedDate = DateTime.UtcNow;
-                    existProduct.Quantity += 1;
-                }
-
-                return shoppingCart;
             }
-            else
+            catch (Exception ex)
             {
-                var newShoppingCart = new ShoppingCart()
-                {
-                    AppUser = user,
-                    AppUserId = user.Id,
-                    StatusOfCompletion = ShoppingCartStatus.PendingForPreview.ToString(),
-                    CreatedDate = DateTime.UtcNow,
-                    ModifiedDate = DateTime.UtcNow,
-                    ShoppingCartItems = new List<ShoppingCartItem>(),
-                };
-                shoppingCart.ShoppingCartItems.Add(new ShoppingCartItem
-                {
-                    Product = product,
-                    CreatedDate = DateTime.UtcNow,
-                    ModifiedDate = DateTime.UtcNow,
-                    Quantity = 1,
-                    ProductID = product.ID,
-                });
-                return newShoppingCart;
+                throw;
             }
+          
         }
     }
 }
