@@ -1,13 +1,15 @@
 ﻿@{
     var loggedIn = User.Identity.IsAuthenticated;
+    var userClaims = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    var userExists = await UserManager.FindByIdAsync(userClaims ?? "");
 }
 
 <li class="nav-item dropdown">
-    @if (loggedIn)
+    @if (loggedIn && userExists != null)
     {
-       @* <a class="nav-link" role="button"> <span class="nav-label">Welcome @User.Identity.Name  <span class="caret"></span></span></a>
-        <a class="nav-link" role="button" asp-action="LogOut" asp-controller="Identity"> <span class="nav-label"> SignOut</span></a>
-*@
+        @* <a class="nav-link" role="button"> <span class="nav-label">Welcome @User.Identity.Name  <span class="caret"></span></span></a>
+    <a class="nav-link" role="button" asp-action="LogOut" asp-controller="Identity"> <span class="nav-label"> SignOut</span></a>
+    *@
         @*view component*@
         @await Component.InvokeAsync("UserIdentity")
     }

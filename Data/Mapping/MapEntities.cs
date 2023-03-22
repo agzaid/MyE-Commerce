@@ -25,7 +25,7 @@ namespace Data.Mapping
         {
             modelBuilder.Entity<Product>().HasKey(s => s.ID);
             modelBuilder.Entity<Product>().HasOne(s => s.Category).WithMany(b => b.Products);
-            modelBuilder.Entity<Product>().HasOne(s => s.ShoppingCartItem).WithOne(d => d.Product).HasForeignKey<ShoppingCartItem>(d => d.ProductID);
+            //modelBuilder.Entity<Product>().HasOne(s => s.ShoppingCartItem).WithMany(d => d.Products);
         }
         public static void MapCategory(this ModelBuilder modelBuilder)
         {

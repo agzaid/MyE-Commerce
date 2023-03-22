@@ -41,15 +41,15 @@
 
     function AddingItem(id) {
         debugger;
-        alert(id);
+        //alert(id);
         $("#badge").html("3");
         var s = { name: "tutorialsPoint", site: "tutorialsPoint.com", };
 
-        setCookie('ppkcookie', s , 7);
-        var x = getCookie('ppkcookie');
-        if (x) {
+        //setCookie('ppkcookie', s , 7);
+        //var x = getCookie('ppkcookie');
+        //if (x) {
 
-        }
+        //}
         AjaxCall(id);
     }
     function AjaxCall(id) {
@@ -62,6 +62,7 @@
             },
             dataType: 'json',
             success: function (data) {
+                $("#badge").html(JSON.stringify(data.no));
                 alert('Data success: ' + JSON.stringify(data.no));
             },
             error: function (request, error) {
@@ -73,27 +74,27 @@
 
 
 
-    function setCookie(name, value, days) {
-        var expires = "";
-        if (days) {
-            var date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            expires = "; expires=" + date.toUTCString();
-        }
-        document.cookie = name + "=" + (value || "") + expires + "; path=/";
-    }
-    function getCookie(name) {
-        var nameEQ = name + "=";
-        var ca = document.cookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-        }
-        return null;
-    }
-    function eraseCookie(name) {
-        document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-    }
+    //function setCookie(name, value, days) {
+    //    var expires = "";
+    //    if (days) {
+    //        var date = new Date();
+    //        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    //        expires = "; expires=" + date.toUTCString();
+    //    }
+    //    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    //}
+    //function getCookie(name) {
+    //    var nameEQ = name + "=";
+    //    var ca = document.cookie.split(';');
+    //    for (var i = 0; i < ca.length; i++) {
+    //        var c = ca[i];
+    //        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+    //        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    //    }
+    //    return null;
+    //}
+    //function eraseCookie(name) {
+    //    document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    //}
 
 </script>

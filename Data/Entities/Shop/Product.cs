@@ -22,7 +22,10 @@ namespace Data.Entities.Shop
         #region Navigation Properties
         public Category Category { get; set; }
         public int? CategoryId { get; set; }
-        public ShoppingCartItem ShoppingCartItem { get; set; }
+        
+        
+        //removed this relation so to could add products with same id in shopping cart item
+        //public ShoppingCartItem ShoppingCartItem { get; set; }
 
         //public OrderDetails OrderDetails { get; set; }
         //public int? OrderDetailsId { get; set; }

@@ -18,6 +18,7 @@ namespace Web.Controllers
 {
     public class CartController : Controller
     {
+        public List<string> Message = new List<string>();
         private readonly IProductService _productService;
         private readonly ICartService _cartService;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -45,44 +46,39 @@ namespace Web.Controllers
         {
             try
             {
-                var Message = new List<string>();
+                //var Message = new List<string>();
                 var user = new AppUser();
                 //code for user
-                var currentUser = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                string userName = User.Identity.Name;
+                var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                string currentUserName = User.Identity.Name;
+
+                //user = await Cookie(currentUserName, user, currentUserId);
 
                 #region cookie
-
                 var userAgent = Request.Headers["User-Agent"].ToString();
                 //"10.243.2.49"
                 //"192.168.137.1"
                 string userIPAddress = CommonMethod.GetIPAddress();
                 string[] subs = userAgent.Split('/');
-                //var user1 = _userManager.GetUserAsync(User);
-                //var userCookieExists = Request.Cookies["Guest_"+ subs[0]];
                 var userCookieExists = Request.Cookies["Guest_" + subs[0]];
-                if (userName == null)
+                if (currentUserName == null)
                 {
                     //user not signed up and no cookie
-
                     CookieOptions option = new CookieOptions();
                     string guestCookie = "Guest_" + subs[0];
-                    //string userDate = DateTime.UtcNow.ToString();
                     option.Expires = DateTime.Now.AddMonths(1);
                     option.IsEssential = true;
                     option.Path = "/";
-                    Response.Cookies.Append(guestCookie, userIPAddress, option);
-
                     AppUser guest = new AppUser()
                     {
-                        UserName = guestCookie  //this to be used other than the line below
-                                                // UserName = "Guest_" + IPAddress + "_" + DateTime.Now.Minute   //this just for test so i can repeat logging in
+                        UserName = guestCookie
                     };
                     var result = await _userManager.CreateAsync(guest, "12345678");
                     if (result.Succeeded)
                     {
                         await _userManager.AddToRoleAsync(guest, "Guest");
                         user = await _userManager.FindByNameAsync(guest.UserName);
+                        Response.Cookies.Append(guestCookie, user.Id, option);
                         //signing in user
                         var signInCookie = await _signInManager.PasswordSignInAsync(user, "12345678", false, lockoutOnFailure: false);
                         Message.Add("Guest");
@@ -95,14 +91,15 @@ namespace Web.Controllers
 
                     //userId = string.Join('_', "AnonymousUser", IPAddress);
                 }
-                else if (userCookieExists != null)
+                else if (userCookieExists != null && currentUserName.Contains("Guest_"))
                 {
                     // not signed up but has cookie before 
-                    user = await _userManager.FindByNameAsync(userCookieExists);
+                    user = await _userManager.FindByIdAsync(userCookieExists);
+                    var signInCookie = await _signInManager.PasswordSignInAsync(user, "12345678", false, lockoutOnFailure: false);
                 }
                 else
                 {
-                    user = await _userManager.FindByIdAsync(currentUser);
+                    user = await _userManager.FindByIdAsync(currentUserId);
                 }
                 #endregion
 
@@ -129,6 +126,59 @@ namespace Web.Controllers
                 throw;
             }
 
+        }
+
+
+        public async Task<AppUser> Cookie(string currentUserName,AppUser user, string currentUserId)
+        {
+
+            var userAgent = Request.Headers["User-Agent"].ToString();
+            //"10.243.2.49"
+            //"192.168.137.1"
+            string userIPAddress = CommonMethod.GetIPAddress();
+            string[] subs = userAgent.Split('/');
+            var userCookieExists = Request.Cookies["Guest_" + subs[0]];
+            if (currentUserName == null)
+            {
+                //user not signed up and no cookie
+                CookieOptions option = new CookieOptions();
+                string guestCookie = "Guest_" + subs[0];
+                option.Expires = DateTime.Now.AddMonths(1);
+                option.IsEssential = true;
+                option.Path = "/";
+                AppUser guest = new AppUser()
+                {
+                    UserName = guestCookie
+                };
+                var result = await _userManager.CreateAsync(guest, "12345678");
+                if (result.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(guest, "Guest");
+                    user = await _userManager.FindByNameAsync(guest.UserName);
+                    Response.Cookies.Append(guestCookie, user.Id, option);
+                    //signing in user
+                    var signInCookie = await _signInManager.PasswordSignInAsync(user, "12345678", false, lockoutOnFailure: false);
+                    Message.Add("Guest");
+                }
+                else
+                {
+                    Message.Add("Error");
+                    //return Json(Message);
+                }
+
+                //userId = string.Join('_', "AnonymousUser", IPAddress);
+            }
+            else if (userCookieExists != null && currentUserName.Contains("Guest_"))
+            {
+                // not signed up but has cookie before 
+                user = await _userManager.FindByIdAsync(userCookieExists);
+                var signInCookie = await _signInManager.PasswordSignInAsync(user, "12345678", false, lockoutOnFailure: false);
+            }
+            else
+            {
+                user = await _userManager.FindByIdAsync(currentUserId);
+            }
+            return user;
         }
 
 
