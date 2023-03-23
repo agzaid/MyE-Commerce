@@ -6,14 +6,21 @@ $(document).ready(function () {
     var AGelemID = AGelem[0].id;
     var AGelemMessage = $("#" + AGelemID).attr("data-AG-message");
 
-  
 
-myToastr(AGelemMessage);
 
+    myToastr(AGelemMessage);
+
+    
+});
+
+//putting function outside document ready so it could be accessible globally
 function myToastr(message) {
     switch (message) {
         case "Success":
             toastr.success('Login Successful');
+            break;
+        case "Item Added":
+            toastr.success('Item Added Successful');
             break;
         case "Edit":
             toastr.success('Edited Successfully');
@@ -32,4 +39,3 @@ function myToastr(message) {
             toastr.info('Sign UP for more User Experience');
     }
 }
-})

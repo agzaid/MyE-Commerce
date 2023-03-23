@@ -43,17 +43,11 @@
         debugger;
         //alert(id);
         $("#badge").html("3");
-        var s = { name: "tutorialsPoint", site: "tutorialsPoint.com", };
+        //var s = { name: "tutorialsPoint", site: "tutorialsPoint.com", };
 
-        //setCookie('ppkcookie', s , 7);
-        //var x = getCookie('ppkcookie');
-        //if (x) {
-
-        //}
         AjaxCall(id);
     }
     function AjaxCall(id) {
-
         $.ajax({
             url: 'cart/addtocart',
             type: 'POST',
@@ -63,9 +57,11 @@
             dataType: 'json',
             success: function (data) {
                 $("#badge").html(JSON.stringify(data.no));
+                myToastr(data.message[0]);
                 alert('Data success: ' + JSON.stringify(data.no));
             },
             error: function (request, error) {
+                myToastr(JSON.stringify(request));
                 alert("Request: " + JSON.stringify(request));
             }
         });

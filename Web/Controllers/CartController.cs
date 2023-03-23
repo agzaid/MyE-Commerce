@@ -16,23 +16,17 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Web.Controllers
 {
-    public class CartController : Controller
+    public class CartController : BaseController<CartController>
     {
         public List<string> Message = new List<string>();
         private readonly IProductService _productService;
         private readonly ICartService _cartService;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<AppUser> _userManager;
-        private readonly SignInManager<AppUser> _signInManager;
 
-        public CartController(IProductService productService, ICartService cartService, RoleManager<IdentityRole> roleManager, UserManager<AppUser> userManager,
-            SignInManager<AppUser> signInManager)
+
+        public CartController(IProductService productService, ICartService cartService)
         {
             _productService = productService;
             _cartService = cartService;
-            _roleManager = roleManager;
-            _userManager = userManager;
-            _signInManager = signInManager;
         }
         public IActionResult Index(List<string> message)
         {
@@ -73,14 +67,15 @@ namespace Web.Controllers
                     {
                         UserName = guestCookie
                     };
-                    var result = await _userManager.CreateAsync(guest, "12345678");
+                    var result = await UserManager.CreateAsync(guest, "12345678");
                     if (result.Succeeded)
                     {
-                        await _userManager.AddToRoleAsync(guest, "Guest");
-                        user = await _userManager.FindByNameAsync(guest.UserName);
+                        await UserManager.AddToRoleAsync(guest, "Guest");
+                        user = await UserManager.FindByNameAsync(guest.UserName);
                         Response.Cookies.Append(guestCookie, user.Id, option);
                         //signing in user
-                        var signInCookie = await _signInManager.PasswordSignInAsync(user, "12345678", false, lockoutOnFailure: false);
+                        if (!User.Identity.IsAuthenticated)
+                            await SignInManager.PasswordSignInAsync(user, "12345678", false, lockoutOnFailure: false);
                         Message.Add("Guest");
                     }
                     else
@@ -94,12 +89,13 @@ namespace Web.Controllers
                 else if (userCookieExists != null && currentUserName.Contains("Guest_"))
                 {
                     // not signed up but has cookie before 
-                    user = await _userManager.FindByIdAsync(userCookieExists);
-                    var signInCookie = await _signInManager.PasswordSignInAsync(user, "12345678", false, lockoutOnFailure: false);
+                    user = await UserManager.FindByIdAsync(userCookieExists);
+                    if (!User.Identity.IsAuthenticated)
+                        await SignInManager.PasswordSignInAsync(user, "12345678", false, lockoutOnFailure: false);
                 }
                 else
                 {
-                    user = await _userManager.FindByIdAsync(currentUserId);
+                    user = await UserManager.FindByIdAsync(currentUserId);
                 }
                 #endregion
 
@@ -111,10 +107,12 @@ namespace Web.Controllers
                 if (availableCart != null && (shoppingCart.StatusOfCompletion == nameof(ShoppingCartStatus.PendingForPreview)))
                 {
                     _cartService.Update(shoppingCart);
+                    Message.Add("Item Added");
                 }
                 else
                 {
                     var cart = _cartService.Insert(shoppingCart);
+                    Message.Add("Item Added");
                 }
 
                 return Json(new { message = Message, no = shoppingCart.ShoppingCartItems.Count() });
@@ -129,7 +127,7 @@ namespace Web.Controllers
         }
 
 
-        public async Task<AppUser> Cookie(string currentUserName,AppUser user, string currentUserId)
+        public async Task<AppUser> Cookie(string currentUserName, AppUser user, string currentUserId)
         {
 
             var userAgent = Request.Headers["User-Agent"].ToString();
@@ -150,14 +148,14 @@ namespace Web.Controllers
                 {
                     UserName = guestCookie
                 };
-                var result = await _userManager.CreateAsync(guest, "12345678");
+                var result = await UserManager.CreateAsync(guest, "12345678");
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(guest, "Guest");
-                    user = await _userManager.FindByNameAsync(guest.UserName);
+                    await UserManager.AddToRoleAsync(guest, "Guest");
+                    user = await UserManager.FindByNameAsync(guest.UserName);
                     Response.Cookies.Append(guestCookie, user.Id, option);
                     //signing in user
-                    var signInCookie = await _signInManager.PasswordSignInAsync(user, "12345678", false, lockoutOnFailure: false);
+                    var signInCookie = await SignInManager.PasswordSignInAsync(user, "12345678", false, lockoutOnFailure: false);
                     Message.Add("Guest");
                 }
                 else
@@ -171,12 +169,12 @@ namespace Web.Controllers
             else if (userCookieExists != null && currentUserName.Contains("Guest_"))
             {
                 // not signed up but has cookie before 
-                user = await _userManager.FindByIdAsync(userCookieExists);
-                var signInCookie = await _signInManager.PasswordSignInAsync(user, "12345678", false, lockoutOnFailure: false);
+                user = await UserManager.FindByIdAsync(userCookieExists);
+                var signInCookie = await SignInManager.PasswordSignInAsync(user, "12345678", false, lockoutOnFailure: false);
             }
             else
             {
-                user = await _userManager.FindByIdAsync(currentUserId);
+                user = await UserManager.FindByIdAsync(currentUserId);
             }
             return user;
         }

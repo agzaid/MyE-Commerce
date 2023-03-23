@@ -7,19 +7,8 @@ using Services.Injection.CommonResult;
 
 namespace Web.Controllers
 {
-    public class IdentityController : Controller
+    public class IdentityController : BaseController<IdentityController>
     {
-        private readonly UserManager<AppUser> _userManager;
-        private readonly SignInManager<AppUser> _signInManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
-
-        public IdentityController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager)
-        {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _roleManager = roleManager;
-        }
-
         [HttpGet]
         public IActionResult Register()
         {
@@ -32,10 +21,10 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (!await _roleManager.RoleExistsAsync(model.Role))
+                if (!await RoleManager.RoleExistsAsync(model.Role))
                 {
                     var role = new IdentityRole { Name = model.Role };
-                    var roleResult = await _roleManager.CreateAsync(role);
+                    var roleResult = await RoleManager.CreateAsync(role);
                     if (!roleResult.Succeeded)
                     {
                         var errors = roleResult.Errors.Select(s => s.Description);
@@ -43,7 +32,7 @@ namespace Web.Controllers
                         return View(model);
                     }
                 }
-                if ((await _userManager.FindByEmailAsync(model.Email)) == null)
+                if ((await UserManager.FindByEmailAsync(model.Email)) == null)
                 {
                     var user = new AppUser()
                     {
@@ -56,19 +45,19 @@ namespace Web.Controllers
                         Age = model.Age,
                         Gender = (Gender)model.GenderId
                     };
-                    var result = await _userManager.CreateAsync(user, model.Password);
-                    user = await _userManager.FindByEmailAsync(model.Email);
+                    var result = await UserManager.CreateAsync(user, model.Password);
+                    user = await UserManager.FindByEmailAsync(model.Email);
 
-                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var token = await UserManager.GenerateEmailConfirmationTokenAsync(user);
                     if (result.Succeeded)
                     {
                         if (model.Role.Contains("Admin"))
                         {
-                            await _userManager.AddToRoleAsync(user, "Admin");
+                            await UserManager.AddToRoleAsync(user, "Admin");
                         }
                         else
                         {
-                            await _userManager.AddToRoleAsync(user, model.Role);
+                            await UserManager.AddToRoleAsync(user, model.Role);
                         }
                         //await _userManager.AddToRoleAsync(user, "Admin");
                         //Url.ActionLink("ConfirmEmail", "Identity", new { userId = user.Id, @token = token });
@@ -98,12 +87,12 @@ namespace Web.Controllers
             {
                 try
                 {
-                    var user = await _userManager.FindByNameAsync(model.UserName);
+                    var user = await UserManager.FindByNameAsync(model.UserName);
                     if (user == null)
                     {
-                        user = await _userManager.FindByEmailAsync(model.UserName);
+                        user = await UserManager.FindByEmailAsync(model.UserName);
                     }
-                    var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
+                    var result = await SignInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
                     if (result.Succeeded)
                     {
                         TempData["Message"] = "Success";
@@ -132,7 +121,7 @@ namespace Web.Controllers
 
         public async Task<IActionResult> LogOut()
         {
-            await _signInManager.SignOutAsync();
+            await SignInManager.SignOutAsync();
             TempData["Message"] = "Logout";
 
             return RedirectToAction("Index", "Home");
@@ -140,8 +129,8 @@ namespace Web.Controllers
 
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {
-            var user = await _userManager.FindByNameAsync(userId);
-            var result = await _userManager.ConfirmEmailAsync(user, token);
+            var user = await UserManager.FindByNameAsync(userId);
+            var result = await UserManager.ConfirmEmailAsync(user, token);
             if (result.Succeeded)
             {
                 return RedirectToAction("Login");
