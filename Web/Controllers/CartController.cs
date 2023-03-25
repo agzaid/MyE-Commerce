@@ -28,13 +28,30 @@ namespace Web.Controllers
             _productService = productService;
             _cartService = cartService;
         }
-        public IActionResult Index(List<string> message)
+        public async Task<IActionResult> Index(List<string> message)
         {
-            if (message.Count > 0)
+                ShoppingCart availableCart = new();
+            try
             {
-                ViewBag.Message = message[0];
+                if (message.Count > 0)
+                {
+                    ViewBag.Message = message[0];
+                }
+                var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var user = await UserManager.FindByIdAsync(currentUserId);
+                if (user != null)
+                {
+                    availableCart = _cartService.GetOne(s => s.AppUserId == user.Id, new List<string> { "ShoppingCartItems" }).Result;
+                }
             }
-            return View();
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+           
+
+            return View(availableCart);
         }
         public async Task<IActionResult> AddToCart(int id)
         {
@@ -54,12 +71,12 @@ namespace Web.Controllers
                 //"192.168.137.1"
                 string userIPAddress = CommonMethod.GetIPAddress();
                 string[] subs = userAgent.Split('/');
-                var userCookieExists = Request.Cookies["Guest_" + subs[0]];
+                var userCookieExists = Request.Cookies["Guest"];
                 if (currentUserName == null)
                 {
                     //user not signed up and no cookie
                     CookieOptions option = new CookieOptions();
-                    string guestCookie = "Guest_" + subs[0];
+                    string guestCookie = "Guest";
                     option.Expires = DateTime.Now.AddMonths(1);
                     option.IsEssential = true;
                     option.Path = "/";
@@ -83,10 +100,8 @@ namespace Web.Controllers
                         Message.Add("Error");
                         return Json(Message);
                     }
-
-                    //userId = string.Join('_', "AnonymousUser", IPAddress);
                 }
-                else if (userCookieExists != null && currentUserName.Contains("Guest_"))
+                else if (userCookieExists != null && currentUserName.Contains("Guest"))
                 {
                     // not signed up but has cookie before 
                     user = await UserManager.FindByIdAsync(userCookieExists);

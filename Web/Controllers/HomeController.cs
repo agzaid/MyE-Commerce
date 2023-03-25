@@ -7,13 +7,18 @@ namespace Web.Controllers
     public class HomeController : BaseController<HomeController>
     {
 
-        public IActionResult Index(List<string> message)
+        public async Task<IActionResult> Index(List<string> message)
         {
+            var userCookieExists = Request.Cookies["Guest"];
+            var user = await UserManager.FindByIdAsync(userCookieExists);
+            await SignInManager.PasswordSignInAsync(user, "12345678", false, lockoutOnFailure: false);
+
+
             if (message.Count > 0)
             {
                 TempData["Message"] = message[0];
             }
-            return View();
+            return View(user);
         }
 
         public IActionResult Privacy()

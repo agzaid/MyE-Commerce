@@ -1,30 +1,31 @@
-﻿@{
+﻿
+@{
     var loggedIn = User.Identity.IsAuthenticated;
     var userClaims = User.FindFirstValue(ClaimTypes.NameIdentifier);
     var userExists = await UserManager.FindByIdAsync(userClaims ?? "");
 }
 
-<li class="nav-item dropdown">
-    @if (loggedIn && userExists != null)
-    {
-        @* <a class="nav-link" role="button"> <span class="nav-label">Welcome @User.Identity.Name  <span class="caret"></span></span></a>
+    <li class="nav-item dropdown">
+        @if (loggedIn && userExists != null)
+        {
+            @* <a class="nav-link" role="button"> <span class="nav-label">Welcome @User.Identity.Name  <span class="caret"></span></span></a>
     <a class="nav-link" role="button" asp-action="LogOut" asp-controller="Identity"> <span class="nav-label"> SignOut</span></a>
     *@
-        @*view component*@
-        @await Component.InvokeAsync("UserIdentity")
-    }
-    else
-    {
-        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> <span class="nav-label"> JOIN US <span class="caret"></span></span></a>
-        <ul class="dropdown-menu">
-            <li><a class="nav-link" asp-action="Login" asp-controller="Identity">SignIN</a></li>
-            <li><a class="nav-link" asp-action="Register" asp-controller="Identity">Register</a></li>
-            @if (User == null)
-            {
-                @*view component*@
-                @await Component.InvokeAsync("UserIdentity")
-            }
-        </ul>
+            @*view component*@
+            @await Component.InvokeAsync("UserIdentity")
+        }
+        else
+        {
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> <span class="nav-label"> JOIN US <span class="caret"></span></span></a>
+            <ul class="dropdown-menu">
+                <li><a class="nav-link" asp-action="Login" asp-controller="Identity">SignIN</a></li>
+                <li><a class="nav-link" asp-action="Register" asp-controller="Identity">Register</a></li>
+                @if (User == null)
+                {
+                    @*view component*@
+                    @await Component.InvokeAsync("UserIdentity")
+                }
+            </ul>
 
-    }
+        }
 </li>

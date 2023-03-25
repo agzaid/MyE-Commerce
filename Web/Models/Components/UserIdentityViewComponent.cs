@@ -17,7 +17,6 @@ namespace Web.Models.Components
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
-
             var currentUser = _userManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name).ToString();
             var user = await _userManager.FindByNameAsync(currentUser);
 
