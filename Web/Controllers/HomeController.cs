@@ -11,7 +11,10 @@ namespace Web.Controllers
         {
             var userCookieExists = Request.Cookies["Guest"];
             var user = await UserManager.FindByIdAsync(userCookieExists);
-            await SignInManager.PasswordSignInAsync(user, "12345678", false, lockoutOnFailure: false);
+            if (user != null)
+            {
+                await SignInManager.PasswordSignInAsync(user, "12345678", false, lockoutOnFailure: false);
+            }
 
 
             if (message.Count > 0)

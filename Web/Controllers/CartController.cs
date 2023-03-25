@@ -41,7 +41,7 @@ namespace Web.Controllers
                 var user = await UserManager.FindByIdAsync(currentUserId);
                 if (user != null)
                 {
-                    availableCart = _cartService.GetOne(s => s.AppUserId == user.Id, new List<string> { "ShoppingCartItems" }).Result;
+                    availableCart = _cartService.GetOne(s => s.AppUserId == user.Id, new List<string> { "ShoppingCartItems", "ShoppingCartItems.Product" }).Result;
                 }
             }
             catch (Exception ex)
