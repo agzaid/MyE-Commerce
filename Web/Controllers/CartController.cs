@@ -58,7 +58,7 @@ namespace Web.Controllers
             try
             {
                 //var Message = new List<string>();
-                var user = new AppUser();
+                AppUser user = new AppUser();
                 //code for user
                 var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 string currentUserName = User.Identity.Name;
