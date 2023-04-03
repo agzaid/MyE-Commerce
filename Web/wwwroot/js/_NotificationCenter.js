@@ -3,14 +3,19 @@ $(document).ready(function () {
     debugger;
 
     var AGelem = $("#messageCenter");
-    var AGelemID = AGelem[0].id;
-    var AGelemMessage = $("#" + AGelemID).attr("data-AG-message");
+    var AGelemID;
+    var AGelemMessage;
+
+    if (AGelem[0] != undefined) {
+        AGelemID = AGelem[0].id;
+        AGelemMessage = $("#" + AGelemID).attr("data-AG-message");
+    }
 
 
 
     myToastr(AGelemMessage);
 
-    
+
 });
 
 //putting function outside document ready so it could be accessible globally

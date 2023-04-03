@@ -18,8 +18,8 @@
         {
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> <span class="nav-label"> JOIN US <span class="caret"></span></span></a>
             <ul class="dropdown-menu">
-                <li><a class="nav-link" asp-action="Login" asp-controller="Identity">SignIN</a></li>
-                <li><a class="nav-link" asp-action="Register" asp-controller="Identity">Register</a></li>
+                <li><a class="custom-nav-link" asp-action="Login" asp-controller="Identity">SignIN</a></li>
+                <li><a class="custom-nav-link" asp-action="Register" asp-controller="Identity">Register</a></li>
                 @if (User == null)
                 {
                     @*view component*@
