@@ -9,12 +9,15 @@
 
 <h1>Manage Controller </h1>
 
-<h3>Report</h3>
-<a class="btn btn-primary" asp-action="EmployeeSalaryInfo" target="_blank">Salary Info</a>
-
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<hr />
+<h3>Report</h3>
+<a class="btn btn-primary" asp-action="EmployeeSalaryInfo" target="_blank">Salary Info</a>
+<hr />
+<h3>BarCode</h3>
+<div id="last-barcode"></div>
 
 <div class="container">
     <table id="Products" class="table table-striped table-bordered dt-resposive nowrap">
@@ -36,6 +39,35 @@
     @*<script src="~/datatables/js/jquery.dataTables.js"></script>
     <script src="~/datatables/js/dataTables.bootstrap4.js"></script>
     <script src="~/js/DrawDatatable.js"></script>*@
+
+    <script>
+        $(document).ready(function () {
+            debugger;
+            var barcode = "";
+            var interval;
+            document.addEventListener('keydown', function (evt) {
+                if (interval) {
+                    clearInterval(interval);
+                }
+                if (evt.code == 'Enter') {
+                    if (barcode) {
+                        handleBarcode(barcode);
+                    }
+                    barcode = "";
+                    return;
+                }
+                if (evt.key != "Shift") {
+                    barcode += evt.key;
+                }
+                interval = setInterval(() => barcode = "", 20)
+            });
+            function handleBarcode(scanned_barcode){
+                document.querySelector('#last-barcode').innerHTML = scanned_barcode;
+            }
+
+        })
+    </script>
+
 }
 
 
@@ -53,7 +85,7 @@
 
 
 
-    @*
+@*
 <table class="table">
     <thead>
         <tr>

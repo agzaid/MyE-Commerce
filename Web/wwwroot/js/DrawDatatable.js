@@ -3,16 +3,35 @@ $(document).ready(function () {
     debugger;
 
     var AGelem = $(".AG-data-table");
-    var AGelemID = AGelem[0].id;
-    var url = $("#" + AGelemID).attr("data-AG-load-url");
-    var urlEdit = $("#" + AGelemID).attr("data-AG-edit");
-    var urlDelete = $("#" + AGelemID).attr("data-AG-delete");
-    var AGelemColumns = $("#" + AGelemID).attr("data-AG-columns");
-    var AGelemMessage = $("#" + AGelemID).attr("data-AG-message");
-    var c = JSON.parse(AGelemColumns);
+    var AGelemID;
+    var AGelemMessage;
+    var url;
+    var urlEdit;
+    var urlDelete;
+    var AGelemColumns;
+    var c;
+
+    if (AGelem[0] != undefined) {
+        AGelemID = AGelem[0].id;
+        AGelemMessage = $("#" + AGelemID).attr("data-AG-message");
+        url = $("#" + AGelemID).attr("data-AG-load-url");
+        urlEdit = $("#" + AGelemID).attr("data-AG-edit");
+        urlDelete = $("#" + AGelemID).attr("data-AG-delete");
+        AGelemColumns = $("#" + AGelemID).attr("data-AG-columns");
+        c = JSON.parse(AGelemColumns);
+    }
+    //var AGelemID = AGelem[0].id;
+    //var url = $("#" + AGelemID).attr("data-AG-load-url");
+    //var urlEdit = $("#" + AGelemID).attr("data-AG-edit");
+    //var urlDelete = $("#" + AGelemID).attr("data-AG-delete");
+    //var AGelemColumns = $("#" + AGelemID).attr("data-AG-columns");
+    //var AGelemMessage = $("#" + AGelemID).attr("data-AG-message");
+    //var c = JSON.parse(AGelemColumns);
     var columnsRendered = [{ "data": "id", "name": "ID", "autowidth": true }];
 
     $('.AG-data-table').css('cursor', 'pointer');
+    //if (c == undefined) 
+    //    c="";
     c.forEach(CreateColumn);
 
     columnsRendered.push({
