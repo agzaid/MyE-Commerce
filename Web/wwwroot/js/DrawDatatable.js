@@ -10,6 +10,7 @@ $(document).ready(function () {
     var urlDelete;
     var AGelemColumns;
     var c;
+    var columnsRendered = [{ "data": "id", "name": "ID", "autowidth": true }];
 
     if (AGelem[0] != undefined) {
         AGelemID = AGelem[0].id;
@@ -19,6 +20,7 @@ $(document).ready(function () {
         urlDelete = $("#" + AGelemID).attr("data-AG-delete");
         AGelemColumns = $("#" + AGelemID).attr("data-AG-columns");
         c = JSON.parse(AGelemColumns);
+        c.forEach(CreateColumn);
     }
     //var AGelemID = AGelem[0].id;
     //var url = $("#" + AGelemID).attr("data-AG-load-url");
@@ -27,12 +29,10 @@ $(document).ready(function () {
     //var AGelemColumns = $("#" + AGelemID).attr("data-AG-columns");
     //var AGelemMessage = $("#" + AGelemID).attr("data-AG-message");
     //var c = JSON.parse(AGelemColumns);
-    var columnsRendered = [{ "data": "id", "name": "ID", "autowidth": true }];
 
     $('.AG-data-table').css('cursor', 'pointer');
     //if (c == undefined) 
     //    c="";
-    c.forEach(CreateColumn);
 
     columnsRendered.push({
         "render": function (data, type, row) { return `<a href="` + urlEdit + `/` + row.id + `" class="btn btn-icon btn-active-warning btn-outline btn-outline-default btn-icon-gray-700 btn-active-icon-primary" title="Edit"><i class="bi bi-pencil-square"></i></a> <a class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" title="Delete" href="` + urlDelete + `/` + row.id + `"><i class="fa fa-trash" aria-hidden="true"></i></a>` },

@@ -192,7 +192,7 @@
     @await Html.PartialAsync("_ToasterPartial")
     @await RenderSectionAsync("Scripts", required: false)
 
-    <script>
+   @* <script>
         $(document).ready(function() {
             var clickNum = 0;
             $('button[type = submit]').click(function(event) {
@@ -203,6 +203,6 @@
                 }
             })
         })
-    </script>
+    </script>*@
 </body>
 </html>

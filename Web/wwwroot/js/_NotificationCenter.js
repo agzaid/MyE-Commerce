@@ -1,7 +1,5 @@
 ﻿
 $(document).ready(function () {
-    debugger;
-
     var AGelem = $("#messageCenter");
     var AGelemID;
     var AGelemMessage;
@@ -11,11 +9,7 @@ $(document).ready(function () {
         AGelemMessage = $("#" + AGelemID).attr("data-AG-message");
     }
 
-
-
     myToastr(AGelemMessage);
-
-
 });
 
 //putting function outside document ready so it could be accessible globally
