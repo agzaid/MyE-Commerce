@@ -1,4 +1,5 @@
 ﻿using Data.Entities.Address;
+using Data.Entities.Cashier;
 using Data.Entities.Shop;
 using Data.Entities.User;
 using Microsoft.EntityFrameworkCore;
@@ -51,6 +52,12 @@ namespace Data.Mapping
         public static void MapCustomer(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Customer>().HasKey(s => s.ID);
+            //modelBuilder.Entity<ShoppingCart>().HasOne(s => s.AppUser).WithMany(s => s.ShoppingCarts).HasForeignKey(s => s.AppUserId).OnDelete(DeleteBehavior.Cascade); ;
+        }
+        public static void MapSkuProduct(this ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<SkuProduct>().HasKey(s => s.ID);
+            modelBuilder.Entity<SkuProduct>().HasIndex(u => u.BarCodeNumber).IsUnique();
             //modelBuilder.Entity<ShoppingCart>().HasOne(s => s.AppUser).WithMany(s => s.ShoppingCarts).HasForeignKey(s => s.AppUserId).OnDelete(DeleteBehavior.Cascade); ;
         }
 

@@ -1,6 +1,7 @@
 ﻿using Data;
 using Data.Entities;
 using Data.Entities.Address;
+using Data.Entities.Cashier;
 using Data.Entities.Shop;
 using Data.Entities.User;
 using Data.Mapping;
@@ -35,6 +36,7 @@ namespace Repo
         public DbSet<ShoppingCart> ShoppingCart { get; set; }
         public DbSet<ShoppingCartItem> ShoppingCartItem { get; set; }
         public DbSet<Customer> Customer { get; set; }
+        public DbSet<SkuProduct> SkuProduct { get; set; }
 
         //public DbSet<Order> Product { get; set; }
         //public DbSet<Order> Order { get; set; }
@@ -50,6 +52,7 @@ namespace Repo
             modelbuilder.MapUsersAddress();
             modelbuilder.MapShoppingCart();
             modelbuilder.MapCustomer();
+            modelbuilder.MapSkuProduct();
             //modelbuilder.MapOrder();
             //modelbuilder.MapOrderDetails();
         }
