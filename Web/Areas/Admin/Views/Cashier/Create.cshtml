@@ -132,9 +132,9 @@
             <!--end::Card header-->
             @*<!--begin::Card header-->
             <div class="card-header">
-                <div class="card-title">
-                    <h2>General</h2>
-                </div>
+            <div class="card-title">
+            <h2>General</h2>
+            </div>
             </div>
             <!--end::Card header-->*@
             <!--begin::Card body-->
@@ -237,7 +237,7 @@
                 <!--end::Input group-->
             </div>
             <!--end::Card body-->
-           
+
         </div>
         <!--end::Category & tags-->
     </div>
@@ -266,7 +266,7 @@
                                 <h2>Table Of Items</h2>
                             </div>
                             <div class="card-title">
-                                <button class="btn btn-success">Add with BarCode Scanner</button>
+                                <button class="btn btn-success" id="swalCall">Add with BarCode Scanner</button>
                             </div>
                         </div>
                         <!--end::Card header-->
@@ -284,9 +284,9 @@
                                     <thead>
                                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                                             <th>ID</th>
-                                           @* @foreach (var item in ViewBag.stringColumns)
+                                            @* @foreach (var item in ViewBag.stringColumns)
                                             {
-                                                <th>@item</th>
+                                            <th>@item</th>
                                             }*@
                                             <th>Name</th>
                                             <th>BarCode Number</th>
@@ -342,42 +342,41 @@
 @section Scripts {
 
     <script>
-        function file() {
-            return "DocumentPhotos";
-        }
         $(document).ready(function () {
-            new Dropzone("#kt_ecommerce_add_product_media",
-                {
-                    url: "@Url.Action("Create","Product")",
-                    method: "post",
-                    autoProcessQueue: false,
-                    paramName: file,
-                    uploadMultiple: true,
-                    maxFiles: 10,
-                    maxFilesize: 10,
-                    addRemoveLinks: !0,
-                    parallelUploads: 100,
-                    init: function () {
-                        console.log("active");
-                        var wrapperThis = this;
-                        //$("#kt_ecommerce_add_product_submit").click(
-                        $('#productForm').submit(function (e) {
-                            // e.preventDefault();
-                            debugger;
-                            var arr = [];
-                            wrapperThis.files.forEach(s => arr.push(s.dataURL));
-                            //$('#GalleryFormFiles').val(arr);
-                            //arr.forEach(s =>document.createElement('input').setAttribute("Id","GalleryImages").value(s));
-                            arr.forEach(function (val, i) {
-                                $('#kt_ecommerce_add_product_media').append(`<input type="hidden" name="RawGalleryImages[` + i + `]" value="` + val + `">'`)
-                            });
-                        });
-                    },
-                    accept: function (e, t) {
-                        "wow.jpg" == e.name ? t("Naha, you don't.") : t()
-                    }
-                });
+            $("#swalCall").on('click', function (event) {
+                event.preventDefault();
+                _Swal.TextInput();
+            })
         });
+        var _Swal = {
+            TextInput: function () {
+                const { value: ipAddress } = Swal.fire({
+                    title: 'Scan Barcode',
+                    input: 'text',
+                    inputLabel: 'Your Barcode digits',
+                    showCancelButton: true,
+                    confirmButtonText: 'OK',
+                    returnInputValueOnDeny: true,
+                    inputPlaceholder: 'Enter your barcode digits',
+                    inputValidator: (value) => {
+                        if (!value) {
+                            return 'Please Re-Scan Barcode ...!!!'
+                        }else{
+                            //Swal.fire(`Entered Codeeeeee: ${value}`)
+                        }
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.update(`Entered Code: ${result.value}`)
+
+                    }
+                })
+
+                if (ipAddress ) {
+                    Swal.fire(`Entered Code: ${value}`)
+                }
+            }
+        }
     </script>
     }
 
