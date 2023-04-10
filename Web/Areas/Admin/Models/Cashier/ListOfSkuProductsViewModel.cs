@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
-namespace Web.Areas.Admin.Models.Shop.Cashier
+namespace Web.Areas.Admin.Models.Cashier
 {
     public class ListOfSkuProductsViewModel
     {
@@ -18,14 +18,14 @@ namespace Web.Areas.Admin.Models.Shop.Cashier
                 }).ToList();
             ListOfStatus.Insert(0, new SelectListItem
             {
-                Value = String.Empty,
+                Value = string.Empty,
                 Text = "--------------"
             });
         }
         public int ID { get; set; }
         [Display(Name = "Product Name")]
         public string Name { get; set; }
-        
+
         [Required]
         [Display(Name = "BarCode Serial Number")]
         //[Unique(ErrorMessage = "This item already exists !!")]

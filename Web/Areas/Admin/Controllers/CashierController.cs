@@ -1,10 +1,11 @@
 ﻿using Data.Entities.Cashier;
+using Data.Entities.Enums;
 using Data.Entities.Shop;
 using Microsoft.AspNetCore.Mvc;
 using Services.Shop;
 using System.Text.Json;
-using Web.Areas.Admin.Models.Shop.Cashier;
-using Web.Areas.Admin.Models.Shop.product;
+using Web.Areas.Admin.Models.Shop;
+using Web.Areas.Admin.Models.Cashier;
 
 namespace Web.Areas.Admin.Controllers
 {
@@ -42,6 +43,41 @@ namespace Web.Areas.Admin.Controllers
 
             return View(skuproducts);
         }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            var product = new CreateSkuProductViewModel();
+            var categories = _skuProductService.GetMany(s => true, null);
+            
+            return View(product);
+        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> CreateAsync(CreateProductViewModel model)
+        //{
+        //    var Message = new List<string>();
+        //    if (ModelState.IsValid)
+        //    {
+        //        var product = new Product()
+        //        {
+        //            ThumbnailImage = $"/Uploads/Products/{await model.ThumbnailFormFile.CreateFile("Products")}",
+        //            CreatedDate = DateTime.UtcNow,
+        //            DisplayOrder = model.DisplayOrder,
+        //            ModifiedDate = DateTime.UtcNow,
+        //            Price = model.Price,
+        //            ProductName = model.ProductName,
+        //            Quantity = model.Quantity,
+        //            ShortDescription = model.ShortDescription,
+        //            Status = model.Status,
+        //        };
+        //        _productService.Insert(product);
+        //        Message.Add("Create");
+        //    }
+        //    return RedirectToAction("index", new { message = Message });
+        //}
+
+       
 
 
         #region Helper Methods

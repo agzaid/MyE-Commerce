@@ -2,6 +2,11 @@
 $(document).ready(function () {
     debugger;
 
+    //var _DataTable = {
+    //    Draw: function () {
+
+    //    }
+    //}
     var AGelem = $(".AG-data-table");
     var AGelemID;
     var AGelemMessage;
