@@ -4,9 +4,9 @@ using Microsoft.Build.Framework;
 
 namespace Web.Areas.Admin.Models.Cashier
 {
-    public class CreateSkuProductViewModel
+    public class CreateSkuMainItemViewModel
     {
-        public CreateSkuProductViewModel()
+        public CreateSkuMainItemViewModel()
         {
             ListOfStatus = Enum.GetNames(typeof(SkuItemStatus))
               .Select(v => new SelectListItem

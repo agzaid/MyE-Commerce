@@ -10,33 +10,33 @@ using System.Threading.Tasks;
 
 namespace Services.Shop
 {
-    public class SkuProductService : ISkuProductService
+    public class SkuMainItemService : ISkuMainItemService
     {
-        private readonly IRepository<SkuProduct> repository;
+        private readonly IRepository<SkuMainItem> repository;
 
-        public SkuProductService(IRepository<SkuProduct> repository)
+        public SkuMainItemService(IRepository<SkuMainItem> repository)
         {
             this.repository = repository;
         }
         public async Task Delete(int id)
         {
-            SkuProduct model = await GetOne(s => s.ID == id, null);
+            SkuMainItem model = await GetOne(s => s.ID == id, null);
 
             await repository.DeleteAsync(model);
             repository.SaveChanges();
         }
 
-        public IEnumerable<SkuProduct> GetMany(Expression<Func<SkuProduct, bool>> expression, List<string> references)
+        public IEnumerable<SkuMainItem> GetMany(Expression<Func<SkuMainItem, bool>> expression, List<string> references)
         {
             return repository.GetAll(expression, references);
         }
 
-        public async Task<SkuProduct> GetOne(Expression<Func<SkuProduct, bool>> expression, List<string> references)
+        public async Task<SkuMainItem> GetOne(Expression<Func<SkuMainItem, bool>> expression, List<string> references)
         {
             return await repository.Get(expression, references);
         }
 
-        public void Insert(SkuProduct product)
+        public void Insert(SkuMainItem product)
         {
             if (product != null)
             {
@@ -47,7 +47,7 @@ namespace Services.Shop
             repository.SaveChanges();
         }
 
-        public void Update(SkuProduct product)
+        public void Update(SkuMainItem product)
         {
             if (product != null)
             {

@@ -69,9 +69,10 @@
     <script src="~/datatables/js/dataTables.bootstrap4.js"></script>
     <script src="~/js/DrawDatatable.js"></script>*@
 
-    @*<script>
-        var alert = $(".alert");
-        if(alert!="")
-            toastr.info('Page Loaded!');
-    </script>*@
+    <script>
+        $(document).ready(function () {
+            debugger;
+            _DataTable.Draw();
+        });
+    </script>
 }

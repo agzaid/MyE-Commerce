@@ -6,9 +6,9 @@ using System.Xml.Linq;
 
 namespace Web.Areas.Admin.Models.Cashier
 {
-    public class ListOfSkuProductsViewModel
+    public class ListOfSkuMainItemViewModel
     {
-        public ListOfSkuProductsViewModel()
+        public ListOfSkuMainItemViewModel()
         {
             ListOfStatus = Enum.GetNames(typeof(SkuItemStatus))
                 .Select(v => new SelectListItem
@@ -30,14 +30,14 @@ namespace Web.Areas.Admin.Models.Cashier
         [Display(Name = "BarCode Serial Number")]
         //[Unique(ErrorMessage = "This item already exists !!")]
         public string BarCodeNumber { get; set; }
-        public double Price { get; set; }
+        public double Quantity { get; set; }
         public string ThumbnailImage { get; set; }
         [Display(Name = "Short Description")]
         public string ShortDescription { get; set; }
         public SkuItemStatus Status { get; set; }
         public IFormFile ThumbnailFormFile { get; set; }
         public List<SelectListItem> ListOfStatus { get; set; } = new();
-        public List<IFormFile> GalleryFormFiles { get; set; } = new();
+        //public List<IFormFile> GalleryFormFiles { get; set; } = new();
 
         //public List<string> RawGalleyImages { get; set; } = new();
         //public List<string> GalleyImages { get; set; } = new();

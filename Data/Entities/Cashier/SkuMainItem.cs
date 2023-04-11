@@ -8,16 +8,17 @@ using System.Threading.Tasks;
 
 namespace Data.Entities.Cashier
 {
-    public class SkuProduct : BaseEntity
+    public class SkuMainItem : BaseEntity
     {
         public string Name { get; set; }
         public string BarCodeNumber { get; set; }
-        public double Price { get; set; }
+        public double Quantity { get; set; }
         public string ThumbnailImage { get; set; }
         public string ShortDescription { get; set; }
         public SkuItemStatus Status { get; set; }
 
         #region Navigation Properties
+        public List<SkuSubItem> skuSubItems { get; set; } = new();
         //public Category Category { get; set; }
         //public int? CategoryId { get; set; }
 

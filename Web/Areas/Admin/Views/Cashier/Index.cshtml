@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Data.Entities.Cashier.SkuProduct>
+﻿@model IEnumerable<Data.Entities.Cashier.SkuMainItem>
 
 @{
     ViewData["Title"] = "Index";
@@ -38,7 +38,7 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>BarCode Number</th>
-                <th>Price</th>
+                <th>Quantity</th>
                 <th>Discreption</th>
                 <th>Status</th>
                 <th>Actions</th>
@@ -49,6 +49,12 @@
 
 @section Scripts
     {
+    <script>
+        $(document).ready(function () {
+            debugger;
+            _DataTable.Draw();
+        });
+    </script>
     @*<script src="~/datatables/js/jquery.dataTables.js"></script>
     <script src="~/datatables/js/dataTables.bootstrap4.js"></script>
     <script src="~/js/DrawDatatable.js"></script>*@

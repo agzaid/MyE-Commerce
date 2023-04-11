@@ -36,7 +36,7 @@ namespace Repo
         public DbSet<ShoppingCart> ShoppingCart { get; set; }
         public DbSet<ShoppingCartItem> ShoppingCartItem { get; set; }
         public DbSet<Customer> Customer { get; set; }
-        public DbSet<SkuProduct> SkuProduct { get; set; }
+        public DbSet<SkuMainItem> SkuMainItem { get; set; }
 
         //public DbSet<Order> Product { get; set; }
         //public DbSet<Order> Order { get; set; }

@@ -14,6 +14,8 @@ namespace Data.Entities.Enums
         Received = 4,
         Returned = 5,
         Damaged = 6,
-        MissingItems= 7
+        MissingItems= 7,
+        OnHold= 8,
+        Cancelled= 9,
     }
 }

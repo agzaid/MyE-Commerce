@@ -47,7 +47,7 @@ namespace Services.Injection
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICartService, CartService>();
             services.AddScoped<ICustomerService, CustomerService>();
-            services.AddScoped<ISkuProductService, SkuProductService>();
+            services.AddScoped<ISkuMainItemService, SkuMainItemService>();
 
             return services;
         }

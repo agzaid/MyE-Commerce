@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repo;
 
@@ -11,9 +12,10 @@ using Repo;
 namespace Repo.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230411095025_edited_skuName")]
+    partial class edited_skuName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -127,7 +129,7 @@ namespace Repo.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Quantity")
+                    b.Property<double>("Price")
                         .HasColumnType("float");
 
                     b.Property<string>("ShortDescription")
@@ -146,42 +148,6 @@ namespace Repo.Migrations
                         .HasFilter("[BarCodeNumber] IS NOT NULL");
 
                     b.ToTable("SkuMainItem");
-                });
-
-            modelBuilder.Entity("Data.Entities.Cashier.SkuSubItem", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<string>("BarCodeNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("ExiperyDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<int?>("SkuMainItemId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("SkuMainItemId");
-
-                    b.ToTable("SkuSubItem");
                 });
 
             modelBuilder.Entity("Data.Entities.Shop.Category", b =>
@@ -620,15 +586,6 @@ namespace Repo.Migrations
                     b.Navigation("AppUser");
                 });
 
-            modelBuilder.Entity("Data.Entities.Cashier.SkuSubItem", b =>
-                {
-                    b.HasOne("Data.Entities.Cashier.SkuMainItem", "SkuMainItem")
-                        .WithMany("skuSubItems")
-                        .HasForeignKey("SkuMainItemId");
-
-                    b.Navigation("SkuMainItem");
-                });
-
             modelBuilder.Entity("Data.Entities.Shop.Product", b =>
                 {
                     b.HasOne("Data.Entities.Shop.Category", "Category")
@@ -721,11 +678,6 @@ namespace Repo.Migrations
             modelBuilder.Entity("Data.Entities.Address.Address", b =>
                 {
                     b.Navigation("UsersAddresses");
-                });
-
-            modelBuilder.Entity("Data.Entities.Cashier.SkuMainItem", b =>
-                {
-                    b.Navigation("skuSubItems");
                 });
 
             modelBuilder.Entity("Data.Entities.Shop.Category", b =>

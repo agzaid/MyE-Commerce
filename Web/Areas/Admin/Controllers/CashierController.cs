@@ -12,17 +12,13 @@ namespace Web.Areas.Admin.Controllers
     [Area("Admin")]
     public class CashierController : Controller
     {
-        private readonly ISkuProductService _skuProductService;
+        private readonly ISkuMainItemService _skuProductService;
 
-        public CashierController(ISkuProductService skuProductService)
+        public CashierController(ISkuMainItemService skuProductService)
         {
             _skuProductService = skuProductService;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
-        public IActionResult ListOfSkuProducts(List<string> message)
+        public IActionResult Index(List<string> message)
         {
             if (message.Count > 0)
             {
@@ -47,7 +43,7 @@ namespace Web.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var product = new CreateSkuProductViewModel();
+            var product = new CreateSkuMainItemViewModel();
             var categories = _skuProductService.GetMany(s => true, null);
             
             return View(product);
@@ -92,14 +88,14 @@ namespace Web.Areas.Admin.Controllers
             var sortDir = Request.Form["order[0][dir]"];
 
             //for searching
-            IEnumerable<SkuProduct> skuproducts = _skuProductService.GetMany(s => true, null)
-                .Where(m => string.IsNullOrEmpty(searchValue) ? true : (m.Name.Contains(searchValue) || m.ShortDescription.Contains(searchValue) || m.Price.ToString().Contains(searchValue) || m.BarCodeNumber.ToString().Contains(searchValue)));
+            IEnumerable<SkuMainItem> skuproducts = _skuProductService.GetMany(s => true, null)
+                .Where(m => string.IsNullOrEmpty(searchValue) ? true : (m.Name.Contains(searchValue) || m.ShortDescription.Contains(searchValue)  || m.BarCodeNumber.ToString().Contains(searchValue)));
 
-            var model = skuproducts.Select(s => new ListOfSkuProductsViewModel()
+            var model = skuproducts.Select(s => new ListOfSkuMainItemViewModel()
             {
                 ID = s.ID,
                 Name = s.Name,
-                Price = s.Price,
+                Quantity = s.Quantity,
                 BarCodeNumber = s.BarCodeNumber,
                 Status = s.Status,
                 ThumbnailImage = s.ThumbnailImage,

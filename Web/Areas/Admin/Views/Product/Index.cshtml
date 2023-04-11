@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="~/datatables/css/dataTables.bootstrap4.css" />
 
 <h1>List of Products</h1>
-<br/>
+<br />
 <p>
     <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
@@ -50,10 +50,16 @@
 
 @section Scripts
     {
+    <script>
+        $(document).ready(function () {
+            debugger;
+            _DataTable.Draw();
+        });
+    </script>
     @*<script src="~/datatables/js/jquery.dataTables.js"></script>
     <script src="~/datatables/js/dataTables.bootstrap4.js"></script>
     <script src="~/js/DrawDatatable.js"></script>*@
-  
+
     @*<script>
         var alert = $(".alert");
         if(alert!="")
