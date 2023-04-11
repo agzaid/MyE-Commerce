@@ -11,10 +11,13 @@
 <p>
     <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
+<p>
+    <a id="swalCall" class="btn btn-primary">try!!!</a>
+</p>
 
 <div class="container">
     <table class="table table-striped table-bordered dt-resposive nowrap AG-data-table"
-           id="Products"
+           id="Categories"
            data-AG-columns='@Html.Raw(ViewBag.columns)'
            data-AG-message='@Html.Raw(ViewBag.Message)'
            data-AG-load-url='@Url.Action("LoadDataTable","Category")'
@@ -46,15 +49,74 @@
 
 @section Scripts
     {
-  
+
     <script>
         $(document).ready(function () {
             debugger;
             _DataTable.Draw();
+
+
+            $("#swalCall").on('click', function (event) {
+                event.preventDefault();
+                debugger;
+                var data = [
+                    [
+                        "1",
+                        "System Architect",
+                        "Edinburgh",
+                        "5421",
+                        "5421"
+                    ],
+                    [
+                        "12",
+                        "Director",
+                        "Edinburgh",
+                        "8422",
+                        "8422"
+                    ]
+                ];
+                var datatable = $('#Categories').DataTable();
+                datatable.rows.add({
+                    "id": "1",
+                    "name": "Tiger Nixon",
+                    "displayOrder": 2,
+                    "status": "Edinburgh",
+                    "action": "5421"
+                }); // Add new data
+                datatable.search(jQuery('input[type="search"]').val()).draw();
+                //datatable.clear().rows.add({
+                //    "id": "1",
+                //    "name": "Tiger Nixon",
+                //    "displayOrder": 2,
+                //    "status": "Edinburgh",
+                //    "action": "5421"
+                //}).draw();
+
+                datatable.columns.adjust().draw();
+
+                //$('#Categories').DataTable().clear().destroy();
+                //var table = $('#Categories').DataTable({
+                //    data: data
+                //});
+
+                //var rowNode = table.row.add({
+                //    "id": "1",
+                //    "name": "Tiger Nixon",
+                //    "barCodeNumber": "System Architect",
+                //    "price": "$3,120",
+                //    "shortDescription": "2011/04/25",
+                //    "status": "Edinburgh",
+                //    "action": "5421"
+                //}).draw().node();
+
+                //$(rowNode)
+                //    .css('color', 'red')
+                //    .animate({ color: 'black' });
+            })
         });
     </script>
-   @* <script src="~/datatables/js/jquery.dataTables.js"></script>
+    @* <script src="~/datatables/js/jquery.dataTables.js"></script>
     <script src="~/datatables/js/dataTables.bootstrap4.js"></script>
     <script src="~/js/DrawDatatable.js"></script>*@
-  
+
     }

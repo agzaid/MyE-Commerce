@@ -45,7 +45,16 @@ namespace Web.Areas.Admin.Controllers
         {
             var product = new CreateSkuMainItemViewModel();
             var categories = _skuProductService.GetMany(s => true, null);
-            
+            var columns = new List<string>()
+            {
+                "Name",
+                "BarCodeNumber",
+                "Price",
+                "ShortDescription",
+                "Status"
+            };
+            ViewBag.columns = JsonSerializer.Serialize(columns);
+
             return View(product);
         }
         //[HttpPost]

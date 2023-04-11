@@ -1,8 +1,4 @@
 ﻿
-//$(document).ready(function () {
-//    debugger;
-
-//});
     var _DataTable = {
         Draw: function () {
 

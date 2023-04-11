@@ -54,7 +54,13 @@ namespace Data.Mapping
             modelBuilder.Entity<Customer>().HasKey(s => s.ID);
             //modelBuilder.Entity<ShoppingCart>().HasOne(s => s.AppUser).WithMany(s => s.ShoppingCarts).HasForeignKey(s => s.AppUserId).OnDelete(DeleteBehavior.Cascade); ;
         }
-        public static void MapSkuProduct(this ModelBuilder modelBuilder)
+        public static void MapSkuMainItem(this ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<SkuMainItem>().HasKey(s => s.ID);
+            modelBuilder.Entity<SkuMainItem>().HasIndex(u => u.BarCodeNumber).IsUnique();
+            //modelBuilder.Entity<ShoppingCart>().HasOne(s => s.AppUser).WithMany(s => s.ShoppingCarts).HasForeignKey(s => s.AppUserId).OnDelete(DeleteBehavior.Cascade); ;
+        }
+        public static void MapSkuSubItem(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<SkuMainItem>().HasKey(s => s.ID);
             modelBuilder.Entity<SkuMainItem>().HasIndex(u => u.BarCodeNumber).IsUnique();

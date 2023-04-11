@@ -37,6 +37,7 @@ namespace Repo
         public DbSet<ShoppingCartItem> ShoppingCartItem { get; set; }
         public DbSet<Customer> Customer { get; set; }
         public DbSet<SkuMainItem> SkuMainItem { get; set; }
+        public DbSet<SkuSubItem> SkuSubItem { get; set; }
 
         //public DbSet<Order> Product { get; set; }
         //public DbSet<Order> Order { get; set; }
@@ -52,7 +53,7 @@ namespace Repo
             modelbuilder.MapUsersAddress();
             modelbuilder.MapShoppingCart();
             modelbuilder.MapCustomer();
-            modelbuilder.MapSkuProduct();
+            modelbuilder.MapSkuMainItem();
             //modelbuilder.MapOrder();
             //modelbuilder.MapOrderDetails();
         }
