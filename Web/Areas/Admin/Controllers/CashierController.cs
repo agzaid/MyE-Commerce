@@ -30,7 +30,7 @@ namespace Web.Areas.Admin.Controllers
             {
                 "Name",
                 "BarCodeNumber",
-                "Price",
+                "Quantity",
                 "ShortDescription",
                 "Status"
             };
@@ -50,10 +50,12 @@ namespace Web.Areas.Admin.Controllers
                 "Name",
                 "BarCodeNumber",
                 "Price",
-                "ShortDescription",
+                //"ShortDescription",
                 "Status"
             };
             ViewBag.columns = JsonSerializer.Serialize(columns);
+            
+            ViewBag.records = _skuProductService.GetMany(s => true, null).Count();
 
             return View(product);
         }
@@ -109,6 +111,40 @@ namespace Web.Areas.Admin.Controllers
                 Status = s.Status,
                 ThumbnailImage = s.ThumbnailImage,
                 ShortDescription = s.ShortDescription,
+            });
+            //for sorting
+            //IQueryable<Product> queryProducts = (IQueryable<Product>)products;
+            //if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortDir)))
+            //   products = queryProducts.OrderBy(string.Concat(sortColumn, " ", sortDir));
+
+            var data = model.Skip(skip).Take(pageSize).ToList();
+
+            var recordsTotal = model.Count();
+            ViewData["records"] = recordsTotal;
+            return Ok(new { recordsFiltered = recordsTotal, recordsTotal, data = data });
+        }
+        
+        [HttpPost]
+        public IActionResult Sub_LoadDataTable()
+        {
+            var pageSize = int.Parse(Request.Form["length"]);
+            var skip = int.Parse(Request.Form["start"]);
+            var searchValue = Request.Form["search[value]"];
+            var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"] + "][name]"];
+            var sortDir = Request.Form["order[0][dir]"];
+
+            //for searching
+            IEnumerable<SkuMainItem> skuproducts = _skuProductService.GetMany(s => true, null)
+                .Where(m => string.IsNullOrEmpty(searchValue) ? true : (m.Name.Contains(searchValue) || m.ShortDescription.Contains(searchValue)  || m.BarCodeNumber.ToString().Contains(searchValue)));
+
+            var model = skuproducts.Select(s => new ListOfSkuMainItemViewModel()
+            {
+                ID = s.ID,
+                Name = s.Name,
+                Quantity = s.Quantity,
+                BarCodeNumber = s.BarCodeNumber,
+                Status = s.Status,
+                ThumbnailImage = s.ThumbnailImage,
             });
             //for sorting
             //IQueryable<Product> queryProducts = (IQueryable<Product>)products;

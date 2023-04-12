@@ -59,59 +59,9 @@
             $("#swalCall").on('click', function (event) {
                 event.preventDefault();
                 debugger;
-                var data = [
-                    [
-                        "1",
-                        "System Architect",
-                        "Edinburgh",
-                        "5421",
-                        "5421"
-                    ],
-                    [
-                        "12",
-                        "Director",
-                        "Edinburgh",
-                        "8422",
-                        "8422"
-                    ]
-                ];
-                var datatable = $('#Categories').DataTable();
-                datatable.rows.add({
-                    "id": "1",
-                    "name": "Tiger Nixon",
-                    "displayOrder": 2,
-                    "status": "Edinburgh",
-                    "action": "5421"
-                }); // Add new data
-                datatable.search(jQuery('input[type="search"]').val()).draw();
-                //datatable.clear().rows.add({
-                //    "id": "1",
-                //    "name": "Tiger Nixon",
-                //    "displayOrder": 2,
-                //    "status": "Edinburgh",
-                //    "action": "5421"
-                //}).draw();
-
-                datatable.columns.adjust().draw();
-
-                //$('#Categories').DataTable().clear().destroy();
-                //var table = $('#Categories').DataTable({
-                //    data: data
-                //});
-
-                //var rowNode = table.row.add({
-                //    "id": "1",
-                //    "name": "Tiger Nixon",
-                //    "barCodeNumber": "System Architect",
-                //    "price": "$3,120",
-                //    "shortDescription": "2011/04/25",
-                //    "status": "Edinburgh",
-                //    "action": "5421"
-                //}).draw().node();
-
-                //$(rowNode)
-                //    .css('color', 'red')
-                //    .animate({ color: 'black' });
+                var table = $('#Categories');
+                var markup = "<tr><td><input type='checkbox' name='record'></td><td>" + "ahmad gamal" + "</td><td>" + "agzaid00" + "</td></tr>";
+                $("table tbody").append(markup);
             })
         });
     </script>
