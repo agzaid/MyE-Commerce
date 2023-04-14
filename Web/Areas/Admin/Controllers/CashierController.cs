@@ -50,7 +50,7 @@ namespace Web.Areas.Admin.Controllers
                 "Name",
                 "BarCodeNumber",
                 "Price",
-                //"ShortDescription",
+                "ExpiryDate",
                 "Status"
             };
             ViewBag.columns = JsonSerializer.Serialize(columns);
