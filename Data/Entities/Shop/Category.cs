@@ -1,4 +1,5 @@
-﻿using Data.Entities.Enums;
+﻿using Data.Entities.Cashier;
+using Data.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -18,7 +19,8 @@ namespace Data.Entities.Shop
         public RecordStatus Status { get; set; }
 
         #region navigation properties
-        public List<Product> Products { get; set; }
+        public List<Product> Products { get; set; } = new();
+        public List<SkuMainItem> skuMainItems { get; set; } = new();
         // public IEnumerable<Localization> Localizations { get; set; }
 
         #endregion

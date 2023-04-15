@@ -100,13 +100,13 @@ namespace Web.Areas.Admin.Controllers
 
             //for searching
             IEnumerable<SkuMainItem> skuproducts = _skuProductService.GetMany(s => true, null)
-                .Where(m => string.IsNullOrEmpty(searchValue) ? true : (m.Name.Contains(searchValue) || m.ShortDescription.Contains(searchValue)  || m.BarCodeNumber.ToString().Contains(searchValue)));
+                .Where(m => string.IsNullOrEmpty(searchValue) ? true : (m.Name.Contains(searchValue) || m.ShortDescription.Contains(searchValue)  || m.Price.ToString().Contains(searchValue)));
 
             var model = skuproducts.Select(s => new ListOfSkuMainItemViewModel()
             {
                 ID = s.ID,
                 Name = s.Name,
-                BarCodeNumber = s.BarCodeNumber,
+                Price = (double)s.Price,
                 Quantity = s.Quantity,
                 Status = s.Status,
                 ThumbnailImage = s.ThumbnailImage,
@@ -135,14 +135,14 @@ namespace Web.Areas.Admin.Controllers
 
             //for searching
             IEnumerable<SkuMainItem> skuproducts = _skuProductService.GetMany(s => true, null)
-                .Where(m => string.IsNullOrEmpty(searchValue) ? true : (m.Name.Contains(searchValue) || m.ShortDescription.Contains(searchValue)  || m.BarCodeNumber.ToString().Contains(searchValue)));
+                .Where(m => string.IsNullOrEmpty(searchValue) ? true : (m.Name.Contains(searchValue) || m.ShortDescription.Contains(searchValue)  || m.Price.ToString().Contains(searchValue)));
 
             var model = skuproducts.Select(s => new ListOfSkuMainItemViewModel()
             {
                 ID = s.ID,
                 Name = s.Name,
                 Quantity = s.Quantity,
-                BarCodeNumber = s.BarCodeNumber,
+                Price = s.Price,
                 Status = s.Status,
                 ThumbnailImage = s.ThumbnailImage,
             });
