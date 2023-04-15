@@ -1,6 +1,9 @@
-﻿using Data.Entities.Enums;
+﻿using Data.Entities.Cashier;
+using Data.Entities.Enums;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Build.Framework;
+using Repo.Migrations;
+using System.ComponentModel.DataAnnotations;
 
 namespace Web.Areas.Admin.Models.Cashier
 {
@@ -20,17 +23,20 @@ namespace Web.Areas.Admin.Models.Cashier
                 Text = "--------------"
             });
         }
-        [Required]
         public string Name { get; set; }
-        [Required]
+        [Display(Name = "Short Description")]
         public string BarCodeNumber { get; set; }
-        [Required]
         public double Price { get; set; }
+        public int Quantity{ get; set; }
         public string ThumbnailImage { get; set; }
         public IFormFile ThumbnailFormFile { get; set; }
         public string ShortDescription { get; set; }
         public SkuItemStatus Status { get; set; }
+        public int CategoryId { get; set; }
         public List<SelectListItem> ListOfStatus { get; set; } = new();
+        public List<SelectListItem> ListOfCategories { get; set; } = new();
+        public List<SkuSubItem> ListSkuSubItems { get; set; } = new();
+
 
 
     }

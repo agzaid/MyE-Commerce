@@ -6,6 +6,8 @@ using Services.Shop;
 using System.Text.Json;
 using Web.Areas.Admin.Models.Shop;
 using Web.Areas.Admin.Models.Cashier;
+using Services.Injection;
+using Services.Shop.CategoryRepo;
 
 namespace Web.Areas.Admin.Controllers
 {
@@ -13,10 +15,12 @@ namespace Web.Areas.Admin.Controllers
     public class CashierController : Controller
     {
         private readonly ISkuMainItemService _skuProductService;
+        private readonly ICategoryService _categoryService;
 
-        public CashierController(ISkuMainItemService skuProductService)
+        public CashierController(ISkuMainItemService skuProductService, ICategoryService categoryService)
         {
             _skuProductService = skuProductService;
+            _categoryService = categoryService;
         }
         public IActionResult Index(List<string> message)
         {
@@ -44,10 +48,16 @@ namespace Web.Areas.Admin.Controllers
         public IActionResult Create()
         {
             var product = new CreateSkuMainItemViewModel();
-            var categories = _skuProductService.GetMany(s => true, null);
+            var categories = _categoryService.GetMany(s => true, new List<string>());
+            product.ListOfCategories = categories.Select(s => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem()
+            {
+                Text = s.Name,
+                Value = s.ID.ToString(),
+            }).ToList();
+            product.Status = SkuItemStatus.available;
             var columns = new List<string>()
             {
-                "Name",
+                //"Name",
                 "BarCodeNumber",
                 "Price",
                 "ExpiryDate",
@@ -59,32 +69,30 @@ namespace Web.Areas.Admin.Controllers
 
             return View(product);
         }
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> CreateAsync(CreateProductViewModel model)
-        //{
-        //    var Message = new List<string>();
-        //    if (ModelState.IsValid)
-        //    {
-        //        var product = new Product()
-        //        {
-        //            ThumbnailImage = $"/Uploads/Products/{await model.ThumbnailFormFile.CreateFile("Products")}",
-        //            CreatedDate = DateTime.UtcNow,
-        //            DisplayOrder = model.DisplayOrder,
-        //            ModifiedDate = DateTime.UtcNow,
-        //            Price = model.Price,
-        //            ProductName = model.ProductName,
-        //            Quantity = model.Quantity,
-        //            ShortDescription = model.ShortDescription,
-        //            Status = model.Status,
-        //        };
-        //        _productService.Insert(product);
-        //        Message.Add("Create");
-        //    }
-        //    return RedirectToAction("index", new { message = Message });
-        //}
 
-       
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateAsync(CreateSkuMainItemViewModel model)
+        {
+            var Message = new List<string>();
+            if (ModelState.IsValid)
+            {
+                var product = new Product()
+                {
+                    ThumbnailImage = $"/Uploads/SkuMainItems/{await model.ThumbnailFormFile.CreateFile("SkuMainItems")}",
+                    CreatedDate = DateTime.UtcNow,
+                    ModifiedDate = DateTime.UtcNow,
+                    Price = model.Price,
+                    Quantity = model.Quantity,
+                    ShortDescription = model.ShortDescription,
+                };
+                //_productService.Insert(product);
+                Message.Add("Create");
+            }
+            return RedirectToAction("index", new { message = Message });
+        }
+
+
 
 
         #region Helper Methods
@@ -140,7 +148,7 @@ namespace Web.Areas.Admin.Controllers
             var model = skuproducts.Select(s => new ListOfSkuMainItemViewModel()
             {
                 ID = s.ID,
-                Name = s.Name,
+                //Name = s.Name,
                 Quantity = s.Quantity,
                 Price = s.Price,
                 Status = s.Status,

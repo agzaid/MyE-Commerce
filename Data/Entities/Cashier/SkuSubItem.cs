@@ -11,7 +11,7 @@ namespace Data.Entities.Cashier
     {
         public string BarCodeNumber { get; set; }
         public double Price { get; set; }
-        public DateTime ExiperyDate { get; set; }
+        public DateTime ExpiryDate { get; set; }
         public SkuItemStatus Status { get; set; }
 
         #region Navigation properties

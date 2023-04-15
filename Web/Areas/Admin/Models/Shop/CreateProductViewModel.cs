@@ -22,6 +22,7 @@ namespace Web.Areas.Admin.Models.Shop
             });
         }
         public int ID { get; set; }
+        [Required]
         [Display(Name = "Product Name")]
         public string ProductName { get; set; }
         public double Price { get; set; }
@@ -44,7 +45,6 @@ namespace Web.Areas.Admin.Models.Shop
         public List<SelectListItem> ListOfStatus { get; set; } = new();
         public List<SelectListItem> ListOfCategories { get; set; } = new();
 
-        public Category Category { get; set; }
         public int CategoryId { get; set; }
 
     }

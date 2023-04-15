@@ -178,19 +178,7 @@
                 <label class="form-label">Categories</label>
                 <!--end::Label-->
                 <!--begin::Select2-->
-                <select class="form-select mb-2" data-control="select2" data-placeholder="Select an option" data-allow-clear="true" multiple="multiple">
-                    <option></option>
-                    <option value="Computers">Computers</option>
-                    <option value="Watches">Watches</option>
-                    <option value="Headphones">Headphones</option>
-                    <option value="Footwear">Footwear</option>
-                    <option value="Cameras">Cameras</option>
-                    <option value="Shirts">Shirts</option>
-                    <option value="Household">Household</option>
-                    <option value="Handbags">Handbags</option>
-                    <option value="Wines">Wines</option>
-                    <option value="Sandals">Sandals</option>
-                </select>
+                <select asp-for="CategoryId" asp-items="@Model.ListOfCategories" class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Status Description"></select>
                 <!--end::Select2-->
                 <!--begin::Description-->
                 <div class="text-muted fs-7 mb-7">Add product to a category.</div>
@@ -250,251 +238,14 @@
                             <div class="card-title">
                                 <h2>Table Of Items</h2>
                             </div>
-                            <div class="card-toolbar">
-                                <a href="#" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#kt_modal_create_campaign">Create Campaign</a>
-                            </div>
+                            @*<div class="card-toolbar">
+                            <a href="#" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#kt_modal_create_campaign">Create Campaign</a>
+                            </div>*@
                             <div class="card-title">
                                 <button class="btn btn-success" id="swalCall">Add with BarCode Scanner</button>
                             </div>
                         </div>
                         <!--end::Card header-->
-                        <!--begin create item sku-->
-                        <!--begin::Modal - Offer A Deal-->
-                        <div class="modal fade" id="kt_modal_create_campaign" tabindex="-1" aria-hidden="true">
-                            <!--begin::Modal dialog-->
-                            <div class="modal-dialog modal-fullscreen p-9">
-                                <!--begin::Modal content-->
-                                <div class="modal-content modal-rounded">
-                                    <!--begin::Modal header-->
-                                    <div class="modal-header py-7 d-flex justify-content-between">
-                                        <!--begin::Modal title-->
-                                        <h2>Create Campaign</h2>
-                                        <!--end::Modal title-->
-                                        <!--begin::Close-->
-                                        <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-                                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                                            <span class="svg-icon svg-icon-1">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
-                                                    <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
-                                                </svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </div>
-                                        <!--end::Close-->
-                                    </div>
-                                    <!--begin::Modal header-->
-                                    <!--begin::Modal body-->
-                                    <div class="modal-body scroll-y m-5">
-                                        <!--begin::Stepper-->
-                                        <div class="stepper stepper-links d-flex flex-column" id="kt_modal_create_campaign_stepper">
-                                            <!--begin::Nav-->
-                                            <div class="stepper-nav justify-content-center py-2">
-                                                <!--begin::Step 1-->
-                                                <div class="stepper-item me-5 me-md-15 current" data-kt-stepper-element="nav">
-                                                    <h3 class="stepper-title">Item SKU</h3>
-                                                </div>
-                                                <!--end::Step 1-->
-
-                                            </div>
-                                            <!--end::Nav-->
-                                            <!--begin::Form-->
-                                            <form class="mx-auto w-100 mw-600px pt-15 pb-10" novalidate="novalidate" id="kt_modal_create_campaign_stepper_form">
-                                                <!--begin::Step 1-->
-                                                <div class="current" data-kt-stepper-element="content">
-                                                    <!--begin::Wrapper-->
-                                                    <div class="w-100">
-                                                        <!--begin::Heading-->
-                                                        <div class="pb-10 pb-lg-15">
-                                                            <!--begin::Title-->
-                                                            <h2 class="fw-bolder d-flex align-items-center text-dark">
-                                                                Setup Campaign Details
-                                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Campaign name will be used as reference within your campaign reports"></i>
-                                                            </h2>
-                                                            <!--end::Title-->
-                                                            <!--begin::Notice-->
-                                                            <div class="text-muted fw-bold fs-6">
-                                                                If you need more info, please check out
-                                                                <a href="#" class="link-primary fw-bolder">Help Page</a>.
-                                                            </div>
-                                                            <!--end::Notice-->
-                                                        </div>
-                                                        <!--end::Heading-->
-                                                        <!--begin::Input group-->
-                                                        <div class="mb-10 fv-row">
-                                                            <!--begin::Label-->
-                                                            <label class="required form-label mb-3">Campaign Name</label>
-                                                            <!--end::Label-->
-                                                            <!--begin::Input-->
-                                                            <input type="text" class="form-control form-control-lg form-control-solid" name="campaign_name" placeholder="" value="" />
-                                                            <!--end::Input-->
-                                                        </div>
-                                                        <!--end::Input group-->
-                                                    </div>
-                                                    <!--end::Wrapper-->
-                                                </div>
-                                                <!--end::Step 1-->
-                                                <!--begin::Step 4-->
-                                                <div data-kt-stepper-element="content">
-                                                    <!--begin::Wrapper-->
-                                                    <div class="w-100">
-                                                        <!--begin::Heading-->
-                                                        <div class="pb-10 pb-lg-12">
-                                                            <!--begin::Title-->
-                                                            <h1 class="fw-bolder text-dark">Budget Estimates</h1>
-                                                            <!--end::Title-->
-                                                            <!--begin::Description-->
-                                                            <div class="text-muted fw-bold fs-4">
-                                                                If you need more info, please check
-                                                                <a href="#" class="link-primary">Campaign Guidelines</a>
-                                                            </div>
-                                                            <!--end::Description-->
-                                                        </div>
-                                                        <!--end::Heading-->
-                                                        <!--begin::Input group-->
-                                                        <div class="fv-row mb-10">
-                                                            <!--begin::Label-->
-                                                            <label class="fs-6 fw-bold mb-2">
-                                                                Campaign Duration
-                                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Choose how long you want your ad to run for"></i>
-                                                            </label>
-                                                            <!--end::Label-->
-                                                            <!--begin::Duration option-->
-                                                            <div class="d-flex gap-9 mb-7">
-                                                                <!--begin::Button-->
-                                                                <button type="button" class="btn btn-outline btn-outline-dashed btn-outline-default active" id="kt_modal_create_campaign_duration_all">
-                                                                    Continuous duration
-                                                                    <br />
-                                                                    <span class="fs-7">Your ad will run continuously for a daily budget.</span>
-                                                                </button>
-                                                                <!--end::Button-->
-                                                                <!--begin::Button-->
-                                                                <button type="button" class="btn btn-outline btn-outline-dashed btn-outline-default" id="kt_modal_create_campaign_duration_fixed">
-                                                                    Fixed duration
-                                                                    <br />
-                                                                    <span class="fs-7">Your ad will run on the specified dates only.</span>
-                                                                </button>
-                                                                <!--end::Button-->
-                                                            </div>
-                                                            <!--end::Duration option-->
-                                                            <!--begin::Datepicker-->
-                                                            <input class="form-control form-control-solid d-none" placeholder="Pick date &amp; time" id="kt_modal_create_campaign_datepicker" />
-                                                            <!--end::Datepicker-->
-                                                        </div>
-                                                        <!--end::Input group-->
-                                                        <!--begin::Input group-->
-                                                        <div class="fv-row mb-10">
-                                                            <!--begin::Label-->
-                                                            <label class="fs-6 fw-bold mb-2">
-                                                                Daily Budget
-                                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Choose the budget allocated for each day. Higher budget will generate better results"></i>
-                                                            </label>
-                                                            <!--end::Label-->
-                                                            <!--begin::Slider-->
-                                                            <div class="d-flex flex-column text-center">
-                                                                <div class="d-flex align-items-start justify-content-center mb-7">
-                                                                    <span class="fw-bolder fs-4 mt-1 me-2">$</span>
-                                                                    <span class="fw-bolder fs-3x" id="kt_modal_create_campaign_budget_label"></span>
-                                                                    <span class="fw-bolder fs-3x">.00</span>
-                                                                </div>
-                                                                <div id="kt_modal_create_campaign_budget_slider" class="noUi-sm"></div>
-                                                            </div>
-                                                            <!--end::Slider-->
-                                                        </div>
-                                                        <!--end::Input group-->
-                                                    </div>
-                                                    <!--end::Wrapper-->
-                                                </div>
-                                                <!--end::Step 4-->
-                                                <!--begin::Step 5-->
-                                                <div data-kt-stepper-element="content">
-                                                    <!--begin::Wrapper-->
-                                                    <div class="w-100">
-                                                        <!--begin::Heading-->
-                                                        <div class="pb-12 text-center">
-                                                            <!--begin::Title-->
-                                                            <h1 class="fw-bolder text-dark">Campaign Created!</h1>
-                                                            <!--end::Title-->
-                                                            <!--begin::Description-->
-                                                            <div class="fw-bold text-muted fs-4">You will receive an email with with the summary of your newly created campaign!</div>
-                                                            <!--end::Description-->
-                                                        </div>
-                                                        <!--end::Heading-->
-                                                        <!--begin::Actions-->
-                                                        <div class="d-flex flex-center pb-20">
-                                                            <button id="kt_modal_create_campaign_create_new" type="button" class="btn btn-lg btn-light me-3" data-kt-element="complete-start">Create New Campaign</button>
-                                                            <a href="#" class="btn btn-lg btn-primary" data-bs-toggle="tooltip" title="Coming Soon">View Campaign</a>
-                                                        </div>
-                                                        <!--end::Actions-->
-                                                        <!--begin::Illustration-->
-                                                        <div class="text-center px-4">
-                                                            <img src="assets/media/illustrations/sketchy-1/9.png" alt="" class="mww-100 mh-350px" />
-                                                        </div>
-                                                        <!--end::Illustration-->
-                                                    </div>
-                                                </div>
-                                                <!--end::Step 5-->
-                                                <!--begin::Actions-->
-                                                <div class="d-flex flex-stack pt-10">
-                                                    <!--begin::Wrapper-->
-                                                    <div class="me-2">
-                                                        <button type="button" class="btn btn-lg btn-light-primary me-3" data-kt-stepper-action="previous">
-                                                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr063.svg-->
-                                                            <span class="svg-icon svg-icon-3 me-1">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                                    <rect opacity="0.5" x="6" y="11" width="13" height="2" rx="1" fill="black" />
-                                                                    <path d="M8.56569 11.4343L12.75 7.25C13.1642 6.83579 13.1642 6.16421 12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75L5.70711 11.2929C5.31658 11.6834 5.31658 12.3166 5.70711 12.7071L11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25C13.1642 17.8358 13.1642 17.1642 12.75 16.75L8.56569 12.5657C8.25327 12.2533 8.25327 11.7467 8.56569 11.4343Z" fill="black" />
-                                                                </svg>
-                                                            </span>
-                                                            <!--end::Svg Icon-->Back
-                                                        </button>
-                                                    </div>
-                                                    <!--end::Wrapper-->
-                                                    <!--begin::Wrapper-->
-                                                    <div>
-                                                        <button type="button" class="btn btn-lg btn-primary" data-kt-stepper-action="submit">
-                                                            <span class="indicator-label">
-                                                                Submit
-                                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
-                                                                <span class="svg-icon svg-icon-3 ms-2 me-0">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                                        <rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="black" />
-                                                                        <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black" />
-                                                                    </svg>
-                                                                </span>
-                                                                <!--end::Svg Icon-->
-                                                            </span>
-                                                            <span class="indicator-progress">
-                                                                Please wait...
-                                                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                                                            </span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-lg btn-primary" data-kt-stepper-action="next">
-                                                            Continue
-                                                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
-                                                            <span class="svg-icon svg-icon-3 ms-1 me-0">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                                    <rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="black" />
-                                                                    <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black" />
-                                                                </svg>
-                                                            </span>
-                                                            <!--end::Svg Icon-->
-                                                        </button>
-                                                    </div>
-                                                    <!--end::Wrapper-->
-                                                </div>
-                                                <!--end::Actions-->
-                                            </form>
-                                            <!--end::Form-->
-                                        </div>
-                                        <!--end::Stepper-->
-                                    </div>
-                                    <!--begin::Modal body-->
-                                </div>
-                            </div>
-                        </div>
-                        <!--end::Modal - Offer A Deal-->
-                        <!--end create item sku-->
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
                             <!--begin::Input group-->
@@ -514,7 +265,7 @@
                                             {
                                             <th>@item</th>
                                             }*@
-                                            <th>Name</th>
+                                            @*<th>Name</th>*@
                                             <th>BarCode Number</th>
                                             <th>Price</th>
                                             <th>Expiry Date</th>
@@ -527,7 +278,7 @@
                                     <tfoot>
                                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                                             <th>ID</th>
-                                            <th>Name</th>
+                                            @*<th>Name</th>*@
                                             <th>BarCode Number</th>
                                             <th>Price</th>
                                             <th>Expiry Date</th>
@@ -570,7 +321,7 @@
     <script>
         $(document).ready(function () {
             var tableCleared = true;
-            var idIncrementer = 1;
+            var idIncrementer = 0;
             _DataTable.Draw();
 
             $("#swalCall").on('click', function (event) {
@@ -582,17 +333,18 @@
                     $('#SkuSubItem').DataTable().clear().destroy();
                     tableCleared = false;
                 }
+                //<td><input class="form-control form-control-sm text-start" type='text' name='name' placeholder='Name' style='width:200px;'></td>
 
                 var markup = `<tr role="row animate__animated animate__backInLeft" class="odd">
-                                            <td>`+ idIncrementer++ + `</td>
-                    <td><input class="form-control form-control-sm text-start" type='text' name='name' placeholder='Name' style='width:200px;'></td>
-                                    <td><input class="form-control form-control-sm text-start" id='scanned-barcode' type='text' name='barcode' placeholder='1234567890'></td>
-                    <td><input class="form-control form-control-sm text-start" type='number' name='price' placeholder='0'></td>
-                    <td><input class="form-control form-control-sm text-start" type='text' name='expiryDate' placeholder='1-1-2024'></td>
-                              <td class="text-end"><div class="badge badge-light-success">Published</div></td>
-                    <td><button onclick="removeEle(this)"; class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>
-                    </tr>`;
+                                                            <td>`+ idIncrementer + `</td>
+                                                            <td><input class="form-control form-control-sm text-start" id='scanned-barcode' type='text' name='ListSkuSubItems[`+ idIncrementer + `].BarCodeNumber' placeholder='1234567890'></td>
+                                                            <td><input class="form-control form-control-sm text-start" type='number' name='ListSkuSubItems[`+ idIncrementer + `].Price' placeholder='0' style='width:100px;'></td>
+                                                                    <td><input class="form-control form-control-sm text-start" type='text' name='ListSkuSubItems[`+ idIncrementer + `].ExpiryDate' placeholder='1-1-2024'></td>
+                                              <td class="text-end"><div class="badge badge-light-success">Published</div></td>
+                                    <td><button onclick="removeEle(this)"; class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+                                    </tr>`;
                 $("table tbody").append(markup);
+                idIncrementer++;
 
                 //$(rowNode)
                 //    .css('color', 'red')
@@ -611,47 +363,47 @@
             $(el).closest('tr').remove();
         };
 
-        //var _Swal = {
-                                                                                        //    TextInput: function () {
-                                                                                        //        const { value: barcode } = Swal.fire({
-                                                                                        //            title: "Scan Barcode",
-                                                                                        //            text: "or write serial number",
-                                                                                        //            input: 'text',
-                                                                                        //            showCancelButton: true,
-                                                                                        //            inputValidator: (value) => {
-                                                                                        //                if (!value) {
-                                                                                        //                    return 'You need to Scan your Barcode!'
-                                                                                        //                }
-                                                                                        //            }
-                                                                                        //        }).then((result) => {
-                                                                                        //            if (result.isConfirmed) {
-                                                                                        //                Swal.fire('Saved!', '', 'success')
-                                                                                        //            }
-                                                                                        //        });
+                        //var _Swal = {
+                                                                                                        //    TextInput: function () {
+                                                                                                        //        const { value: barcode } = Swal.fire({
+                                                                                                        //            title: "Scan Barcode",
+                                                                                                        //            text: "or write serial number",
+                                                                                                        //            input: 'text',
+                                                                                                        //            showCancelButton: true,
+                                                                                                        //            inputValidator: (value) => {
+                                                                                                        //                if (!value) {
+                                                                                                        //                    return 'You need to Scan your Barcode!'
+                                                                                                        //                }
+                                                                                                        //            }
+                                                                                                        //        }).then((result) => {
+                                                                                                        //            if (result.isConfirmed) {
+                                                                                                        //                Swal.fire('Saved!', '', 'success')
+                                                                                                        //            }
+                                                                                                        //        });
 
-                                                                                        //    },
-                                                                                        //    MultiInput: async function () {
-                                                                                        //        const { value: formValues } = await Swal.fire({
-                                                                                        //            title: 'Multiple inputs',
-                                                                                        //            html:
-                                                                                        //                'Barcode:<input id="swal-input1" class="swal2-input">' +
-                                                                                        //                'Price:<input id="swal-input2" class="swal2-input">' +
-                                                                                        //                'Expiry_Date:<input id="swal-input3" class="swal2-input">',
-                                                                                        //            focusConfirm: false,
-                                                                                        //            preConfirm: () => {
-                                                                                        //                return [
-                                                                                        //                    document.getElementById('swal-input1').value,
-                                                                                        //                    document.getElementById('swal-input3').value,
-                                                                                        //                    document.getElementById('swal-input2').value
-                                                                                        //                ]
-                                                                                        //            }
-                                                                                        //        })
+                                                                                                        //    },
+                                                                                                        //    MultiInput: async function () {
+                                                                                                        //        const { value: formValues } = await Swal.fire({
+                                                                                                        //            title: 'Multiple inputs',
+                                                                                                        //            html:
+                                                                                                        //                'Barcode:<input id="swal-input1" class="swal2-input">' +
+                                                                                                        //                'Price:<input id="swal-input2" class="swal2-input">' +
+                                                                                                        //                'Expiry_Date:<input id="swal-input3" class="swal2-input">',
+                                                                                                        //            focusConfirm: false,
+                                                                                                        //            preConfirm: () => {
+                                                                                                        //                return [
+                                                                                                        //                    document.getElementById('swal-input1').value,
+                                                                                                        //                    document.getElementById('swal-input3').value,
+                                                                                                        //                    document.getElementById('swal-input2').value
+                                                                                                        //                ]
+                                                                                                        //            }
+                                                                                                        //        })
 
-                                                                                        //        if (formValues) {
-                                                                                        //            Swal.fire(JSON.stringify(formValues))
-                                                                                        //        }
-                                                                                        //    }
-                                                                                        //}
+                                                                                                        //        if (formValues) {
+                                                                                                        //            Swal.fire(JSON.stringify(formValues))
+                                                                                                        //        }
+                                                                                                        //    }
+                                                                                                        //}
 
     </script>
     }
