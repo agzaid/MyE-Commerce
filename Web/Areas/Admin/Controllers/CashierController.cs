@@ -29,7 +29,7 @@ namespace Web.Areas.Admin.Controllers
             var columns = new List<string>()
             {
                 "Name",
-                "BarCodeNumber",
+                "Price",
                 "Quantity",
                 "ShortDescription",
                 "Status"
@@ -106,8 +106,8 @@ namespace Web.Areas.Admin.Controllers
             {
                 ID = s.ID,
                 Name = s.Name,
-                Quantity = s.Quantity,
                 BarCodeNumber = s.BarCodeNumber,
+                Quantity = s.Quantity,
                 Status = s.Status,
                 ThumbnailImage = s.ThumbnailImage,
                 ShortDescription = s.ShortDescription,

@@ -169,21 +169,6 @@
                     <!--end::Editor-->
 
                 </div>
-                <!--end::Input group-->
-                <div class="mb-10 fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-invalid">
-                    <!--begin::Label-->
-                    <label asp-for="Price" class="form-label required"></label>
-                    <!--end::Label-->
-                    <!--begin::Editor-->
-                    <input type="number" asp-for="Price" class="form-control mb-2" value="" />
-                    <!--end::Input-->
-                    <!--begin::Description-->
-                    <span asp-validation-for="Price" class="text-danger"></span>
-
-                    <!--end::Editor-->
-
-                </div>
-                <!--end::Input group-->
             </div>
             <!--end::Card header-->
             <!--begin::Card body-->
@@ -585,54 +570,34 @@
     <script>
         $(document).ready(function () {
             var tableCleared = true;
+            var idIncrementer = 1;
             _DataTable.Draw();
 
-            //$("#swalCall").on('click', function (event) {
-            //    event.preventDefault();
-            //    //_Swal.TextInput();
-            //    _Swal.MultiInput();
-
-            //})
             $("#swalCall").on('click', function (event) {
                 event.preventDefault();
-                debugger;
                 //if(loadData==null){
                 var records = $('#SkuSubItem').attr("data-AG-records");
+
                 if ($('#SkuSubItem').attr("data-AG-records") == 0 && tableCleared === true) {
                     $('#SkuSubItem').DataTable().clear().destroy();
                     tableCleared = false;
                 }
-                var markup = `<tr role="row" class="odd">
-                                                                <td>1</td>
-                                                                <td><input class="form-control form-control-sm text-start" type='text' name='name' placeholder='Name'></td>
-                                                                        <td><input class="form-control form-control-sm text-start" id='last-barcode' type='text' name='barcode' placeholder='1234567890'></td>
-                                                                <td><input class="form-control form-control-sm text-start" type='number' name='price' placeholder='0'></td>
-                                                                <td><input class="form-control form-control-sm text-start" type='text' name='expiryDate' placeholder='1-1-2024'></td>
-                                                                          <td class="text-end"><div class="badge badge-light-success">Published</div></td>
-                                                                <td><button onclick="removeEle()"; class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>
-                                                                </tr>`;
+
+                var markup = `<tr role="row animate__animated animate__backInLeft" class="odd">
+                                            <td>`+ idIncrementer++ + `</td>
+                    <td><input class="form-control form-control-sm text-start" type='text' name='name' placeholder='Name' style='width:200px;'></td>
+                            <td><input class="form-control form-control-sm text-start" id='last-barcode' type='text' name='barcode' placeholder='1234567890'></td>
+                    <td><input class="form-control form-control-sm text-start" type='number' name='price' placeholder='0'></td>
+                    <td><input class="form-control form-control-sm text-start" type='text' name='expiryDate' placeholder='1-1-2024'></td>
+                              <td class="text-end"><div class="badge badge-light-success">Published</div></td>
+                    <td><button onclick="removeEle(this)"; class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+                    </tr>`;
                 $("table tbody").append(markup);
 
                 //$(rowNode)
                 //    .css('color', 'red')
                 //    .animate({ color: 'black' });
             });
-
-
-
-            $("#remove").on('click', function (event) {
-                event.preventDefault();
-                debugger;
-                var e = event.target.nodeName;
-
-                $("table tbody").find('input[name="record"]').each(function () {
-                    if ($(this).is(":checked")) {
-                        $(this).parents("tr").remove();
-                    }
-                });
-            })
-
-
 
             $("#remove").on('click', '.btn-active-danger', function () {
                 debugger;
@@ -642,16 +607,11 @@
 
         });
 
-
-        function removeEle() {
-            debugger;
-            $(this).preventDefault();
-            $(this).closest('tr').remove();
-
-            console.log("close");
+        function removeEle(el) {
+            $(el).closest('tr').remove();
         };
 
-                                                                                        //var _Swal = {
+        //var _Swal = {
                                                                                         //    TextInput: function () {
                                                                                         //        const { value: barcode } = Swal.fire({
                                                                                         //            title: "Scan Barcode",
@@ -692,6 +652,7 @@
                                                                                         //        }
                                                                                         //    }
                                                                                         //}
+
     </script>
     }
 
