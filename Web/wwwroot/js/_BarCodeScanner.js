@@ -20,6 +20,8 @@
     });
     function handleBarcode(scanned_barcode) {
         document.querySelector('#last-barcode').innerHTML = scanned_barcode;
+        document.querySelector('#scanned-barcode').innerHTML = scanned_barcode;
+        document.querySelector('#scanned-barcode').value = scanned_barcode;
     }
 
 })
