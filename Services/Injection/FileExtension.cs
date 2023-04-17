@@ -31,7 +31,7 @@ namespace Services.Injection
                 return string.Empty;
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return string.Empty;
             }

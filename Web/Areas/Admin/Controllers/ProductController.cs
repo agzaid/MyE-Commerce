@@ -74,7 +74,7 @@ namespace Web.Areas.Admin.Controllers
             {
                 var product = new Product()
                 {
-                    ThumbnailImage = $"/Uploads/Products/{await model.ThumbnailFormFile.CreateFile("Products")}",
+                    ThumbnailImage = model.ThumbnailFormFile != null ? $"/Uploads/Products/{await model.ThumbnailFormFile.CreateFile("Products")}" : "",
                     CreatedDate = DateTime.UtcNow,
                     DisplayOrder = model.DisplayOrder,
                     ModifiedDate = DateTime.UtcNow,
@@ -135,7 +135,7 @@ namespace Web.Areas.Admin.Controllers
                 oldModel.Status = model.Status;
                 oldModel.Quantity = model.Quantity;
                 oldModel.DisplayOrder = model.DisplayOrder;
-                oldModel.CategoryId= model.CategoryId;
+                oldModel.CategoryId = model.CategoryId;
 
                 _productService.Update(oldModel);
 

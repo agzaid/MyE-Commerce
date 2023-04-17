@@ -56,7 +56,7 @@ namespace Web.Areas.Admin.Controllers
             {
                 var category = new Category()
                 {
-                    ThumbnailImage = $"/Uploads/Categories/{await model.ThumbnailFormFile.CreateFile("Categories")}",
+                    ThumbnailImage = model.ThumbnailFormFile != null ? $"/Uploads/Categories/{await model.ThumbnailFormFile.CreateFile("Categories")}" : "",
                     CreatedDate = DateTime.Now,
                     DisplayOrder = model.DisplayOrder,
                     ModifiedDate = DateTime.Now,

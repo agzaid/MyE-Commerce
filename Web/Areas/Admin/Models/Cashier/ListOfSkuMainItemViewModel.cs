@@ -29,6 +29,7 @@ namespace Web.Areas.Admin.Models.Cashier
         [Required]
         [Display(Name = "BarCode Serial Number")]
         //[Unique(ErrorMessage = "This item already exists !!")]
+        public string BarcodeNumber { get; set; }
         public double? Price { get; set; }
         public int? Quantity { get; set; }
         public string ThumbnailImage { get; set; }

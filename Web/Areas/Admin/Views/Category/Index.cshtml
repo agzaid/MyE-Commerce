@@ -11,9 +11,6 @@
 <p>
     <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
-<p>
-    <a id="swalCall" class="btn btn-primary">try!!!</a>
-</p>
 
 <div class="container">
     <table class="table table-striped table-bordered dt-resposive nowrap AG-data-table"
@@ -54,15 +51,6 @@
         $(document).ready(function () {
             debugger;
             _DataTable.Draw();
-
-
-            $("#swalCall").on('click', function (event) {
-                event.preventDefault();
-                debugger;
-                var table = $('#Categories');
-                var markup = "<tr><td><input type='checkbox' name='record'></td><td>" + "ahmad gamal" + "</td><td>" + "agzaid00" + "</td></tr>";
-                $("table tbody").append(markup);
-            })
         });
     </script>
     @* <script src="~/datatables/js/jquery.dataTables.js"></script>

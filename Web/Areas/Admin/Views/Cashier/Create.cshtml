@@ -5,7 +5,7 @@
     <link href="~/assets/js/Select2ToTree/select2totree.css" rel="stylesheet" type="text/css" />
 }
 
-@TempData["alertNotification"]
+@*@TempData["alertNotification"]*@
 
 @section Breadcrumb{
     <div class="page-title d-flex flex-column me-5 ms-lg-15">
@@ -254,22 +254,29 @@
                                        id="SkuSubItem"
                                        data-AG-columns='@Html.Raw(ViewBag.columns)'
                                        data-AG-message='@Html.Raw(ViewBag.Message)'
-                                       data-AG-records='@Html.Raw(ViewBag.records)'
-                                       data-AG-load-url='@Url.Action("Sub_LoadDataTable","Cashier")'
+                                       data-AG-records='@Html.Raw(ViewBag.records_create)'
+                                       data-AG-load-url='@Url.Action("Create_LoadDataTable","Cashier")'
                                        data-AG-edit='@Url.Action("Edit","Cashier")'
                                        data-AG-delete='@Url.Action("Delete","Cashier")'>
                                     <thead>
                                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                                             <th>ID</th>
-                                            @* @foreach (var item in ViewBag.stringColumns)
+                                             @foreach (var item in ViewBag.stringColumns)
                                             {
                                             <th>@item</th>
-                                            }*@
-                                            @*<th>Name</th>*@
-                                            <th>BarCode Number</th>
+                                            }
+
+                                           @* "Name",
+                                            "Price",
+                                            "Quantity",
+                                            "ShortDescription",
+                                            "Status"*@
+
+                                           @* <th>Name</th>
                                             <th>Price</th>
-                                            <th>Expiry Date</th>
-                                            <th>Status</th>
+                                            <th>Quantity</th>
+                                            <th>ShortDescription</th>
+                                            <th>Status</th>*@
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -278,11 +285,15 @@
                                     <tfoot>
                                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                                             <th>ID</th>
-                                            @*<th>Name</th>*@
-                                            <th>BarCode Number</th>
+                                            @foreach (var item in ViewBag.stringColumns)
+                                            {
+                                                <th>@item</th>
+                                            }
+                                            @*<th>Name</th>
                                             <th>Price</th>
-                                            <th>Expiry Date</th>
-                                            <th>Status</th>
+                                            <th>Quantity</th>
+                                            <th>ShortDescription</th>
+                                            <th>Status</th>*@
                                             <th>Actions</th>
                                         </tr>
                                     </tfoot>
@@ -329,7 +340,7 @@
                 event.preventDefault();
                 //if(loadData==null){
                 var records = $('#SkuSubItem').attr("data-AG-records");
-
+                debugger;
                 if ($('#SkuSubItem').attr("data-AG-records") == 0 && tableCleared === true) {
                     $('#SkuSubItem').DataTable().clear().destroy();
                     tableCleared = false;
@@ -365,6 +376,7 @@
             $(el).closest('tr').remove();
         };
 
+        //swall call was here
                                 //var _Swal = {
                                                                                                                 //    TextInput: function () {
                                                                                                                 //        const { value: barcode } = Swal.fire({
