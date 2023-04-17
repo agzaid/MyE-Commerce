@@ -321,7 +321,8 @@
     <script>
         $(document).ready(function () {
             var tableCleared = true;
-            var idIncrementer = 0;
+            var i = 0;
+            var idIncrementer = 1;
             _DataTable.Draw();
 
             $("#swalCall").on('click', function (event) {
@@ -336,15 +337,16 @@
                 //<td><input class="form-control form-control-sm text-start" type='text' name='name' placeholder='Name' style='width:200px;'></td>
 
                 var markup = `<tr role="row animate__animated animate__backInLeft" class="odd">
-                                                            <td>`+ idIncrementer + `</td>
-                                                            <td><input class="form-control form-control-sm text-start" id='scanned-barcode' type='text' name='ListSkuSubItems[`+ idIncrementer + `].BarCodeNumber' placeholder='1234567890'></td>
-                                                            <td><input class="form-control form-control-sm text-start" type='number' name='ListSkuSubItems[`+ idIncrementer + `].Price' placeholder='0' style='width:100px;'></td>
-                                                                    <td><input class="form-control form-control-sm text-start" type='text' name='ListSkuSubItems[`+ idIncrementer + `].ExpiryDate' placeholder='1-1-2024'></td>
-                                              <td class="text-end"><div class="badge badge-light-success">Published</div></td>
-                                    <td><button onclick="removeEle(this)"; class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>
-                                    </tr>`;
+                                      <td>`+ idIncrementer + `</td>
+                                      <td><input class="form-control form-control-sm text-start" id='scanned-barcode' type='text' name='ListSkuSubItems[`+ i + `].BarCodeNumber' placeholder='1234567890'></td>
+                                      <td><input class="form-control form-control-sm text-start" type='number' name='ListSkuSubItems[`+ i + `].Price' placeholder='0' style='width:100px;'></td>
+                                      <td><input class="form-control form-control-sm text-start" type='text' name='ListSkuSubItems[`+ i + `].ExpiryDate' placeholder='1-1-2024'></td>
+                                      <td class="text-end"><div class="badge badge-light-success">Published</div></td>
+                                      <td><button onclick="removeEle(this)"; class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+                                      </tr>`;
                 $("table tbody").append(markup);
                 idIncrementer++;
+                i++;
 
                 //$(rowNode)
                 //    .css('color', 'red')
@@ -363,47 +365,47 @@
             $(el).closest('tr').remove();
         };
 
-                        //var _Swal = {
-                                                                                                        //    TextInput: function () {
-                                                                                                        //        const { value: barcode } = Swal.fire({
-                                                                                                        //            title: "Scan Barcode",
-                                                                                                        //            text: "or write serial number",
-                                                                                                        //            input: 'text',
-                                                                                                        //            showCancelButton: true,
-                                                                                                        //            inputValidator: (value) => {
-                                                                                                        //                if (!value) {
-                                                                                                        //                    return 'You need to Scan your Barcode!'
-                                                                                                        //                }
-                                                                                                        //            }
-                                                                                                        //        }).then((result) => {
-                                                                                                        //            if (result.isConfirmed) {
-                                                                                                        //                Swal.fire('Saved!', '', 'success')
-                                                                                                        //            }
-                                                                                                        //        });
+                                //var _Swal = {
+                                                                                                                //    TextInput: function () {
+                                                                                                                //        const { value: barcode } = Swal.fire({
+                                                                                                                //            title: "Scan Barcode",
+                                                                                                                //            text: "or write serial number",
+                                                                                                                //            input: 'text',
+                                                                                                                //            showCancelButton: true,
+                                                                                                                //            inputValidator: (value) => {
+                                                                                                                //                if (!value) {
+                                                                                                                //                    return 'You need to Scan your Barcode!'
+                                                                                                                //                }
+                                                                                                                //            }
+                                                                                                                //        }).then((result) => {
+                                                                                                                //            if (result.isConfirmed) {
+                                                                                                                //                Swal.fire('Saved!', '', 'success')
+                                                                                                                //            }
+                                                                                                                //        });
 
-                                                                                                        //    },
-                                                                                                        //    MultiInput: async function () {
-                                                                                                        //        const { value: formValues } = await Swal.fire({
-                                                                                                        //            title: 'Multiple inputs',
-                                                                                                        //            html:
-                                                                                                        //                'Barcode:<input id="swal-input1" class="swal2-input">' +
-                                                                                                        //                'Price:<input id="swal-input2" class="swal2-input">' +
-                                                                                                        //                'Expiry_Date:<input id="swal-input3" class="swal2-input">',
-                                                                                                        //            focusConfirm: false,
-                                                                                                        //            preConfirm: () => {
-                                                                                                        //                return [
-                                                                                                        //                    document.getElementById('swal-input1').value,
-                                                                                                        //                    document.getElementById('swal-input3').value,
-                                                                                                        //                    document.getElementById('swal-input2').value
-                                                                                                        //                ]
-                                                                                                        //            }
-                                                                                                        //        })
+                                                                                                                //    },
+                                                                                                                //    MultiInput: async function () {
+                                                                                                                //        const { value: formValues } = await Swal.fire({
+                                                                                                                //            title: 'Multiple inputs',
+                                                                                                                //            html:
+                                                                                                                //                'Barcode:<input id="swal-input1" class="swal2-input">' +
+                                                                                                                //                'Price:<input id="swal-input2" class="swal2-input">' +
+                                                                                                                //                'Expiry_Date:<input id="swal-input3" class="swal2-input">',
+                                                                                                                //            focusConfirm: false,
+                                                                                                                //            preConfirm: () => {
+                                                                                                                //                return [
+                                                                                                                //                    document.getElementById('swal-input1').value,
+                                                                                                                //                    document.getElementById('swal-input3').value,
+                                                                                                                //                    document.getElementById('swal-input2').value
+                                                                                                                //                ]
+                                                                                                                //            }
+                                                                                                                //        })
 
-                                                                                                        //        if (formValues) {
-                                                                                                        //            Swal.fire(JSON.stringify(formValues))
-                                                                                                        //        }
-                                                                                                        //    }
-                                                                                                        //}
+                                                                                                                //        if (formValues) {
+                                                                                                                //            Swal.fire(JSON.stringify(formValues))
+                                                                                                                //        }
+                                                                                                                //    }
+                                                                                                                //}
 
     </script>
     }
