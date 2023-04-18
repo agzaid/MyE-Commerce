@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.DependencyInjection;
 using Repo.Repository;
+using Services.Cashier;
 using Services.Shop;
 using Services.Shop.CategoryRepo;
 using Services.Shop.CustomerRepo;
@@ -48,6 +49,7 @@ namespace Services.Injection
             services.AddScoped<ICartService, CartService>();
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<ISkuMainItemService, SkuMainItemService>();
+            services.AddScoped<ISkuSubItemService, SkuSubItemService>();
 
             return services;
         }

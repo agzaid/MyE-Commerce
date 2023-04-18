@@ -88,6 +88,8 @@
                         render: function (data, type, row) {
                             if (row.thumbnailImage) {
                                 return `<div class="d-flex align-items-center"><a class="symbol symbol-50px"><span class="symbol-label" style="background-image:url(` + row.thumbnailImage + `);"></span></a><div class="ms-5"><a href="` + urlEdit + `/` + row.id + `"class="text-gray-800 text-hover-primary fs-5 fw-bolder" data-kt-ecommerce-productfilter="product_name">` + row.name + `</a></div></div > `
+                            } else if (row.barCodeNumber) {
+                                return '<a href="' + urlEdit + '/' + row.id + '" class="m-3 text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kaj-filter="item_name">' + row.barCodeNumber + '</a><input type="hidden" data-kaj-filter="item_id" value="' + row.id + '">';
                             } else {
                                 return '<a href="' + urlEdit + '/' + row.id + '" class="m-3 text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kaj-filter="item_name">' + row.name + '</a><input type="hidden" data-kaj-filter="item_id" value="' + row.id + '">';;
                             }
@@ -97,7 +99,7 @@
                         targets: -2,
                         data: null,
                         orderable: true,
-                        className: 'text-end',
+                        className: 'text-start',
                         render: function (data, type, row) {
                             switch (data) {
                                 case 1:
@@ -106,6 +108,8 @@
                                     return '<div class="badge badge-light-primary">' + 'InActive' + '</div>';
                                 case 3:
                                     return '<div class="badge badge-light-danger">' + 'Deleted' + '</div>';
+                                case 0:
+                                    return '<div class="badge badge-light-success">' + 'available' + '</div>';
                                 default:
                                     return '';
                             }

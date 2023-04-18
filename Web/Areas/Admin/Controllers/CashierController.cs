@@ -8,6 +8,7 @@ using Web.Areas.Admin.Models.Shop;
 using Web.Areas.Admin.Models.Cashier;
 using Services.Injection;
 using Services.Shop.CategoryRepo;
+using Services.Cashier;
 
 namespace Web.Areas.Admin.Controllers
 {
@@ -16,11 +17,13 @@ namespace Web.Areas.Admin.Controllers
     {
         private readonly ISkuMainItemService _skuProductService;
         private readonly ICategoryService _categoryService;
+        private readonly ISkuSubItemService _skuSubItemService;
 
-        public CashierController(ISkuMainItemService skuProductService, ICategoryService categoryService)
+        public CashierController(ISkuMainItemService skuProductService, ICategoryService categoryService,ISkuSubItemService skuSubItemService)
         {
             _skuProductService = skuProductService;
             _categoryService = categoryService;
+            _skuSubItemService = skuSubItemService;
         }
         public IActionResult Index(List<string> message)
         {
@@ -149,7 +152,7 @@ namespace Web.Areas.Admin.Controllers
                 ListSkuSubItems = skuProduct.skuSubItems.Select(s => new SkuSubItemViewModel()
                 {
                     BarCodeNumber = s.BarCodeNumber,
-                    ExpiryDate = s.ExpiryDate,
+                    ExpiryDate = s.ExpiryDate.ToString("yyyyMMddHHmmss"),
                     Status = s.Status,
                     Price = s.Price,
                     ID = s.ID
@@ -164,7 +167,7 @@ namespace Web.Areas.Admin.Controllers
             }).ToList();
             var columns = new List<string>()
             {
-                "BarcodeNumber",
+                "BarCodeNumber",
                 "Price",
                 "ExpiryDate",
                 "Status"
@@ -265,17 +268,17 @@ namespace Web.Areas.Admin.Controllers
 
             //for searching
             //IEnumerable<SkuMainItem> skuproducts = new List<SkuMainItem>();
-            IEnumerable<SkuMainItem> skuproducts = _skuProductService.GetMany(s => s.ID == id, new List<string>() { "skuSubItems" })
-               .Where(m => string.IsNullOrEmpty(searchValue) ? true : (m.Name.Contains(searchValue) || m.ShortDescription.Contains(searchValue) || m.Price.ToString().Contains(searchValue)));
+            IEnumerable<SkuSubItem> skuSubItems = _skuSubItemService.GetMany(s => s.SkuMainItemId == id, null)
+               .Where(m => string.IsNullOrEmpty(searchValue) ? true : (m.Status.ToString().Contains(searchValue) || m.BarCodeNumber.Contains(searchValue) || m.Price.ToString().Contains(searchValue)));
 
-            var model = skuproducts.Select(s => s.skuSubItems.Select(e => new SkuSubItemViewModel()
+            var model = skuSubItems.Select(e => new SkuSubItemViewModel()
             {
                 ID = e.ID,
                 BarCodeNumber = e.BarCodeNumber,
-                ExpiryDate = e.ExpiryDate,
+                ExpiryDate = e.ExpiryDate.ToString("yyyy-MM-dd"),
                 Price = e.Price,
                 Status = e.Status,
-            }));
+            });
             //var model = skuproducts.Select(s => new ListOfSkuMainItemViewModel()
             //{
             //    ID = s.ID,
