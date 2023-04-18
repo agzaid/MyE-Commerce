@@ -122,30 +122,59 @@ namespace Web.Areas.Admin.Controllers
             }
             return RedirectToAction("index", new { message = Message });
         }
-      //  [HttpGet]
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null || id == 0)
-        //    {
-        //        return NotFound();
-        //    }
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
 
-        //    var model = new CreateProductViewModel();
-        //    var product = await _skuProductService.GetOne(s => s.ID == id, null);
-        //    var categories = _categoryService.GetMany(s => true, null);
-        //    var productViewModel = _mapper.Map<CreateProductViewModel>(product);
-        //    productViewModel.ListOfCategories = categories.Select(s => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem()
-        //    {
-        //        Text = s.Name,
-        //        Value = s.ID.ToString(),
-        //    }).ToList();
+            var skuProduct = await _skuProductService.GetOne(s => s.ID == id, new List<string>() { "skuSubItems" });
+            if (skuProduct == null)
+            {
+                return NotFound();
+            }
+            var categories = _categoryService.GetMany(s => true, null);
 
-        //    if (product == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(productViewModel);
-        //}
+            var productViewModel = new EditSkuMainItemViewModel()
+            {
+                Id = skuProduct.ID,
+                Name = skuProduct.Name,
+                Price = skuProduct.Price,
+                Quantity = skuProduct.Quantity,
+                ShortDescription = skuProduct.ShortDescription,
+                CategoryId = skuProduct.CategoryId,
+                Status = skuProduct.Status,
+                ListSkuSubItems = skuProduct.skuSubItems.Select(s => new SkuSubItemViewModel()
+                {
+                    BarCodeNumber = s.BarCodeNumber,
+                    ExpiryDate = s.ExpiryDate,
+                    Status = s.Status,
+                    Price = s.Price,
+                    ID = s.ID
+
+                }).ToList(),
+                ThumbnailImage = skuProduct.ThumbnailImage
+            };
+            productViewModel.ListOfCategories = categories.Select(s => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem()
+            {
+                Text = s.Name,
+                Value = s.ID.ToString(),
+            }).ToList();
+            var columns = new List<string>()
+            {
+                "BarcodeNumber",
+                "Price",
+                "ExpiryDate",
+                "Status"
+            };
+            ViewBag.columns = JsonSerializer.Serialize(columns);
+            ViewBag.stringColumns = columns;
+
+
+            return View(productViewModel);
+        }
 
 
 
@@ -226,7 +255,7 @@ namespace Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update_LoadDataTable()
+        public IActionResult Edit_LoadDataTable(int id)
         {
             var pageSize = int.Parse(Request.Form["length"]);
             var skip = int.Parse(Request.Form["start"]);
@@ -236,27 +265,28 @@ namespace Web.Areas.Admin.Controllers
 
             //for searching
             //IEnumerable<SkuMainItem> skuproducts = new List<SkuMainItem>();
-            IEnumerable<SkuMainItem> skuproducts = _skuProductService.GetMany(s => true, new List<string>() { "skuSubItems" })
+            IEnumerable<SkuMainItem> skuproducts = _skuProductService.GetMany(s => s.ID == id, new List<string>() { "skuSubItems" })
                .Where(m => string.IsNullOrEmpty(searchValue) ? true : (m.Name.Contains(searchValue) || m.ShortDescription.Contains(searchValue) || m.Price.ToString().Contains(searchValue)));
 
-            var model = skuproducts.Select(s => new ListOfSkuMainItemViewModel()
+            var model = skuproducts.Select(s => s.skuSubItems.Select(e => new SkuSubItemViewModel()
             {
-                ID = s.ID,
-                Name = s.Name,
-                Quantity = s.Quantity,
-                Price = (double)s.Price,
-                Status = s.Status,
-                ThumbnailImage = s.ThumbnailImage,
-                ShortDescription = s.ShortDescription,
-            });
-            //var model = skuproducts.Select(s => s.skuSubItems.Select(a => new SkuSubItemViewModel()
+                ID = e.ID,
+                BarCodeNumber = e.BarCodeNumber,
+                ExpiryDate = e.ExpiryDate,
+                Price = e.Price,
+                Status = e.Status,
+            }));
+            //var model = skuproducts.Select(s => new ListOfSkuMainItemViewModel()
             //{
-            //    ID = a.ID,
-            //    BarCodeNumber = a.BarCodeNumber,
-            //    Price = a.Price,
-            //    ExpiryDate = a.ExpiryDate,
-            //    Status = a.Status
-            //}));
+            //    ID = s.ID,
+            //    Name = s.Name,
+            //    Quantity = s.Quantity,
+            //    Price = (double)s.Price,
+            //    Status = s.Status,
+            //    ThumbnailImage = s.ThumbnailImage,
+            //    ShortDescription = s.ShortDescription,
+            //});
+
             //for sorting
             //IQueryable<Product> queryProducts = (IQueryable<Product>)products;
             //if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortDir)))

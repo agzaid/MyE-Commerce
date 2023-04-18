@@ -1,0 +1,351 @@
+﻿@model Web.Areas.Admin.Models.Cashier.EditSkuMainItemViewModel
+
+@section Header{
+    @*<link href="~/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />*@
+    <link href="~/assets/js/Select2ToTree/select2totree.css" rel="stylesheet" type="text/css" />
+}
+
+@*@TempData["alertNotification"]*@
+
+@section Breadcrumb{
+    <div class="page-title d-flex flex-column me-5 ms-lg-15">
+        <!--begin::Title-->
+        <h1 class=" text-dark fw-bolder fs-2 mb-0">
+            <span class="badge badge-danger display-1 p-2">SKU</span> Product
+        </h1>
+        <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 pt-1">
+            <li class="breadcrumb-item text-muted">
+                <a asp-action="Index" asp-controller="Home" class="text-muted text-hover-primary">
+                    Home
+                </a>
+            </li>
+            <li class="breadcrumb-item">
+                <span class="bullet bg-gray-300 w-5px h-2px"></span>
+            </li>
+            <li class="breadcrumb-item text-muted">
+                eCommerce
+            </li>
+            <li class="breadcrumb-item">
+                <span class="bullet bg-gray-300 w-5px h-2px"></span>
+            </li>
+            <li class="breadcrumb-item text-muted">
+                <a asp-action="ListOfSkuProducts" asp-controller="Cashier" class="text-muted text-hover-primary">
+                    Products
+                </a>
+            </li>
+            <li class="breadcrumb-item">
+                <span class="bullet bg-gray-300 w-5px h-2px"></span>
+            </li>
+            <li class="breadcrumb-item text-muted">
+                EditSkuProduct
+            </li>
+        </ul>
+    </div>
+}
+<form id="productForm" method="post" asp-action="Edit" asp-controller="Cashier" enctype="multipart/form-data" class="form d-flex flex-column flex-lg-row" data-kt-redirect="products.html">
+    <!--begin::Aside column-->
+    <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
+        <!--begin::Thumbnail settings-->
+        <div class="card card-flush py-4">
+            <!--begin::Card header-->
+            <div class="card-header">
+                <!--begin::Card title-->
+                <div class="card-title">
+                    <h2>Thumbnail</h2>
+                </div>
+                <!--end::Card title-->
+            </div>
+            <!--end::Card header-->
+            <!--begin::Card body-->
+            <div class="card-body text-center pt-0">
+                <!--begin::Image input-->
+                <div class="image-input image-input-empty image-input-outline mb-3" data-kt-image-input="true" style="background-image: url(@Model.ThumbnailImage)">
+                    <!--begin::Preview existing avatar-->
+                    <div class="image-input-wrapper w-150px h-150px"></div>
+                    <!--end::Preview existing avatar-->
+                    <!--begin::Label-->
+                    <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
+                        <i class="bi bi-pencil-fill fs-7"></i>
+                        <!--begin::Inputs-->
+                        <input asp-for="ThumbnailFormFile" type="file" accept=".png, .jpg, .jpeg" />
+                        <input type="hidden" name="avatar_remove" />
+                        <!--end::Inputs-->
+                    </label>
+                    <!--end::Label-->
+                    <!--begin::Cancel-->
+                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
+                        <i class="bi bi-x fs-2"></i>
+                    </span>
+                    <!--end::Cancel-->
+                    <!--begin::Remove-->
+                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
+                        <i class="bi bi-x fs-2"></i>
+                    </span>
+                    <!--end::Remove-->
+                </div>
+                <!--end::Image input-->
+                <!--begin::Description-->
+                <div class="text-muted fs-7">
+                    <span asp-validation-for="ThumbnailFormFile" class="text-danger"></span>
+                </div>
+                <!--end::Description-->
+            </div>
+            <!--end::Card body-->
+        </div>
+        <!--end::Thumbnail settings-->
+        <!--begin::Category & tags-->
+        <div class="card card-flush py-4">
+            <!--begin::Card header-->
+            <div class="card-header">
+                <!--begin::Card title-->
+                <div class="card-title">
+                    <h2>Status</h2>
+                </div>
+                <!--end::Card title-->
+                <!--begin::Card toolbar-->
+                <div class="card-toolbar">
+                    <div class="rounded-circle bg-success w-15px h-15px" id="kt_ecommerce_add_product_status"></div>
+                </div>
+                <!--begin::Card toolbar-->
+            </div>
+            <!--end::Card header-->
+            <!--begin::Card body-->
+            <div class="card-body pt-0">
+                <!--begin::Select2-->
+                <select asp-for="Status" asp-items="@Model.ListOfStatus" class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Status Description"></select>
+                <!--end::Select2-->
+                <!--begin::Description-->
+                <div class="text-muted fs-7">
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+                <!--end::Description-->
+            </div>
+            <!--end::Card body-->
+            <!--begin::Card header-->
+            <div class="card-header">
+                <!--begin::Card title-->
+                <div class="card-title">
+                    <h2>Product Details</h2>
+                </div>
+                <!--end::Card title-->
+            </div>
+            <!--end::Card header-->
+            @*<!--begin::Card header-->
+            <div class="card-header">
+            <div class="card-title">
+            <h2>General</h2>
+            </div>
+            </div>
+            <!--end::Card header-->*@
+            <!--begin::Card body-->
+            <div class="card-body pt-0">
+                <!--begin::Input group-->
+                <div class="mb-10 fv-row">
+                    <!--begin::Label-->
+                    <label class="required form-label" asp-for="Name"></label>
+                    <!--end::Label-->
+                    <!--begin::Input-->
+                    <input type="text" asp-for="Name" class="form-control mb-2" placeholder="Product name" />
+                    <!--end::Input-->
+                    <!--begin::Description-->
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                    <!--end::Description-->
+                </div>
+                <!--end::Input group-->
+                <!--begin::Input group-->
+                <div class="mb-10 fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-invalid">
+                    <!--begin::Label-->
+                    <label asp-for="ShortDescription" class="form-label"></label>
+                    <!--end::Label-->
+                    <!--begin::Editor-->
+                    <input type="text" asp-for="ShortDescription" class="form-control mb-2" placeholder="Short Description" />
+                    <!--end::Input-->
+                    <!--begin::Description-->
+                    <span asp-validation-for="ShortDescription" class="text-danger"></span>
+
+                    <div id="lang-ShortDescription">
+                        @Html.Raw(Model.ShortDescription)
+                    </div>
+                    <!--end::Editor-->
+
+                </div>
+            </div>
+            <!--end::Card header-->
+            <!--begin::Card body-->
+            <div class="card-body pt-0 pb-0">
+                <!--begin::Input group-->
+                <!--begin::Label-->
+                <label class="form-label">Categories</label>
+                <!--end::Label-->
+                <!--begin::Select2-->
+                <select asp-for="CategoryId" asp-items="@Model.ListOfCategories" class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Status Description"></select>
+                <!--end::Select2-->
+                <!--begin::Description-->
+                <div class="text-muted fs-7 mb-7">Add product to a category.</div>
+                <!--end::Description-->
+                <!--end::Input group-->
+                <!--begin::Button-->
+                <a asp-action="Create" asp-controller="Category" class="btn btn-light-primary btn-sm mb-10">
+                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr087.svg-->
+                    <span class="svg-icon svg-icon-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="11" y="18" width="12" height="2" rx="1" transform="rotate(-90 11 18)" fill="black" />
+                            <rect x="6" y="11" width="12" height="2" rx="1" fill="black" />
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->Create new category
+                </a>
+            </div>
+            <!--end::Card body-->
+
+        </div>
+        <!--end::Category & tags-->
+    </div>
+    <!--end::Aside column-->
+    <!--begin::Main column-->
+    <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
+        <!--begin:::Tabs-->
+        <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-bold mb-n2">
+            <!--begin:::Tab item-->
+            <li class="nav-item">
+                <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab" href="#kt_ecommerce_add_product_english">Engilsh</a>
+            </li>
+            <!--end:::Tab item-->
+        </ul>
+        <!--end:::Tabs-->
+        <!--begin::Tab content-->
+        <div class="tab-content">
+            <!--begin::Tab pane-->
+            <div class="tab-pane fade show active" id="kt_ecommerce_add_product_english" role="tab-panel">
+                <div class="d-flex flex-column gap-7 gap-lg-10">
+                    <!--begin::General options-->
+                    <div class="card card-flush py-4">
+                        <!--begin::Card header-->
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h2>Table Of Items</h2>
+                            </div>
+                            @*<div class="card-toolbar">
+                            <a href="#" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#kt_modal_create_campaign">Create Campaign</a>
+                            </div>*@
+                            <div class="card-title">
+                                <button class="btn btn-success" id="swalCall">Add with BarCode Scanner</button>
+                            </div>
+                        </div>
+                        <!--end::Card header-->
+                        <!--begin::Card body-->
+                        <div class="card-body pt-0">
+                            <!--begin::Input group-->
+                            <div class="container">
+                                <table class="table table-striped table-bordered dt-resposive nowrap AG-data-table"
+                                       id="SkuSubItem"
+                                       data-AG-columns='@Html.Raw(ViewBag.columns)'
+                                       data-AG-message='@Html.Raw(ViewBag.Message)'
+                                       data-AG-records='@Html.Raw(ViewBag.records_create)'
+                                       data-AG-load-url='@Url.Action("Edit_LoadDataTable","Cashier",new { id = Model.Id })'
+                                       data-AG-edit='@Url.Action("Edit","Cashier")'
+                                       data-AG-delete='@Url.Action("Delete","Cashier")'>
+                                    <thead>
+                                        <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                            <th>ID</th>
+                                            @foreach (var item in ViewBag.stringColumns)
+                                            {
+                                                <th>@item</th>
+                                            }
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="fw-bold">
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                            <th>ID</th>
+                                            @foreach (var item in ViewBag.stringColumns)
+                                            {
+                                                <th>@item</th>
+                                            }
+                                            <th>Actions</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <!--end::Input group-->
+                        </div>
+                        <!--end::Card header-->
+                    </div>
+                    <!--end::General options-->
+                </div>
+            </div>
+            <!--end::Tab pane-->
+        </div>
+        <!--end::Tab content-->
+        <div class="d-flex justify-content-end">
+            <!--begin::Button-->
+            <a asp-action="index" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">Cancel</a>
+            <!--end::Button-->
+            <!--begin::Button-->
+            <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-primary">
+                <span class="indicator-label">Save Changes</span>
+                <span class="indicator-progress">
+                    Please wait...
+                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+            </button>
+            <!--end::Button-->
+        </div>
+    </div>
+    <!--end::Main column-->
+</form>
+
+@section Scripts {
+
+    <script>
+        $(document).ready(function () {
+            var tableCleared = true;
+            var i = 0;
+            var idIncrementer = 1;
+            _DataTable.Draw();
+
+            $("#swalCall").on('click', function (event) {
+                event.preventDefault();
+                //if(loadData==null){
+                var records = $('#SkuSubItem').attr("data-AG-records");
+                debugger;
+                if ($('#SkuSubItem').attr("data-AG-records") == 0 && tableCleared === true) {
+                    $('#SkuSubItem').DataTable().clear().destroy();
+                    tableCleared = false;
+                }
+                //<td><input class="form-control form-control-sm text-start" type='text' name='name' placeholder='Name' style='width:200px;'></td>
+
+                var markup = `<tr role="row animate__animated animate__backInLeft" class="odd">
+                                                      <td>`+ idIncrementer + `</td>
+                                                      <td><input class="form-control form-control-sm text-start" id='scanned-barcode' type='text' name='ListSkuSubItems[`+ i + `].BarCodeNumber' placeholder='1234567890'></td>
+                                                      <td><input class="form-control form-control-sm text-start" type='number' name='ListSkuSubItems[`+ i + `].Price' placeholder='0' style='width:100px;'></td>
+                                                      <td><input class="form-control form-control-sm text-start" type='text' name='ListSkuSubItems[`+ i + `].ExpiryDate' placeholder='1-1-2024'></td>
+                                                      <td class="text-end"><div class="badge badge-light-success">Published</div></td>
+                                                      <td><button onclick="removeEle(this)"; class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+                                                      </tr>`;
+                $("table tbody").append(markup);
+                idIncrementer++;
+                i++;
+
+                //$(rowNode)
+                //    .css('color', 'red')
+                //    .animate({ color: 'black' });
+            });
+
+            $("#remove").on('click', '.btn-active-danger', function () {
+                debugger;
+                $(this).closest('tr').remove();
+            });
+
+
+        });
+
+        function removeEle(el) {
+            $(el).closest('tr').remove();
+        };
+
+    </script>
+    }
+
