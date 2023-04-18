@@ -19,7 +19,7 @@ namespace Web.Areas.Admin.Controllers
         private readonly ICategoryService _categoryService;
         private readonly ISkuSubItemService _skuSubItemService;
 
-        public CashierController(ISkuMainItemService skuProductService, ICategoryService categoryService,ISkuSubItemService skuSubItemService)
+        public CashierController(ISkuMainItemService skuProductService, ICategoryService categoryService, ISkuSubItemService skuSubItemService)
         {
             _skuProductService = skuProductService;
             _categoryService = categoryService;
@@ -101,6 +101,7 @@ namespace Web.Areas.Admin.Controllers
                 };
                 if (model.ListSkuSubItems.Count != 0)
                 {
+                    model.ListSkuSubItems.RemoveAll(s => (s.BarCodeNumber == null) || (s.Price == 0));
                     model.ListSkuSubItems.ForEach(s =>
                     {
                         skuMainItem.skuSubItems.Add(new SkuSubItem()
@@ -112,7 +113,7 @@ namespace Web.Areas.Admin.Controllers
                             ModifiedDate = DateTime.Now,
                             SkuMainItem = skuMainItem,
                             SkuMainItemId = skuMainItem.ID,
-                            Status = s.Status
+                            Status = SkuItemStatus.available
                         });
 
                     });
