@@ -9,6 +9,7 @@ using Web.Areas.Admin.Models.Cashier;
 using Services.Injection;
 using Services.Shop.CategoryRepo;
 using Services.Cashier;
+using System.Text.RegularExpressions;
 
 namespace Web.Areas.Admin.Controllers
 {
@@ -57,7 +58,7 @@ namespace Web.Areas.Admin.Controllers
                 Text = s.Name,
                 Value = s.ID.ToString(),
             }).ToList();
-            product.Status = SkuItemStatus.available;
+            product.Status = RecordStatus.Published;
             var columns = new List<string>()
             {
                 // "Name",
@@ -91,7 +92,7 @@ namespace Web.Areas.Admin.Controllers
                     ID = 0,
                     Name = model.Name,
                     ShortDescription = model.ShortDescription,
-                    Status = SkuItemStatus.available,
+                    Status = model.Status,
                     CategoryId = model.CategoryId,
                     CreatedDate = DateTime.Now,
                     ModifiedDate = DateTime.Now,
@@ -124,8 +125,14 @@ namespace Web.Areas.Admin.Controllers
                 _skuProductService.Insert(skuMainItem);
                 Message.Add("Create");
             }
+            //var errors = ModelState.Select(x => x.Value.Errors)
+            //               .Where(y => y.Count > 0)
+            //               .ToList();
+            //errors.ForEach(s => Message.Add(s.First().ErrorMessage));
+            Message.Add("ErrorSubItem");
             return RedirectToAction("index", new { message = Message });
         }
+
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -179,8 +186,130 @@ namespace Web.Areas.Admin.Controllers
 
             return View(productViewModel);
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditAsync(EditSkuMainItemViewModel model)
+        {
+            var Message = new List<string>();
+            if (ModelState.IsValid)
+            {
+                var oldModel = await _skuProductService.GetOne(s => s.ID == model.Id, new List<string>() { "skuSubItems" });
+                //var skuSubItems = _skuSubItemService.GetMany(s => s.SkuMainItemId == model.Id, null).ToList();
+                if (model.ThumbnailFormFile is not null)
+                {
+                    FileExtension.DeleteFile(oldModel.ThumbnailImage);
+                    oldModel.ThumbnailImage = $"/Uploads/SkuMainItems/{await model.ThumbnailFormFile.CreateFile("SkuMainItems")}";
+                }
+
+                oldModel.Name = model.Name;
+                oldModel.ShortDescription = model.ShortDescription;
+                oldModel.Price = model.Price;
+                oldModel.Status = model.Status;
+                //oldModel.Quantity = model.Quantity;
+                oldModel.CategoryId = model.CategoryId;
+
+                #region
+                var addedSubItems = model.ListSkuSubItems.Select(s => new SkuSubItem()
+                {
+                    BarCodeNumber = s.BarCodeNumber,
+                    CreatedDate = DateTime.UtcNow,
+                    ExpiryDate = Convert.ToDateTime(s.ExpiryDate),
+                    Price = s.Price,
+                    SkuMainItemId = oldModel.ID,
+                    ModifiedDate = DateTime.UtcNow,
+                    Status = SkuItemStatus.available,
+                    SkuMainItem = oldModel
+                });
+                oldModel.skuSubItems.AddRange(addedSubItems);
+                //oldModel.skuSubItems = skuSubItems;
+                oldModel.Quantity = oldModel.skuSubItems.Count();
+                oldModel.Price = oldModel.skuSubItems.OrderByDescending(s => s.Price).First().Price;
+              
+                #endregion
+                _skuProductService.Update(oldModel);
+
+                Message.Add("Edit");
+                return RedirectToAction("Index", new { message = Message });
+            }
+            return View(model);
+        }
 
 
+        [HttpGet]
+        public async Task<IActionResult> EditSkuSubItem(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var skuProduct = await _skuProductService.GetOne(s => s.ID == id, new List<string>() { "skuSubItems" });
+            if (skuProduct == null)
+            {
+                return NotFound();
+            }
+            var categories = _categoryService.GetMany(s => true, null);
+
+            var productViewModel = new EditSkuMainItemViewModel()
+            {
+                Id = skuProduct.ID,
+                Name = skuProduct.Name,
+                Price = skuProduct.Price,
+                Quantity = skuProduct.Quantity,
+                ShortDescription = skuProduct.ShortDescription,
+                CategoryId = skuProduct.CategoryId,
+                Status = skuProduct.Status,
+                ListSkuSubItems = skuProduct.skuSubItems.Select(s => new SkuSubItemViewModel()
+                {
+                    BarCodeNumber = s.BarCodeNumber,
+                    ExpiryDate = s.ExpiryDate.ToString("yyyyMMddHHmmss"),
+                    Status = s.Status,
+                    Price = s.Price,
+                    ID = s.ID
+
+                }).ToList(),
+                ThumbnailImage = skuProduct.ThumbnailImage
+            };
+            productViewModel.ListOfCategories = categories.Select(s => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem()
+            {
+                Text = s.Name,
+                Value = s.ID.ToString(),
+            }).ToList();
+            var columns = new List<string>()
+            {
+                "BarCodeNumber",
+                "Price",
+                "ExpiryDate",
+                "Status"
+            };
+            ViewBag.columns = JsonSerializer.Serialize(columns);
+            ViewBag.stringColumns = columns;
+
+
+            return View(productViewModel);
+        }
+        [HttpGet]
+        public async Task<IActionResult> DeleteSkuSubItem(int id)
+        {
+            var Message = new List<string>();
+            var productSkuSub = await _skuSubItemService.GetOne(s => s.ID == id, null);
+
+            if (productSkuSub is not null)
+            {
+                await _skuSubItemService.Delete(id);
+                //var result = FileExtension.DeleteFile(productSkuSub.ThumbnailImage);
+                //if (result.Errors.Count > 0)
+                //{
+                //    Message.AddRange(result.Errors);
+                //}
+                //else
+                //    Message.Add("DeleteTrue");
+
+                return RedirectToAction("Index", new { message = Message });
+            }
+
+            return RedirectToAction("Index", new { message = Message });
+        }
 
 
 

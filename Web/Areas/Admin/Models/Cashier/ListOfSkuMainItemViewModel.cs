@@ -10,7 +10,7 @@ namespace Web.Areas.Admin.Models.Cashier
     {
         public ListOfSkuMainItemViewModel()
         {
-            ListOfStatus = Enum.GetNames(typeof(SkuItemStatus))
+            ListOfStatus = Enum.GetNames(typeof(RecordStatus))
                 .Select(v => new SelectListItem
                 {
                     Text = v,
@@ -35,7 +35,7 @@ namespace Web.Areas.Admin.Models.Cashier
         public string ThumbnailImage { get; set; }
         [Display(Name = "Short Description")]
         public string ShortDescription { get; set; }
-        public SkuItemStatus Status { get; set; }
+        public RecordStatus Status { get; set; }
         public IFormFile ThumbnailFormFile { get; set; }
         public List<SelectListItem> ListOfStatus { get; set; } = new();
         //public List<IFormFile> GalleryFormFiles { get; set; } = new();

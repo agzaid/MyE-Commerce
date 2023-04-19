@@ -330,7 +330,7 @@
 @section Scripts {
     <script>
         var idIncrementer = 1;
-         
+
         $(document).ready(function () {
             var tableCleared = true;
             var i = 0;
@@ -347,13 +347,13 @@
                 }
                 //<td><input class="form-control form-control-sm text-start" type='text' name='name' placeholder='Name' style='width:200px;'></td>
                 var markup = `<tr role="row animate__animated animate__backInLeft" class="odd">
-                                              <td>`+ idIncrementer + `</td>
-                                              <td><input class="form-control form-control-sm text-start" id='scanned-barcode' type='text' name='ListSkuSubItems[`+ i + `].BarCodeNumber' placeholder='1234567890'></td>
-                                              <td><input class="form-control form-control-sm text-start" type='number' name='ListSkuSubItems[`+ i + `].Price' placeholder='0' style='width:100px;'></td>
-                                              <td><input class="form-control form-control-sm text-start" type='text' name='ListSkuSubItems[`+ i + `].ExpiryDate' placeholder='1-1-2024'></td>
-                                              <td class="text-end"><div class="badge badge-light-success">Published</div></td>
-                                              <td><button onclick="removeEle(this)"; class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>
-                                              </tr>`;
+                                                              <td>`+ idIncrementer + `</td>
+                                                              <td><input class="form-control form-control-sm text-start" id='scanned-barcode' type='text' name='ListSkuSubItems[`+ i + `].BarCodeNumber' placeholder='1234567890'></td>
+                                                              <td><input class="form-control form-control-sm text-start" type='number' name='ListSkuSubItems[`+ i + `].Price' placeholder='0' style='width:100px;'></td>
+                                                              <td><input class="form-control form-control-sm text-start" type='text' name='ListSkuSubItems[`+ i + `].ExpiryDate' placeholder='1-1-2024'></td>
+                                                              <td class="text-end"><div class="badge badge-light-success">Published</div></td>
+                                                              <td><button onclick="removeEle(this)"; class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+                                                              </tr>`;
                 $("table tbody").append(markup);
                 idIncrementer++;
                 i++;
@@ -362,11 +362,14 @@
                 //    .css('color', 'red')
                 //    .animate({ color: 'black' });
             });
+            //if i want to use id to remove element must use setTimeout to delay the creation of function before drawing element
+            //or i could use callback function after drawing element which is better approach
+            setTimeout(function () {
+                $("#remove").on('click', function () {
+                    $(this).closest('tr').remove();
+                });
+            }, 1000)
 
-            $("#remove").on('click', '.btn-active-danger', function () {
-                debugger;
-                $(this).closest('tr').remove();
-            });
         });
 
         function removeEle(el) {
@@ -374,7 +377,7 @@
             idIncrementer--;
 
         };
-        //swall call was here
+                        //swall call was here
     </script>
     }
 

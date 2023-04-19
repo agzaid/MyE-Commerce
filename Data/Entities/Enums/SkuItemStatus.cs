@@ -8,9 +8,6 @@ namespace Data.Entities.Enums
 {
     public enum SkuItemStatus
     {
-        Published = 1,
-        Inactive = 2,
-        Deleted = 3,
         available = 4,
         unavailable = 5,
         sold = 6,

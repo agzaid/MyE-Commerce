@@ -155,10 +155,6 @@
                     <!--end::Input-->
                     <!--begin::Description-->
                     <span asp-validation-for="ShortDescription" class="text-danger"></span>
-
-                    <div id="lang-ShortDescription">
-                        @Html.Raw(Model.ShortDescription)
-                    </div>
                     <!--end::Editor-->
 
                 </div>
@@ -236,8 +232,8 @@
                                        data-AG-message='@Html.Raw(ViewBag.Message)'
                                        data-AG-records='@Html.Raw(ViewBag.records_create)'
                                        data-AG-load-url='@Url.Action("Edit_LoadDataTable","Cashier",new { id = Model.Id })'
-                                       data-AG-edit='@Url.Action("Edit","Cashier")'
-                                       data-AG-delete='@Url.Action("Delete","Cashier")'>
+                                       data-AG-edit='@Url.Action("EditSkuSubItem","Cashier")'
+                                       data-AG-delete='@Url.Action("DeleteSkuSubItem","Cashier")'>
                                     <thead>
                                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                                             <th>ID</th>

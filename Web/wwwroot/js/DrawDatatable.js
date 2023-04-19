@@ -145,6 +145,9 @@ var _DataTable = {
                 case "Error":
                     toastr.error('Failed');
                     break;
+                case "ErrorSubItem":
+                    toastr.error('Failed To Create Cause Of Missing Values In Sub Item...!!!');
+                    break;
                 case "DeleteTrue":
                     toastr.error('Item Deleted');
                     break;

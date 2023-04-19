@@ -15,7 +15,7 @@ namespace Data.Entities.Cashier
         public int? Quantity { get; set; }
         public string ThumbnailImage { get; set; }
         public string ShortDescription { get; set; }
-        public SkuItemStatus Status { get; set; }
+        public RecordStatus Status { get; set; }
 
         #region Navigation Properties
         public List<SkuSubItem> skuSubItems { get; set; } = new();
