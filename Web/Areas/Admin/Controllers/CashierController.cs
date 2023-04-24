@@ -102,12 +102,15 @@ namespace Web.Areas.Admin.Controllers
                 };
                 if (model.ListSkuSubItems.Count != 0)
                 {
-                    model.ListSkuSubItems.RemoveAll(s => (s.BarCodeNumber == null) || (s.Price == 0));
+                    //new ag 
+                    //model.ListSkuSubItems.RemoveAll(s => (s.BarCodeNumber == null) || (s.Price == 0));
+                    model.ListSkuSubItems.RemoveAll(s => (s.BarCodeNumber == null));
                     model.ListSkuSubItems.ForEach(s =>
                     {
                         skuMainItem.skuSubItems.Add(new SkuSubItem()
                         {
-                            Price = s.Price,
+                            // new ag
+                            Price = s.Price == 0 ? model.Price : s.Price,
                             BarCodeNumber = s.BarCodeNumber,
                             CreatedDate = DateTime.Now,
                             ExpiryDate = s.ExpiryDate,
@@ -317,7 +320,7 @@ namespace Web.Areas.Admin.Controllers
 
             if (productSkuSub is not null)
             {
-                productSkuSub.Status= RecordStatus.Deleted;
+                productSkuSub.Status = RecordStatus.Deleted;
                 _skuProductService.Update(productSkuSub);
                 //await _skuSubItemService.Delete(id);
                 //var result = FileExtension.DeleteFile(productSkuSub.ThumbnailImage);
