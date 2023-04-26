@@ -10,8 +10,8 @@ namespace Data.Entities.Cashier
     public class SkuSubItem : BaseEntity
     {
         public string BarCodeNumber { get; set; }
-        public double Price { get; set; }
-        public DateTime ExpiryDate { get; set; }
+        public double? Price { get; set; }
+        public DateTime? ExpiryDate { get; set; }
         public SkuItemStatus Status { get; set; }
 
         #region Navigation properties

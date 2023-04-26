@@ -26,7 +26,7 @@ namespace Web.Areas.Admin.Models.Cashier
         [Required]
         public string BarCodeNumber { get; set; }
         [Required]
-        public double Price { get; set; }
+        public double? Price { get; set; }
         [Required]
         public string ExpiryDate { get; set; }
         public string ThumbnailImage { get; set; }

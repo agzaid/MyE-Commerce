@@ -25,7 +25,7 @@ namespace Web.Areas.Admin.Models.Cashier
         public string Name { get; set; }
         [Display(Name = "Barcode serial")]
         public string BarCodeNumber { get; set; }
-        public double Price { get; set; }
+        public double? Price { get; set; }
         public int Quantity{ get; set; }
         public string ThumbnailImage { get; set; }
         public IFormFile ThumbnailFormFile { get; set; }
@@ -34,7 +34,7 @@ namespace Web.Areas.Admin.Models.Cashier
         public int CategoryId { get; set; }
         public List<SelectListItem> ListOfStatus { get; set; } = new();
         public List<SelectListItem> ListOfCategories { get; set; } = new();
-        public List<SkuSubItem> ListSkuSubItems { get; set; } = new();
+        public List<SkuSubItemViewModel> ListSkuSubItems { get; set; } = new();
 
 
 

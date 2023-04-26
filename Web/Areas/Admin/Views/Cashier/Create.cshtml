@@ -365,19 +365,19 @@
                         //}
                     });
                 }, 1000);
-                 var markup = `<tr role="row animate__animated animate__backInLeft" class="odd">
-                                       <td>`+ idIncrementer + `</td>
-                                       <td><input class="form-control form-control-sm text-start" id='scanned-barcode' type='text' name='ListSkuSubItems[`+ i + `].BarCodeNumber' placeholder='1234567890'></td>
-                                       <td><input class="form-control form-control-sm text-start" type='number' name='ListSkuSubItems[`+ i + `].Price' placeholder='0' style='width:100px;'></td>
-                                       <td><input class="form-control form-control-sm text-start" type='text' name='ListSkuSubItems[`+ i + `].ExpiryDate' placeholder='1-1-2024'></td>
-                                       <td class="text-end"><div class="badge badge-light-success">Published</div></td>
-                                       <td><button onclick="removeEle(this)"; class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>
-                                       </tr>`;
-                        $("table tbody").append(markup);
-                        idIncrementer++;
-                        $(`[name='ListSkuSubItems[` + i + `].BarCodeNumber']`).focus();
-                        tableCleared = false;
-                        i++;
+                var markup = `<tr role="row animate__animated animate__backInLeft" class="odd">
+                                                               <td>`+ idIncrementer + `</td>
+                                                               <td><input class="form-control form-control-sm text-start" id='scanned-barcode' type='text' name='ListSkuSubItems[`+ i + `].BarCodeNumber' placeholder='1234567890'></td>
+                                                               <td><input class="form-control form-control-sm text-start" type='number' id='subPrice' name='ListSkuSubItems[`+ i + `].Price' placeholder='0' style='width:100px;'></td>
+                                                               <td><input class="form-control form-control-sm text-start" type='text' name='ListSkuSubItems[`+ i + `].ExpiryDate' placeholder='1-1-2024'></td>
+                                                               <td class="text-end"><div class="badge badge-light-success">Published</div></td>
+                                                               <td><button onclick="removeEle(this)"; class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+                                                               </tr>`;
+                $("table tbody").append(markup);
+                idIncrementer++;
+                $(`[name='ListSkuSubItems[` + i + `].BarCodeNumber']`).focus();
+                tableCleared = false;
+                i++;
                 //<td><input class="form-control form-control-sm text-start" type='text' name='name' placeholder='Name' style='width:200px;'></td>
 
                 //$(rowNode)
@@ -390,13 +390,27 @@
                 $("#remove").on('click', function () {
                     $(this).closest('tr').remove();
                 });
-            }, 1000)
+            }, 1000);
             setTimeout(function () {
                 $("#scanned-barcode").on('focus', function (event) {
                     event.preventDefault();
                     _Barcode.Scan();
                 });
-            }, 1000)
+            }, 1000);
+
+            $(`[name='Price`).on('keyup', function () {
+                debugger;
+                if ($(`[name='Price`).val() != "") {
+                    //$('#subPrice').val($(`[name='Price`).val());
+                    $('[id=subPrice]').each(function () {
+                        $(this).val($(`[name='Price`).val());
+                    })
+                } else {
+                    $('[id=subPrice]').each(function () { $(this).val(0) })
+                }
+
+
+            });
 
         });
 
@@ -405,7 +419,7 @@
             idIncrementer--;
 
         };
-                                                                                //swall call was here
+                //swall call was here
     </script>
     }
 

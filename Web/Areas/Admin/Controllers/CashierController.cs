@@ -97,6 +97,7 @@ namespace Web.Areas.Admin.Controllers
                     CreatedDate = DateTime.Now,
                     ModifiedDate = DateTime.Now,
                     Quantity = 0,
+                    Price=model.Price,
                     ThumbnailImage = model.ThumbnailFormFile != null ? ($"/Uploads/SkuMainItems/{await model.ThumbnailFormFile.CreateFile("SkuMainItems")}") : "",
                     skuSubItems = new List<SkuSubItem>()
                 };
@@ -113,7 +114,8 @@ namespace Web.Areas.Admin.Controllers
                             Price = s.Price == 0 ? model.Price : s.Price,
                             BarCodeNumber = s.BarCodeNumber,
                             CreatedDate = DateTime.Now,
-                            ExpiryDate = s.ExpiryDate,
+                            //new ag
+                            ExpiryDate = Convert.ToDateTime(model.ListSkuSubItems.FirstOrDefault(s => true).ExpiryDate),
                             ModifiedDate = DateTime.Now,
                             SkuMainItem = skuMainItem,
                             SkuMainItemId = skuMainItem.ID,
@@ -122,7 +124,7 @@ namespace Web.Areas.Admin.Controllers
 
                     });
                     skuMainItem.Quantity = model.ListSkuSubItems.Count();
-                    skuMainItem.Price = model.ListSkuSubItems.OrderByDescending(s => s.Price).First().Price;
+                    //skuMainItem.Price = model.ListSkuSubItems.OrderByDescending(s => s.Price).First().Price;
                 };
 
                 _skuProductService.Insert(skuMainItem);
@@ -167,7 +169,7 @@ namespace Web.Areas.Admin.Controllers
                 ListSkuSubItems = skuProduct.skuSubItems.Select(s => new SkuSubItemViewModel()
                 {
                     BarCodeNumber = s.BarCodeNumber,
-                    ExpiryDate = s.ExpiryDate.ToString("yyyyMMddHHmmss"),
+                    ExpiryDate = s.ExpiryDate?.ToString("yyyyMMddHHmmss"),
                     Status = s.Status,
                     Price = s.Price,
                     ID = s.ID
@@ -260,7 +262,7 @@ namespace Web.Areas.Admin.Controllers
                 Name = oldSkuSubItem.SkuMainItem.Name,
                 Price = oldSkuSubItem.Price,
                 BarCodeNumber = oldSkuSubItem.BarCodeNumber,
-                ExpiryDate = oldSkuSubItem.ExpiryDate.ToString("yyyy-MM-dd"),
+                ExpiryDate = oldSkuSubItem.ExpiryDate?.ToString("yyyy-MM-dd"),
                 Status = oldSkuSubItem.Status,
                 ThumbnailImage = oldSkuSubItem.SkuMainItem.ThumbnailImage,
                 SkuMainItemId = oldSkuSubItem?.SkuMainItemId,
@@ -430,7 +432,7 @@ namespace Web.Areas.Admin.Controllers
             {
                 ID = e.ID,
                 BarCodeNumber = e.BarCodeNumber,
-                ExpiryDate = e.ExpiryDate.ToString("yyyy-MM-dd"),
+                ExpiryDate = e.ExpiryDate?.ToString("yyyy-MM-dd"),
                 Price = e.Price,
                 Status = e.Status,
             });
