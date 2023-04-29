@@ -10,6 +10,7 @@ using Services.Injection;
 using Services.Shop.CategoryRepo;
 using Services.Cashier;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Http;
 
 namespace Web.Areas.Admin.Controllers
 {
@@ -97,7 +98,7 @@ namespace Web.Areas.Admin.Controllers
                     CreatedDate = DateTime.Now,
                     ModifiedDate = DateTime.Now,
                     Quantity = 0,
-                    Price=model.Price,
+                    Price = model.Price,
                     ThumbnailImage = model.ThumbnailFormFile != null ? ($"/Uploads/SkuMainItems/{await model.ThumbnailFormFile.CreateFile("SkuMainItems")}") : "",
                     skuSubItems = new List<SkuSubItem>()
                 };
@@ -106,16 +107,17 @@ namespace Web.Areas.Admin.Controllers
                     //new ag 
                     //model.ListSkuSubItems.RemoveAll(s => (s.BarCodeNumber == null) || (s.Price == 0));
                     model.ListSkuSubItems.RemoveAll(s => (s.BarCodeNumber == null));
+                    var s = model.ListSkuSubItems.Find(s => s.Price != null).Price;
                     model.ListSkuSubItems.ForEach(s =>
                     {
                         skuMainItem.skuSubItems.Add(new SkuSubItem()
                         {
                             // new ag
-                            Price = s.Price == 0 ? model.Price : s.Price,
+                            Price = s.Price ?? model.ListSkuSubItems.Find(s => s.Price != null).Price,
                             BarCodeNumber = s.BarCodeNumber,
                             CreatedDate = DateTime.Now,
                             //new ag
-                            ExpiryDate = Convert.ToDateTime(model.ListSkuSubItems.FirstOrDefault(s => true).ExpiryDate),
+                            ExpiryDate = s.ExpiryDate == null ? DateTime.Now : Convert.ToDateTime(s.ExpiryDate),
                             ModifiedDate = DateTime.Now,
                             SkuMainItem = skuMainItem,
                             SkuMainItemId = skuMainItem.ID,

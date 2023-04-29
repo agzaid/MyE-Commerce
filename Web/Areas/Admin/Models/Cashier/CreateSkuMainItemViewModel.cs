@@ -25,6 +25,7 @@ namespace Web.Areas.Admin.Models.Cashier
         public string Name { get; set; }
         [Display(Name = "Barcode serial")]
         public string BarCodeNumber { get; set; }
+        //[Required(ErrorMessage = "Please Enter price...")]
         public double? Price { get; set; }
         public int Quantity{ get; set; }
         public string ThumbnailImage { get; set; }
