@@ -151,16 +151,16 @@
                     <span asp-validation-for="Name" class="text-danger"></span>
                     <!--end::Description-->
                 </div>
-               @* <div class="mb-10 fv-row">
-                    <!--begin::Label-->
-                    <label class="required form-label" asp-for="Price"></label>
-                    <!--end::Label-->
-                    <!--begin::Input-->
-                    <input type="number" asp-for="Price" class="form-control mb-2" placeholder="Price..." />
-                    <!--end::Input-->
-                    <!--begin::Description-->
-                    <span asp-validation-for="Price" class="text-danger"></span>
-                    <!--end::Description-->
+                @* <div class="mb-10 fv-row">
+                <!--begin::Label-->
+                <label class="required form-label" asp-for="Price"></label>
+                <!--end::Label-->
+                <!--begin::Input-->
+                <input type="number" asp-for="Price" class="form-control mb-2" placeholder="Price..." />
+                <!--end::Input-->
+                <!--begin::Description-->
+                <span asp-validation-for="Price" class="text-danger"></span>
+                <!--end::Description-->
                 </div>*@
                 <!--end::Input group-->
                 <!--begin::Input group-->
@@ -356,26 +356,25 @@
                     $('#SkuSubItem').DataTable().clear().destroy();
                     //tableCleared = false;
                 }
-                setTimeout(function () {
-                    $("#scanned-barcode").on('focus', function (event) {
-                        debugger;
-                        //var d = $(`[name='ListSkuSubItems[` + i - 1 + `].BarCodeNumber']`);
-                        //if ($(`td[name="ListSkuSubItems[` + i - 1 + `].BarCodeNumber"]`).val() == undefined) {
-                        //    var c = $(`td[name="ListSkuSubItems[` + i - 1 + `].BarCodeNumber"]`).val();
-                        //}
-                    });
-                }, 1000);
+                
                 var markup = `<tr role="row animate__animated animate__backInLeft" class="odd">
-                                                               <td>`+ idIncrementer + `</td>
-                                                               <td><input class="form-control form-control-sm text-start" id='scanned-barcode' type='text' name='ListSkuSubItems[`+ i + `].BarCodeNumber' placeholder='1234567890'></td>
-                                                               <td><input class="form-control form-control-sm text-start" type='number' id='subPrice' name='ListSkuSubItems[`+ i + `].Price' min='0' placeholder='0' style='width:100px;'></td>
-                                                               <td><input class="form-control form-control-sm text-start" type='text' name='ListSkuSubItems[`+ i + `].ExpiryDate' placeholder='2-24-2024' value=""></td>
-                                                               <td class="text-end"><div class="badge badge-light-success">Published</div></td>
-                                                               <td><button onclick="removeEle(this)"; class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>
-                                                               </tr>`;
+                                   <td>`+ idIncrementer + `</td>
+                                   <td><input class="form-control form-control-sm text-start" id='scanned-barcode' type='text' name='ListSkuSubItems[`+ i + `].BarCodeNumber' placeholder='1234567890'></td>
+                                   <td><input class="form-control form-control-sm text-start" type='number' id='subPrice' name='ListSkuSubItems[`+ i + `].Price' min='0' placeholder='0' style='width:100px;'></td>
+                                   <td><input class="form-control form-control-sm text-start" type='text' name='ListSkuSubItems[`+ i + `].ExpiryDate' placeholder='24-02-2024' pattern="\d{1,2}/\d{1,2}/\d{4}" value=""></ td >
+                                   <td class="text-end"><div class="badge badge-light-success">Published</div></td>
+                                   <td><button onclick="removeEle(this)"; class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+                                   </tr>`;
                 $("table tbody").append(markup);
                 idIncrementer++;
                 $(`[name='ListSkuSubItems[` + i + `].BarCodeNumber']`).focus();
+
+                setTimeout(function () {
+                    $(`[name='ListSkuSubItems[0].BarCodeNumber']`).attr("required", "required")
+                    $(`[name='ListSkuSubItems[0].ExpiryDate']`).attr("required", "required")
+                    $(`[name='ListSkuSubItems[0].Price']`).attr("required", "required")
+                }, 500);
+
                 tableCleared = false;
                 i++;
                 //<td><input class="form-control form-control-sm text-start" type='text' name='name' placeholder='Name' style='width:200px;'></td>
@@ -419,7 +418,7 @@
             idIncrementer--;
 
         };
-                //swall call was here
+                                                //swall call was here
     </script>
     }
 

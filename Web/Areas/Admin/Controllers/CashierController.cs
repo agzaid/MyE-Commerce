@@ -27,6 +27,7 @@ namespace Web.Areas.Admin.Controllers
             _categoryService = categoryService;
             _skuSubItemService = skuSubItemService;
         }
+        
         public IActionResult Index(List<string> message)
         {
             if (message.Count > 0)
@@ -117,7 +118,9 @@ namespace Web.Areas.Admin.Controllers
                             BarCodeNumber = s.BarCodeNumber,
                             CreatedDate = DateTime.Now,
                             //new ag
-                            ExpiryDate = s.ExpiryDate == null ? Convert.ToDateTime(model.ListSkuSubItems.Find(s => s.ExpiryDate != null)?.ExpiryDate) : Convert.ToDateTime(s.ExpiryDate),
+                            ExpiryDate = s.ExpiryDate == null ?
+                            Convert.ToDateTime(model.ListSkuSubItems.Find(s => s.ExpiryDate != null)?.ExpiryDate)
+                            : Convert.ToDateTime(s.ExpiryDate),
                             ModifiedDate = DateTime.Now,
                             SkuMainItem = skuMainItem,
                             SkuMainItemId = skuMainItem.ID,
@@ -172,7 +175,7 @@ namespace Web.Areas.Admin.Controllers
                 {
                     BarCodeNumber = s.BarCodeNumber,
                     //ExpiryDate = s.ExpiryDate?.ToString("yyyyMMddHHmmss"),
-                    ExpiryDate = s.ExpiryDate?.ToString("dd-MM-yyyy"),
+                    ExpiryDate = s.ExpiryDate?.ToString("yyyy-MM-dd"),
                     Status = s.Status,
                     Price = s.Price,
                     ID = s.ID
@@ -215,7 +218,7 @@ namespace Web.Areas.Admin.Controllers
 
                 oldModel.Name = model.Name;
                 oldModel.ShortDescription = model.ShortDescription;
-                oldModel.Price = model.Price;
+                //oldModel.Price = model.Price;
                 oldModel.Status = model.Status;
                 //oldModel.Quantity = model.Quantity;
                 oldModel.CategoryId = model.CategoryId;
@@ -224,9 +227,10 @@ namespace Web.Areas.Admin.Controllers
                 var addedSubItems = model.ListSkuSubItems.Select(s => new SkuSubItem()
                 {
                     BarCodeNumber = s.BarCodeNumber,
-                    CreatedDate = DateTime.UtcNow,
-                    ExpiryDate = Convert.ToDateTime(s.ExpiryDate),
-                    Price = s.Price,
+                    ExpiryDate = s.ExpiryDate == null ?
+                            Convert.ToDateTime(model.ListSkuSubItems.Find(s => s.ExpiryDate != null)?.ExpiryDate)
+                            : Convert.ToDateTime(s.ExpiryDate),
+                    Price = s.Price ?? model.ListSkuSubItems.Find(s => s.Price != null)?.Price ?? default,
                     SkuMainItemId = oldModel.ID,
                     ModifiedDate = DateTime.UtcNow,
                     Status = SkuItemStatus.available,
@@ -265,7 +269,7 @@ namespace Web.Areas.Admin.Controllers
                 Name = oldSkuSubItem.SkuMainItem.Name,
                 Price = oldSkuSubItem.Price,
                 BarCodeNumber = oldSkuSubItem.BarCodeNumber,
-                ExpiryDate = oldSkuSubItem.ExpiryDate?.ToString("dd-MM-yyyy"),
+                ExpiryDate = oldSkuSubItem.ExpiryDate?.ToString("yyyy-MM-dd"),
                 Status = oldSkuSubItem.Status,
                 ThumbnailImage = oldSkuSubItem.SkuMainItem.ThumbnailImage,
                 SkuMainItemId = oldSkuSubItem?.SkuMainItemId,
@@ -435,7 +439,7 @@ namespace Web.Areas.Admin.Controllers
             {
                 ID = e.ID,
                 BarCodeNumber = e.BarCodeNumber,
-                ExpiryDate = e.ExpiryDate?.ToString("dd-MM-yyyy"),
+                ExpiryDate = e.ExpiryDate?.ToString("yyyy-MM-dd"),
                 Price = e.Price,
                 Status = e.Status,
             });
