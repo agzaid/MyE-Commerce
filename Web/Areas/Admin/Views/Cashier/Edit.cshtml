@@ -225,7 +225,6 @@
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
                             <!--begin::Input group-->
-                            <div class="container">
                                 <table class="table table-striped table-bordered dt-resposive nowrap AG-data-table"
                                        id="SkuSubItem"
                                        data-AG-columns='@Html.Raw(ViewBag.columns)'
@@ -257,7 +256,6 @@
                                         </tr>
                                     </tfoot>
                                 </table>
-                            </div>
                             <!--end::Input group-->
                         </div>
                         <!--end::Card header-->
@@ -310,7 +308,7 @@
                                            <td>`+ idIncrementer + `</td>
                                            <td><input class="form-control form-control-sm text-start" id='scanned-barcode' type='text' name='ListSkuSubItems[`+ i + `].BarCodeNumber' placeholder='1234567890'></td>
                                            <td><input class="form-control form-control-sm text-start" type='number' id='subPrice' name='ListSkuSubItems[`+ i + `].Price' min='0' placeholder='0' style='width:100px;'></td>
-                                           <td><input class="form-control form-control-sm text-start" type='text' name='ListSkuSubItems[`+ i + `].ExpiryDate' placeholder='24-02-2024' pattern="\d{1,2}/\d{1,2}/\d{4}" value=""></ td >
+                                           <td><input class="form-control form-control-sm text-start" type='text' name='ListSkuSubItems[`+ i + `].ExpiryDate' placeholder='2024-02-24' pattern="\d{1,2}/\d{1,2}/\d{4}" value=""></ td >
                                            <td class="text-end"><div class="badge badge-light-success">Published</div></td>
                                            <td><button onclick="removeEle(this)"; class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>
                                            </tr>`;
