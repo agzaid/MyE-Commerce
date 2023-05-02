@@ -11,7 +11,7 @@ namespace Data.Entities.Cashier
     public class SkuMainItem : BaseEntity
     {
         public string Name { get; set; }
-        public double? Price { get; set; }
+        public double? PurchasePrice { get; set; }
         public int? Quantity { get; set; }
         public string ThumbnailImage { get; set; }
         public string ShortDescription { get; set; }

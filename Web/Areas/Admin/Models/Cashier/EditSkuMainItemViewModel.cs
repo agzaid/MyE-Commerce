@@ -25,7 +25,8 @@ namespace Web.Areas.Admin.Models.Cashier
         public int Id { get; set; }
         [Required(ErrorMessage = "Please Enter Name...")]
         public string Name { get; set; }
-        public double? Price { get; set; }
+        [Display(Name="Purchase Price")]
+        public double? PurchasePrice { get; set; }
         public int? Quantity { get; set; }
         public string ThumbnailImage { get; set; }
         public IFormFile ThumbnailFormFile { get; set; }

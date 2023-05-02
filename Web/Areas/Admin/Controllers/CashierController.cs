@@ -39,7 +39,7 @@ namespace Web.Areas.Admin.Controllers
             var columns = new List<string>()
             {
                 "Name",
-                "Price",
+                "PurchasePrice",
                 "Quantity",
                 "ShortDescription",
                 "Status"
@@ -99,7 +99,7 @@ namespace Web.Areas.Admin.Controllers
                     CreatedDate = DateTime.Now,
                     ModifiedDate = DateTime.Now,
                     Quantity = 0,
-                    //Price = model.Price,
+                    PurchasePrice = model.PurchasePrice,
                     ThumbnailImage = model.ThumbnailFormFile != null ? ($"/Uploads/SkuMainItems/{await model.ThumbnailFormFile.CreateFile("SkuMainItems")}") : "",
                     skuSubItems = new List<SkuSubItem>()
                 };
@@ -129,7 +129,7 @@ namespace Web.Areas.Admin.Controllers
 
                     });
                     skuMainItem.Quantity = model.ListSkuSubItems.Count();
-                    skuMainItem.Price = model.ListSkuSubItems.OrderByDescending(s => s.Price)?.First().Price;
+                    //skuMainItem.PurchasePrice = model.ListSkuSubItems.OrderByDescending(s => s.Price)?.First().Price;
                 };
 
                 _skuProductService.Insert(skuMainItem);
@@ -166,7 +166,7 @@ namespace Web.Areas.Admin.Controllers
             {
                 Id = skuProduct.ID,
                 Name = skuProduct.Name,
-                Price = skuProduct.Price,
+                PurchasePrice = skuProduct.PurchasePrice,
                 Quantity = skuProduct.Quantity,
                 ShortDescription = skuProduct.ShortDescription,
                 CategoryId = skuProduct.CategoryId,
@@ -218,7 +218,7 @@ namespace Web.Areas.Admin.Controllers
 
                 oldModel.Name = model.Name;
                 oldModel.ShortDescription = model.ShortDescription;
-                //oldModel.Price = model.Price;
+                oldModel.PurchasePrice = model.PurchasePrice;
                 oldModel.Status = model.Status;
                 //oldModel.Quantity = model.Quantity;
                 oldModel.CategoryId = model.CategoryId;
@@ -239,7 +239,7 @@ namespace Web.Areas.Admin.Controllers
                 oldModel.skuSubItems.AddRange(addedSubItems);
                 //oldModel.skuSubItems = skuSubItems;
                 oldModel.Quantity = oldModel.skuSubItems.Count();
-                oldModel.Price = oldModel.skuSubItems.OrderByDescending(s => s.Price).First().Price;
+                //oldModel.PurchasePrice = oldModel.skuSubItems.OrderByDescending(s => s.Price).First().Price;
 
                 #endregion
                 _skuProductService.Update(oldModel);
@@ -361,12 +361,12 @@ namespace Web.Areas.Admin.Controllers
 
             //for searching
             IEnumerable<SkuMainItem> skuproducts = _skuProductService.GetMany(s => true, null)
-                .Where(m => string.IsNullOrEmpty(searchValue) ? true : (m.Name.Contains(searchValue) || m.ShortDescription.Contains(searchValue) || m.Price.ToString().Contains(searchValue)));
+                .Where(m => string.IsNullOrEmpty(searchValue) ? true : (m.Name.Contains(searchValue) || m.ShortDescription.Contains(searchValue) || m.PurchasePrice.ToString().Contains(searchValue)));
             var model = skuproducts.Select(s => new ListOfSkuMainItemViewModel()
             {
                 ID = s.ID,
                 Name = s.Name,
-                Price = s.Price,
+                PurchasePrice = s.PurchasePrice,
                 Quantity = s.Quantity,
                 Status = s.Status,
                 ThumbnailImage = s.ThumbnailImage,
@@ -396,7 +396,7 @@ namespace Web.Areas.Admin.Controllers
                 ID = s.ID,
                 Name = s.Name,
                 Quantity = s.Quantity,
-                Price = s.Price,
+                PurchasePrice = s.PurchasePrice,
                 Status = s.Status,
                 ThumbnailImage = s.ThumbnailImage,
                 ShortDescription = s.ShortDescription,

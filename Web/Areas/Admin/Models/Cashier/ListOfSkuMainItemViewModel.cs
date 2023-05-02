@@ -30,7 +30,7 @@ namespace Web.Areas.Admin.Models.Cashier
         [Display(Name = "BarCode Serial Number")]
         //[Unique(ErrorMessage = "This item already exists !!")]
         public string BarcodeNumber { get; set; }
-        public double? Price { get; set; }
+        public double? PurchasePrice { get; set; }
         public int? Quantity { get; set; }
         public string ThumbnailImage { get; set; }
         [Display(Name = "Short Description")]
