@@ -63,10 +63,9 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox2</rd:DefaultName>
-            <Top>0.26333in</Top>
             <Left>0.23833in</Left>
             <Height>0.25in</Height>
-            <Width>2.84167in</Width>
+            <Width>0.86667in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -81,16 +80,16 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>1.72153in</Width>
+                  <Width>0.82153in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.47014in</Width>
+                  <Width>0.57014in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.72153in</Width>
+                  <Width>0.82153in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.30208in</Width>
+                  <Width>0.40208in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -365,10 +364,10 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>dsProducts</DataSetName>
-            <Top>0.81612in</Top>
+            <Top>0.29167in</Top>
             <Left>0.0868in</Left>
             <Height>0.5in</Height>
-            <Width>6.21528in</Width>
+            <Width>2.61528in</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -376,15 +375,46 @@
               </Border>
             </Style>
           </Tablix>
+          <Textbox Name="Textbox10">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Copy write @Ag Store</Value>
+                    <Style />
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox10</rd:DefaultName>
+            <Top>0.86111in</Top>
+            <Height>0.375in</Height>
+            <Width>0.96666in</Width>
+            <ZIndex>2</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
         </ReportItems>
-        <Height>1.45833in</Height>
+        <Height>1.28056in</Height>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
       </Body>
-      <Width>7.13833in</Width>
+      <Width>2.7986in</Width>
       <Page>
         <PageHeader>
           <Height>0.55833in</Height>
@@ -412,9 +442,9 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Top>0.16333in</Top>
+              <Top>0.24999in</Top>
               <Height>0.26667in</Height>
-              <Width>6.92166in</Width>
+              <Width>2.70207in</Width>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -433,101 +463,9 @@
           </Style>
         </PageHeader>
         <PageFooter>
-          <Height>1.01334in</Height>
+          <Height>0.01042in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
-          <ReportItems>
-            <Textbox Name="Textbox10">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>Copy write @Ag Store</Value>
-                      <Style />
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Center</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox10</rd:DefaultName>
-              <Top>0.625in</Top>
-              <Height>0.375in</Height>
-              <Width>1.80833in</Width>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="OverallTotalPages">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>=Globals!OverallTotalPages</Value>
-                      <Style />
-                    </TextRun>
-                  </TextRuns>
-                  <Style />
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>OverallTotalPages</rd:DefaultName>
-              <Top>0.71334in</Top>
-              <Left>5.82167in</Left>
-              <Height>0.25in</Height>
-              <Width>1in</Width>
-              <ZIndex>1</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="PageName">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>=Globals!PageName</Value>
-                      <Style />
-                    </TextRun>
-                  </TextRuns>
-                  <Style />
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>PageName</rd:DefaultName>
-              <Top>0.75in</Top>
-              <Left>3.06333in</Left>
-              <Height>0.25in</Height>
-              <Width>1in</Width>
-              <ZIndex>2</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-          </ReportItems>
           <Style>
             <Border>
               <Style>None</Style>
