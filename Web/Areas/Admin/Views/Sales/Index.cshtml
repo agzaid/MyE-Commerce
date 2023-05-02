@@ -11,7 +11,7 @@
     <div class="page-title d-flex flex-column me-5 ms-lg-15">
         <!--begin::Title-->
         <h1 class=" text-dark fw-bolder fs-2 mb-0">
-            <span class="badge badge-danger display-1 p-2">SKU</span> Product
+            <span class="badge badge-danger display-1 p-2">Sales</span> Invoice
         </h1>
         <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 pt-1">
             <li class="breadcrumb-item text-muted">
@@ -40,7 +40,7 @@
     <!--begin::Aside column-->
     <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
         <!--begin::Thumbnail settings-->
-        <div class="card card-flush py-4">
+        <div class="card card-flush py-4" style="background-color: blanchedalmond;">
             <!--begin::Card header-->
             <div class="card-header">
                 <!--begin::Card title-->
@@ -59,54 +59,22 @@
         <!--end::Thumbnail settings-->
         <!--begin::Category & tags-->
         <div class="card card-flush py-4">
-            <!--begin::Card header-->
-            <div class="card-header">
-                <!--begin::Card title-->
-                <div class="card-title">
-                    <h2>Status</h2>
-                </div>
-                <!--end::Card title-->
-                <!--begin::Card toolbar-->
-                <div class="card-toolbar">
-                    <div class="rounded-circle bg-success w-15px h-15px" id="kt_ecommerce_add_product_status"></div>
-                </div>
-                <!--begin::Card toolbar-->
-            </div>
-            <!--end::Card header-->
             <!--begin::Card body-->
             <div class="card-body pt-0">
                 <!--begin::Select2-->
-                <select asp-for="Status" asp-items="@Model.ListOfStatus" class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Status Description"></select>
-                <!--end::Select2-->
+                <label class="required form-label" asp-for="Name">Paid</label>
+
+                <input type="text" asp-for="Name" class="form-control mb-2" placeholder="Product name" />
+				<!--end::Select2-->
                 <!--begin::Description-->
                 <div class="text-muted fs-7">
                     <span asp-validation-for="Status" class="text-danger"></span>
                 </div>
                 <!--end::Description-->
-            </div>
-            <!--end::Card body-->
-            <!--begin::Card header-->
-            <div class="card-header">
-                <!--begin::Card title-->
-                <div class="card-title">
-                    <h2>Product Details</h2>
-                </div>
-                <!--end::Card title-->
-            </div>
-            <!--end::Card header-->
-            @*<!--begin::Card header-->
-            <div class="card-header">
-            <div class="card-title">
-            <h2>General</h2>
-            </div>
-            </div>
-            <!--end::Card header-->*@
-            <!--begin::Card body-->
-            <div class="card-body pt-0">
-                <!--begin::Input group-->
+				<!--begin::Input group-->
                 <div class="mb-10 fv-row">
                     <!--begin::Label-->
-                    <label class="required form-label" asp-for="Name"></label>
+                    <label class="required form-label" asp-for="Name">Change</label>
                     <!--end::Label-->
                     <!--begin::Input-->
                     <input type="text" asp-for="Name" class="form-control mb-2" placeholder="Product name" />
@@ -115,77 +83,8 @@
                     <span asp-validation-for="Name" class="text-danger"></span>
                     <!--end::Description-->
                 </div>
-                @* <div class="mb-10 fv-row">
-                <!--begin::Label-->
-                <label class="required form-label" asp-for="Price"></label>
-                <!--end::Label-->
-                <!--begin::Input-->
-                <input type="number" asp-for="Price" class="form-control mb-2" placeholder="Price..." />
-                <!--end::Input-->
-                <!--begin::Description-->
-                <span asp-validation-for="Price" class="text-danger"></span>
-                <!--end::Description-->
-                </div>*@
-                <!--end::Input group-->
-                <!--begin::Input group-->
-                <div class="mb-10 fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-invalid">
-                    <!--begin::Label-->
-                    <label asp-for="ShortDescription" class="form-label"></label>
-                    <!--end::Label-->
-                    <!--begin::Editor-->
-                    <input type="text" asp-for="ShortDescription" class="form-control mb-2" placeholder="Short Description" />
-                    <!--end::Input-->
-                    <!--begin::Description-->
-                    <span asp-validation-for="ShortDescription" class="text-danger"></span>
-
-                    <div id="lang-ShortDescription">
-                        @Html.Raw(Model.ShortDescription)
-                    </div>
-                    <!--end::Editor-->
-
-                </div>
             </div>
-            <!--end::Card header-->
-            <!--begin::Card body-->
-            <div class="card-body pt-0 pb-0">
-                <!--begin::Input group-->
-                <!--begin::Label-->
-                <label class="form-label">Categories</label>
-                <!--end::Label-->
-                <!--begin::Select2-->
-                <select asp-for="CategoryId" asp-items="@Model.ListOfCategories" class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Status Description"></select>
-                <!--end::Select2-->
-                <!--begin::Description-->
-                <div class="text-muted fs-7 mb-7">Add product to a category.</div>
-                <!--end::Description-->
-                <!--end::Input group-->
-                <!--begin::Button-->
-                <a asp-action="Create" asp-controller="Category" class="btn btn-light-primary btn-sm mb-10">
-                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr087.svg-->
-                    <span class="svg-icon svg-icon-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <rect opacity="0.5" x="11" y="18" width="12" height="2" rx="1" transform="rotate(-90 11 18)" fill="black" />
-                            <rect x="6" y="11" width="12" height="2" rx="1" fill="black" />
-                        </svg>
-                    </span>
-                    <!--end::Svg Icon-->Create new category
-                </a>
-
-                <!--end::Button-->
-                <!--begin::Input group-->
-                <!--begin::Label-->
-                @*  <label class="form-label d-block">Tags</label>
-                <!--end::Label-->
-                <!--begin::Input-->
-                <input id="kt_ecommerce_add_product_tags" name="kt_ecommerce_add_product_tags" class="form-control mb-2" value="" />
-                <!--end::Input-->
-                <!--begin::Description-->
-                <div class="text-muted fs-7">Add tags to a product.</div>*@
-                <!--end::Description-->
-                <!--end::Input group-->
-            </div>
-            <!--end::Card body-->
-
+           
         </div>
         <!--end::Category & tags-->
     </div>
