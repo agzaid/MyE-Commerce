@@ -11,6 +11,8 @@ using Services.Shop.CategoryRepo;
 using Services.Cashier;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
+using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace Web.Areas.Admin.Controllers
 {
@@ -27,7 +29,7 @@ namespace Web.Areas.Admin.Controllers
             _categoryService = categoryService;
             _skuSubItemService = skuSubItemService;
         }
-        
+
         public IActionResult Index(List<string> message)
         {
             if (message.Count > 0)
@@ -361,7 +363,19 @@ namespace Web.Areas.Admin.Controllers
 
             //for searching
             IEnumerable<SkuMainItem> skuproducts = _skuProductService.GetMany(s => true, null)
-                .Where(m => string.IsNullOrEmpty(searchValue) ? true : (m.Name.Contains(searchValue) || m.ShortDescription.Contains(searchValue) || m.PurchasePrice.ToString().Contains(searchValue)));
+                .Where(m => m.Name.ToLower().Contains(searchValue.ToString())
+                || (m.Status.ToString().Contains(searchValue)));
+
+            //IEnumerable<SkuMainItem> skuproduct = _skuProductService.GetMany(s => true, null)
+            //    .Where(m => m.Name.ToLower().Contains(searchValue.ToString())
+            //    || m.ShortDescription.ToLower().Contains(searchValue.ToString())
+            //    || m.PurchasePrice.ToString().Contains(searchValue.ToString())
+            //    || Enum.GetName(typeof(RecordStatus), m.Status).ToLower().Contains(searchValue.ToString()));
+
+            //IEnumerable<SkuMainItem> skuproductss = _skuProductService.GetMany(s => true, null)
+            //    .Where(m => string.IsNullOrEmpty(searchValue) ? true : (m.Name.ToLower().Contains(searchValue.ToString()) ||
+            //    m.ShortDescription.ToLower().Contains(searchValue.ToString()) || m.PurchasePrice.ToString().Contains(searchValue.ToString())));
+
             var model = skuproducts.Select(s => new ListOfSkuMainItemViewModel()
             {
                 ID = s.ID,
@@ -433,7 +447,9 @@ namespace Web.Areas.Admin.Controllers
             //for searching
             //IEnumerable<SkuMainItem> skuproducts = new List<SkuMainItem>();
             IEnumerable<SkuSubItem> skuSubItems = _skuSubItemService.GetMany(s => s.SkuMainItemId == id, null)
-               .Where(m => string.IsNullOrEmpty(searchValue) ? true : (m.Status.ToString().Contains(searchValue) || m.BarCodeNumber.Contains(searchValue) || m.Price.ToString().Contains(searchValue)));
+               .Where(m => string.IsNullOrEmpty(searchValue) ? true 
+               : (m.Status.ToString().Contains(searchValue) || m.BarCodeNumber.Contains(searchValue) 
+               || m.Price.ToString().Contains(searchValue)));
 
             var model = skuSubItems.Select(e => new SkuSubItemViewModel()
             {

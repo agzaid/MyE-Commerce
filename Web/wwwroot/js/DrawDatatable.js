@@ -47,6 +47,7 @@ var _DataTable = {
 
         $("#" + AGelemID).dataTable({
             "serverSide": true,
+            "processing": true, // for show progress bar    
             "filter": true,
             "ajax": {
                 "url": url,
