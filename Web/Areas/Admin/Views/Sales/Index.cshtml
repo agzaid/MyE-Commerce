@@ -11,7 +11,7 @@
     <div class="page-title d-flex flex-column me-5 ms-lg-15">
         <!--begin::Title-->
         <h1 class=" text-dark fw-bolder fs-2 mb-0">
-            <span class="badge badge-danger display-1 p-2">Sales</span> Invoice
+            <span class="badge badge-danger display-1 p-2">Invoice</span> #@(new Random().Next())
         </h1>
         <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 pt-1">
             <li class="breadcrumb-item text-muted">
@@ -41,6 +41,14 @@
     <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
         <!--begin::Thumbnail settings-->
         <div class="card card-flush py-4" style="background-color: blanchedalmond;">
+			<div class="row g-5 mb-11">
+				@*<div class="col-sm-6">
+					#@(new Random().Next()) 
+				</div>*@
+				<div class="col-sm-12">
+					<h2>@DateTime.Now.ToString("yyyy-MM-dd")</h2>
+				</div>
+			</div>
             <!--begin::Card header-->
             <div class="card-header">
                 <!--begin::Card title-->
