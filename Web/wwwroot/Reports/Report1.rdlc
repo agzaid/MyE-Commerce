@@ -407,17 +407,17 @@
             </Style>
           </Textbox>
         </ReportItems>
-        <Height>1.28056in</Height>
+        <Height>3.25262cm</Height>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
       </Body>
-      <Width>2.7986in</Width>
+      <Width>6.86328cm</Width>
       <Page>
         <PageHeader>
-          <Height>0.55833in</Height>
+          <Height>1.41816cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -428,7 +428,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>ASP.NET Core RDLC</Value>
+                      <Value>Asian Goodies Store</Value>
                       <Style>
                         <FontSize>11pt</FontSize>
                         <FontWeight>Bold</FontWeight>
@@ -463,7 +463,7 @@
           </Style>
         </PageHeader>
         <PageFooter>
-          <Height>0.01042in</Height>
+          <Height>0.02647cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <Style>
@@ -472,10 +472,13 @@
             </Border>
           </Style>
         </PageFooter>
-        <LeftMargin>1in</LeftMargin>
-        <RightMargin>1in</RightMargin>
-        <TopMargin>1in</TopMargin>
-        <BottomMargin>1in</BottomMargin>
+        <PageHeight>5.08cm</PageHeight>
+        <PageWidth>5.08cm</PageWidth>
+        <LeftMargin>1cm</LeftMargin>
+        <RightMargin>1cm</RightMargin>
+        <TopMargin>1cm</TopMargin>
+        <BottomMargin>1cm</BottomMargin>
+        <ColumnSpacing>1.27cm</ColumnSpacing>
         <Style />
       </Page>
     </ReportSection>
@@ -501,6 +504,6 @@
       </CellDefinitions>
     </GridLayoutDefinition>
   </ReportParametersLayout>
-  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>5001a983-4ac1-4fdd-956f-282631640902</rd:ReportID>
 </Report>
