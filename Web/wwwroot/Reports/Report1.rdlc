@@ -63,7 +63,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox2</rd:DefaultName>
-            <Left>0.23833in</Left>
+            <Left>0.34666in</Left>
             <Height>0.25in</Height>
             <Width>0.86667in</Width>
             <Style>
@@ -80,13 +80,13 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>0.82153in</Width>
+                  <Width>0.50485in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>0.57014in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.82153in</Width>
+                  <Width>0.4382in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>0.40208in</Width>
@@ -364,10 +364,9 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>dsProducts</DataSetName>
-            <Top>0.29167in</Top>
-            <Left>0.0868in</Left>
+            <Top>0.30556in</Top>
             <Height>0.5in</Height>
-            <Width>2.61528in</Width>
+            <Width>1.91527in</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -393,6 +392,7 @@
             </Paragraphs>
             <rd:DefaultName>Textbox10</rd:DefaultName>
             <Top>0.86111in</Top>
+            <Left>0.10833in</Left>
             <Height>0.375in</Height>
             <Width>0.96666in</Width>
             <ZIndex>2</ZIndex>
@@ -406,18 +406,30 @@
               <PaddingBottom>2pt</PaddingBottom>
             </Style>
           </Textbox>
+          <Line Name="Line1">
+            <Top>2.18722cm</Top>
+            <Left>0cm</Left>
+            <Height>0cm</Height>
+            <Width>8.0372cm</Width>
+            <ZIndex>3</ZIndex>
+            <Style>
+              <Border>
+                <Style>Solid</Style>
+              </Border>
+            </Style>
+          </Line>
         </ReportItems>
-        <Height>3.25262cm</Height>
+        <Height>3.54895cm</Height>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
       </Body>
-      <Width>6.86328cm</Width>
+      <Width>8.0372cm</Width>
       <Page>
         <PageHeader>
-          <Height>1.41816cm</Height>
+          <Height>0.51666in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -443,6 +455,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
               <Top>0.24999in</Top>
+              <Left>0.10833in</Left>
               <Height>0.26667in</Height>
               <Width>2.70207in</Width>
               <Style>
@@ -472,12 +485,12 @@
             </Border>
           </Style>
         </PageFooter>
-        <PageHeight>5.08cm</PageHeight>
-        <PageWidth>5.08cm</PageWidth>
-        <LeftMargin>1cm</LeftMargin>
-        <RightMargin>1cm</RightMargin>
-        <TopMargin>1cm</TopMargin>
-        <BottomMargin>1cm</BottomMargin>
+        <PageHeight>8cm</PageHeight>
+        <PageWidth>8cm</PageWidth>
+        <LeftMargin>0.5cm</LeftMargin>
+        <RightMargin>1.27cm</RightMargin>
+        <TopMargin>0.5cm</TopMargin>
+        <BottomMargin>0.5cm</BottomMargin>
         <ColumnSpacing>1.27cm</ColumnSpacing>
         <Style />
       </Page>
