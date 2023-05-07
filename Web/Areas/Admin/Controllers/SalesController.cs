@@ -24,7 +24,7 @@ namespace Web.Areas.Admin.Controllers
             _skuSubItemService = skuSubItemService;
         }
 
-        public IActionResult Index(List<string> message)
+        public IActionResult Create(List<string> message)
         {
             var product = new CreateSkuMainItemViewModel();
             var categories = _categoryService.GetMany(s => true, new List<string>());

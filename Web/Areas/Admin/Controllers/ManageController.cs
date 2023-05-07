@@ -23,10 +23,6 @@ namespace Web.Areas.Admin.Controllers
 
         #region Report 
 
-        //public IActionResult EployeeSalaryInfo()
-        //{
-
-        //}
         public IActionResult PrintReceipt()
         {
             var dt= new DataTable();
