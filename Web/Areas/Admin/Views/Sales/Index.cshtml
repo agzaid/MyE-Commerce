@@ -60,7 +60,7 @@
             <!--end::Card header-->
             <!--begin::Card body-->
             <div class="card-body text-center pt-0">
-               <h1>Total Price</h1>
+               <h1 id="total_price">Total Price</h1>
             </div>
             <!--end::Card body-->
         </div>
@@ -129,7 +129,7 @@
 												</svg>
 											</span>
 											<!--end::Svg Icon-->
-											<input type="text" data-kt-filemanager-table-filter="search" class="form-control form-control-solid ps-15" placeholder="Search Files &amp; Folders" />
+											<input type="text" data-kt-filemanager-table-filter="search" id="scanned-barcode" class="form-control form-control-solid ps-15" placeholder="Search Products &amp; Items" />
 										</div>
 										<!--end::Search-->
 									</div>
@@ -8817,8 +8817,6 @@
             var i = 0;
             _DataTable.Draw();
             $("#swalCall").on('click', function (event) {
-                debugger;
-
                 event.preventDefault();
                 //if(loadData==null){
                 var records = $('#SkuSubItem').attr("data-AG-records");
@@ -8861,9 +8859,12 @@
                 });
             }, 1000);
             setTimeout(function () {
-                $("#scanned-barcode").on('focus', function (event) {
+                $("#scanned-barcode").on('change', function (event) {
+					debugger;
                     event.preventDefault();
                     _Barcode.Scan();
+					_AjaxCall.Call();
+                document.querySelector('#total_price').innerText = $("#scanned-barcode").val();
                 });
             }, 1000);
 

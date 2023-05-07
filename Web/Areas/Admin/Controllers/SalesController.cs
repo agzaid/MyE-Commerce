@@ -6,12 +6,13 @@ using System.Text.Json;
 using Data.Entities.Cashier;
 using Web.Areas.Admin.Models.Cashier;
 using Data.Entities.Enums;
+using Web.Controllers;
 
 namespace Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class SalesController : Controller
-    {
+    public class SalesController : BaseController<SalesController>
+	{
         private readonly ISkuMainItemService _skuProductService;
         private readonly ICategoryService _categoryService;
         private readonly ISkuSubItemService _skuSubItemService;
@@ -54,10 +55,60 @@ namespace Web.Areas.Admin.Controllers
             return View(product);
         }
 
+		[HttpGet]
+		public async Task<IActionResult> GetItem(string id)
+		{
+			var skuProduct = await _skuProductService.GetOne(s => true, new List<string>() { "skuSubItems" });
+			if (skuProduct == null)
+			{
+				return NotFound();
+			}
+			var categories = _categoryService.GetMany(s => true, null);
+
+			var productViewModel = new EditSkuMainItemViewModel()
+			{
+				Id = skuProduct.ID,
+				Name = skuProduct.Name,
+				PurchasePrice = skuProduct.PurchasePrice,
+				Quantity = skuProduct.Quantity,
+				ShortDescription = skuProduct.ShortDescription,
+				CategoryId = skuProduct.CategoryId,
+				Status = skuProduct.Status,
+				ListSkuSubItems = skuProduct.skuSubItems.Select(s => new SkuSubItemViewModel()
+				{
+					BarCodeNumber = s.BarCodeNumber,
+					//ExpiryDate = s.ExpiryDate?.ToString("yyyyMMddHHmmss"),
+					ExpiryDate = s.ExpiryDate?.ToString("yyyy-MM-dd"),
+					Status = s.Status,
+					Price = s.Price,
+					ID = s.ID
+
+				}).ToList(),
+				ThumbnailImage = skuProduct.ThumbnailImage
+			};
+			productViewModel.ListOfCategories = categories.Select(s => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem()
+			{
+				Text = s.Name,
+				Value = s.ID.ToString(),
+			}).ToList();
+			var columns = new List<string>()
+			{
+				"BarCodeNumber",
+				"Price",
+				"ExpiryDate",
+				"Status"
+			};
+			ViewBag.columns = JsonSerializer.Serialize(columns);
+			ViewBag.stringColumns = columns;
+
+
+			return View(productViewModel);
+		}
 
 
 
-        [HttpPost]
+
+		[HttpPost]
         public IActionResult LoadDataTable()
         {
             var pageSize = int.Parse(Request.Form["length"]);
