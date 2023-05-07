@@ -58,7 +58,8 @@ namespace Web.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> GetItem(string id)
 		{
-			var skuProduct = await _skuProductService.GetOne(s => true, new List<string>() { "skuSubItems" });
+            var skuSubProduct = await _skuSubItemService.GetOne(s => s.ID.ToString() == id, new List<string>() { "SkuMainItem" });
+			var skuProduct = await _skuProductService.GetOne(s => s.ID.ToString() == id, new List<string>() { "skuSubItems" });
 			if (skuProduct == null)
 			{
 				return NotFound();

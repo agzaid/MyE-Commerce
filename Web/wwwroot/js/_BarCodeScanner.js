@@ -35,7 +35,7 @@ var _AjaxCall = {
             url: 'https://localhost:7099/en/Admin/Sales/GetItem',
             type: 'GET',
             data: {
-                "id": "21312312321"
+                "id": "1010"
             },
             contentType: "application/json; charset = utf-8",
             datatype: "json",
