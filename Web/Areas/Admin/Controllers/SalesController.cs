@@ -7,6 +7,7 @@ using Data.Entities.Cashier;
 using Web.Areas.Admin.Models.Cashier;
 using Data.Entities.Enums;
 using Web.Controllers;
+using Web.Areas.Admin.Models.Sales;
 
 namespace Web.Areas.Admin.Controllers
 {
@@ -26,34 +27,30 @@ namespace Web.Areas.Admin.Controllers
 
         public IActionResult Create(List<string> message)
         {
-            var product = new CreateSkuMainItemViewModel();
-            var categories = _categoryService.GetMany(s => true, new List<string>());
-            product.ListOfCategories = categories.Select(s => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem()
-            {
-                Text = s.Name,
-                Value = s.ID.ToString(),
-            }).ToList();
-            product.Status = RecordStatus.Published;
+            var product = new CreateSalesInvoiceViewModel();
+            //var product = new CreateSkuMainItemViewModel();
+            //var categories = _categoryService.GetMany(s => true, new List<string>());
+            //product.ListOfCategories = categories.Select(s => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem()
+            //{
+            //    Text = s.Name,
+            //    Value = s.ID.ToString(),
+            //}).ToList();
+            //product.Status = RecordStatus.Published;
             var columns = new List<string>()
             {
-                // "Name",
-                //"Price",
-                //"Quantity",
-                //"ShortDescription",
-                //"Status"
-                "BarcodeNumber",
+                 "Name",
                 "Price",
-                "ExpiryDate",
-                "Status"
+                "Quantity",
             };
             ViewBag.columns = JsonSerializer.Serialize(columns);
             ViewBag.stringColumns = columns;
 
             //ViewBag.records = _skuProductService.GetMany(s => true, null).Count();
-            ViewBag.records_create = 0;
+            //ViewBag.records_create = 0;
 
             return View(product);
         }
+
 
 		[HttpGet]
 		public async Task<IActionResult> GetItem(string id)

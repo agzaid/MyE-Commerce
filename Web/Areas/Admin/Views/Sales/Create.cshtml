@@ -1,4 +1,4 @@
-﻿@model Web.Areas.Admin.Models.Cashier.CreateSkuMainItemViewModel
+﻿@model Web.Areas.Admin.Models.Sales.CreateSalesInvoiceViewModel
 
 @section Header{
     @*<link href="~/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />*@
@@ -11,7 +11,7 @@
     <div class="page-title d-flex flex-column me-5 ms-lg-15">
         <!--begin::Title-->
         <h1 class=" text-dark fw-bolder fs-2 mb-0">
-            <span class="badge badge-danger display-1 p-2">Invoice</span> #@(new Random().Next())
+            <span class="badge badge-danger display-1 p-2">Invoice</span> #@Model.InvoiceId
         </h1>
         <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 pt-1">
             <li class="breadcrumb-item text-muted">
@@ -23,13 +23,7 @@
                 <span class="bullet bg-gray-300 w-5px h-2px"></span>
             </li>
             <li class="breadcrumb-item text-muted">
-                Cashier
-            </li>
-            <li class="breadcrumb-item">
-                <span class="bullet bg-gray-300 w-5px h-2px"></span>
-            </li>
-            <li class="breadcrumb-item text-muted">
-                <a asp-action="Index" asp-controller="Sales" class="text-muted text-hover-primary">
+                <a asp-action="Create" asp-controller="Sales" class="text-muted text-hover-primary">
                     Sales
                 </a>
             </li>
@@ -45,8 +39,11 @@
 				@*<div class="col-sm-6">
 					#@(new Random().Next()) 
 				</div>*@
+				@*<div>
+					<img onLoad="timeCount()" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" />
+				</div>*@
 				<div class="col-sm-12">
-					<h2>@DateTime.Now.ToString("yyyy-MM-dd")</h2>
+				<div id="clock"></div>
 				</div>
 			</div>
             <!--begin::Card header-->
@@ -61,6 +58,7 @@
             <!--begin::Card body-->
             <div class="card-body text-center pt-0">
                <h1 id="total_price">Total Price</h1>
+			   <input asp-for="TotalPrice" class="form-control mb-2" hidden />
             </div>
             <!--end::Card body-->
         </div>
@@ -70,25 +68,25 @@
             <!--begin::Card body-->
             <div class="card-body pt-0">
                 <!--begin::Select2-->
-                <label class="required form-label" asp-for="Name">Paid</label>
+                <label class="required form-label" asp-for="Tendered"></label>
 
-                <input type="text" asp-for="Name" class="form-control mb-2" placeholder="Product name" />
+                <input asp-for="Tendered" class="form-control mb-2" placeholder="Paid amoount...."/>
 				<!--end::Select2-->
                 <!--begin::Description-->
                 <div class="text-muted fs-7">
-                    <span asp-validation-for="Status" class="text-danger"></span>
+                    <span asp-validation-for="Tendered" class="text-danger"></span>
                 </div>
                 <!--end::Description-->
 				<!--begin::Input group-->
                 <div class="mb-10 fv-row">
                     <!--begin::Label-->
-                    <label class="required form-label" asp-for="Name">Change</label>
+                    <label class="required form-label" asp-for="Change"></label>
                     <!--end::Label-->
                     <!--begin::Input-->
-                    <input type="text" asp-for="Name" class="form-control mb-2" placeholder="Product name" />
+                    <input asp-for="Change" class="form-control mb-2" placeholder="Change...." />
                     <!--end::Input-->
                     <!--begin::Description-->
-                    <span asp-validation-for="Name" class="text-danger"></span>
+                    <span asp-validation-for="Change" class="text-danger"></span>
                     <!--end::Description-->
                 </div>
             </div>
@@ -2053,6 +2051,7 @@
         var idIncrementer = 1;
 
         $(document).ready(function () {
+			timeCount();
             var tableCleared = true;
             var i = 0;
             _DataTable.Draw();
@@ -2129,6 +2128,29 @@
             idIncrementer--;
 
         };
+
+		function timeCount() {
+			debugger;
+		var today = new Date();
+
+		var day = today.getDate();
+		var month = today.getMonth()+1;
+		var year = today.getFullYear();
+
+		var hour = today.getHours();
+		if(hour<10)hour = "0"+hour;
+
+		var minute = today.getMinutes();
+		if(minute<10)minute = "0"+minute;
+
+		var second = today.getSeconds();
+		if(second<10)second = "0"+second;
+
+		document.getElementById("clock").innerHTML = 
+		day+"/"+month+"/"+year+" |"+hour+":"+minute+":"+second;
+
+		setTimeout("timeCount()", 1000);
+		}
                                                         //swall call was here
     </script>
     }
