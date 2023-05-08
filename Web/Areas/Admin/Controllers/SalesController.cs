@@ -13,7 +13,7 @@ namespace Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class SalesController : BaseController<SalesController>
-	{
+    {
         private readonly ISkuMainItemService _skuProductService;
         private readonly ICategoryService _categoryService;
         private readonly ISkuSubItemService _skuSubItemService;
@@ -52,61 +52,31 @@ namespace Web.Areas.Admin.Controllers
         }
 
 
-		[HttpGet]
-		public async Task<IActionResult> GetItem(string id)
-		{
+        [HttpGet]
+        public async Task<IActionResult> GetItem(string id)
+        {
             var skuSubProduct = await _skuSubItemService.GetOne(s => s.ID.ToString() == id, new List<string>() { "SkuMainItem" });
-			var skuProduct = await _skuProductService.GetOne(s => s.ID.ToString() == id, new List<string>() { "skuSubItems" });
-			if (skuProduct == null)
-			{
-				return NotFound();
-			}
-			var categories = _categoryService.GetMany(s => true, null);
+            var skuProduct = await _skuProductService.GetOne(s => s.ID.ToString() == id, new List<string>() { "skuSubItems" });
+            if (skuSubProduct == null)
+            {
+                return NotFound();
+            }
 
-			var productViewModel = new EditSkuMainItemViewModel()
-			{
-				Id = skuProduct.ID,
-				Name = skuProduct.Name,
-				PurchasePrice = skuProduct.PurchasePrice,
-				Quantity = skuProduct.Quantity,
-				ShortDescription = skuProduct.ShortDescription,
-				CategoryId = skuProduct.CategoryId,
-				Status = skuProduct.Status,
-				ListSkuSubItems = skuProduct.skuSubItems.Select(s => new SkuSubItemViewModel()
-				{
-					BarCodeNumber = s.BarCodeNumber,
-					//ExpiryDate = s.ExpiryDate?.ToString("yyyyMMddHHmmss"),
-					ExpiryDate = s.ExpiryDate?.ToString("yyyy-MM-dd"),
-					Status = s.Status,
-					Price = s.Price,
-					ID = s.ID
+            var productTable = new ProductSalesTable()
+            {
+                Id = skuSubProduct.ID,
+                Name = skuSubProduct.SkuMainItem.Name,
+                Quantity = 1,
+                Price = (double)skuSubProduct.Price
+            };
 
-				}).ToList(),
-				ThumbnailImage = skuProduct.ThumbnailImage
-			};
-			productViewModel.ListOfCategories = categories.Select(s => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem()
-			{
-				Text = s.Name,
-				Value = s.ID.ToString(),
-			}).ToList();
-			var columns = new List<string>()
-			{
-				"BarCodeNumber",
-				"Price",
-				"ExpiryDate",
-				"Status"
-			};
-			ViewBag.columns = JsonSerializer.Serialize(columns);
-			ViewBag.stringColumns = columns;
-
-
-			return View(productViewModel);
-		}
+            return Ok(new { data = productTable });
+        }
 
 
 
 
-		[HttpPost]
+        [HttpPost]
         public IActionResult LoadDataTable()
         {
             var pageSize = int.Parse(Request.Form["length"]);

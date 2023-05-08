@@ -106,19 +106,19 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link @(currentControllerName == "category" ? "active" : string.Empty)" asp-controller="Category" asp-action="Index">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Categories</span>
-                            </a>
-                        </div>
-                        <div class="menu-item">
                             <a class="menu-link @(currentControllerName == "sales" ? "active" : string.Empty)" asp-controller="Sales" asp-action="Create">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Sales</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link @(currentControllerName == "category" ? "active" : string.Empty)" asp-controller="Category" asp-action="Index">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Categories</span>
                             </a>
                         </div>
                     </div>

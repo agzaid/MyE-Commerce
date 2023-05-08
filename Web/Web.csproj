@@ -28,6 +28,7 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Resources\Views\" />
+    <Folder Include="wwwroot\Admin\js\" />
   </ItemGroup>
 
   <ItemGroup>
