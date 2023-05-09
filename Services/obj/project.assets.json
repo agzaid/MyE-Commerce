@@ -2810,19 +2810,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\AhmedGamal\\.nuget\\packages\\": {}
+    "C:\\Users\\Agzaid\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\MyProject\\AsianStore\\Services\\Services.csproj",
+      "projectUniqueName": "D:\\Programming\\Projects\\MVC\\AsianGoodies_v2\\Services\\Services.csproj",
       "projectName": "Services",
-      "projectPath": "D:\\MyProject\\AsianStore\\Services\\Services.csproj",
-      "packagesPath": "C:\\Users\\AhmedGamal\\.nuget\\packages\\",
-      "outputPath": "D:\\MyProject\\AsianStore\\Services\\obj\\",
+      "projectPath": "D:\\Programming\\Projects\\MVC\\AsianGoodies_v2\\Services\\Services.csproj",
+      "packagesPath": "C:\\Users\\Agzaid\\.nuget\\packages\\",
+      "outputPath": "D:\\Programming\\Projects\\MVC\\AsianGoodies_v2\\Services\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\AhmedGamal\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Agzaid\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2836,11 +2836,11 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\MyProject\\AsianStore\\Data\\Data.csproj": {
-              "projectPath": "D:\\MyProject\\AsianStore\\Data\\Data.csproj"
+            "D:\\Programming\\Projects\\MVC\\AsianGoodies_v2\\Data\\Data.csproj": {
+              "projectPath": "D:\\Programming\\Projects\\MVC\\AsianGoodies_v2\\Data\\Data.csproj"
             },
-            "D:\\MyProject\\AsianStore\\Repo\\Repo.csproj": {
-              "projectPath": "D:\\MyProject\\AsianStore\\Repo\\Repo.csproj"
+            "D:\\Programming\\Projects\\MVC\\AsianGoodies_v2\\Repo\\Repo.csproj": {
+              "projectPath": "D:\\Programming\\Projects\\MVC\\AsianGoodies_v2\\Repo\\Repo.csproj"
             }
           }
         }
