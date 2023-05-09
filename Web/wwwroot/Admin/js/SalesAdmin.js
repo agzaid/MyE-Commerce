@@ -4,6 +4,7 @@ var destroyTable = true;
 var itemsObj = [];
 var i = 0;
 var totalPrice = 0;
+var totalQ = 0;
 
 $(document).ready(function () {
     var tableCleared = true;
@@ -107,16 +108,18 @@ function timeCount() {
 };
 
 function CreateTRow(data) {
-    itemsObj.push(data);
+    AddingItems(data);
+    //itemsObj.push(data);
     var markup = `<tr role="row animate__animated animate__backInLeft" class="odd">
                <td>`+ idIncrementer + `</td>
                <td><input class="form-control form-control-sm text-start" type='text' value='`+ data.name + `' name='Name[` + i + `]' disabled></td>
                <td><input class="form-control form-control-sm text-start" type='number' id='subPrice' name='Price[`+ i + `]' value='` + data.price + `'  disabled></td>
-               <td><input class="form-control form-control-sm text-start" type='number' name='Qunatity[`+ i + `]' min='1' value="` + data.quantity + `" style='width:100px;'></ td >
+               <td><input class="form-control form-control-sm text-start" type='number' name='Qunatity[`+ i + `]' min='1' value="` + data.quantity + `" disabled style='width:100px;'></ td >
                <td><button onclick="removeEle(this)"; class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>
                </tr>`;
     $("table tbody").append(markup);
     ComputeTotalPrice();
+    CountTotalQuantity();
     idIncrementer++;
     i++;
 }
@@ -125,6 +128,34 @@ setTimeout(function () {
     ComputeTotalPrice();
 
 }, 1000);
+
+function AddingItems(data) {
+    debugger;
+    if (itemsObj.length == 0) {
+        itemsObj.push(data)
+    } else {
+        itemsObj.forEach(function (arrayItem) {
+            if (arrayItem.name == data.name) {
+                arrayItem.quantity += 1;
+                $(`[name='Qunatity[` + arrayItem.id + `]]'`).val(arrayItem.quantity);
+
+            } else
+                itemsObj.push(data);
+        });
+    }
+
+    //totalQ += (arrayItem.quantity);
+    //console.log(totalQ);
+    //document.querySelector('#kt_file_manager_items_counter').innerText = totalQ;
+}
+function CountTotalQuantity() {
+    totalQ = 0;
+    itemsObj.forEach(function (arrayItem) {
+        totalQ += (arrayItem.quantity);
+        console.log(totalQ);
+        document.querySelector('#kt_file_manager_items_counter').innerText = totalQ;
+    });
+}
 
 function ComputeTotalPrice() {
     debugger
