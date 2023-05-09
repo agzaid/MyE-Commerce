@@ -29,24 +29,4 @@ var _Barcode = {
     }
 }
 
-var _AjaxCall = {
-    Call: function (barcode_id) {
-        $.ajax({
-            url: 'https://localhost:7099/en/Admin/Sales/GetItem',
-            type: 'GET',
-            data: {
-                "id": barcode_id
-            },
-            contentType: "application/json; charset = utf-8",
-            datatype: "json",
-            success: function (response) {
-                debugger;
-                alert('Data: ' + JSON.stringify(response));
-            },
-            error: function (request, error) {
-                debugger;
-                alert("Request: " + JSON.stringify(request));
-            }
-        });
-    }
-}
+
