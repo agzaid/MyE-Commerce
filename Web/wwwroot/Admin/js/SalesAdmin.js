@@ -110,14 +110,7 @@ function timeCount() {
 function CreateTRow(data) {
     AddingItems(data);
     //itemsObj.push(data);
-    var markup = `<tr role="row animate__animated animate__backInLeft" class="odd">
-               <td>`+ idIncrementer + `</td>
-               <td><input class="form-control form-control-sm text-start" type='text' value='`+ data.name + `' name='Name[` + i + `]' disabled></td>
-               <td><input class="form-control form-control-sm text-start" type='number' id='subPrice' name='Price[`+ i + `]' value='` + data.price + `'  disabled></td>
-               <td><input class="form-control form-control-sm text-start" type='number' name='Qunatity[`+ i + `]' min='1' value="` + data.quantity + `" disabled style='width:100px;'></ td >
-               <td><button onclick="removeEle(this)"; class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>
-               </tr>`;
-    $("table tbody").append(markup);
+
     ComputeTotalPrice();
     CountTotalQuantity();
     idIncrementer++;
@@ -132,15 +125,36 @@ setTimeout(function () {
 function AddingItems(data) {
     debugger;
     if (itemsObj.length == 0) {
-        itemsObj.push(data)
+        itemsObj.push(data);
+        var markup = `<tr role="row animate__animated animate__backInLeft" class="odd">
+               <td>`+ idIncrementer + `</td>
+               <td><input class="form-control form-control-sm text-start" type='text' value='`+ data.name + `' name='Name[` + i + `]' disabled></td>
+               <td><input class="form-control form-control-sm text-start" type='number' id='subPrice' name='Price[`+ i + `]' value='` + data.price + `'  disabled></td>
+               <td><input class="form-control form-control-sm text-start" type='number' name='Qunatity[`+ i + `]' min='1' value="` + data.quantity + `" disabled style='width:100px;'></ td >
+               <td><button onclick="removeEle(this)"; class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+               </tr>`;
+        $("table tbody").append(markup);
     } else {
+        //need another condition here when item not duplicated and not available 
+
         itemsObj.forEach(function (arrayItem) {
             if (arrayItem.name == data.name) {
                 arrayItem.quantity += 1;
-                $(`[name='Qunatity[` + arrayItem.id + `]]'`).val(arrayItem.quantity);
+                $(`[name='Qunatity[` + (arrayItem.id-1) + `]']`).val(arrayItem.quantity);
+                //var s = $(`[name='Qunatity[0]']`);
+                //var o = $(`[name='Qunatity[0]']`).val(5);
 
-            } else
+            } else {
                 itemsObj.push(data);
+                var markup = `<tr role="row animate__animated animate__backInLeft" class="odd">
+               <td>`+ idIncrementer + `</td>
+               <td><input class="form-control form-control-sm text-start" type='text' value='`+ data.name + `' name='Name[` + i + `]' disabled></td>
+               <td><input class="form-control form-control-sm text-start" type='number' id='subPrice' name='Price[`+ i + `]' value='` + data.price + `'  disabled></td>
+               <td><input class="form-control form-control-sm text-start" type='number' name='Qunatity[`+ i + `]' min='1' value="` + data.quantity + `" disabled style='width:100px;'></ td >
+               <td><button onclick="removeEle(this)"; class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+               </tr>`;
+                $("table tbody").append(markup);
+            }
         });
     }
 
