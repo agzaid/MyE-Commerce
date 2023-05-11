@@ -4,7 +4,7 @@ var destroyTable = true;
 var itemsObj = [];
 var i = 0;
 var totalPrice = 0;
-var totalQ = 0;
+var totalQuantity = 0;
 
 $(document).ready(function () {
     var tableCleared = true;
@@ -55,7 +55,6 @@ $(document).ready(function () {
     }, 1000);
     setTimeout(function () {
         $("#scanned-barcode").on('change', function (event) {
-            debugger;
             event.preventDefault();
             _Barcode.Scan();
             _AjaxCall.Call("1");
@@ -63,8 +62,7 @@ $(document).ready(function () {
         });
     }, 1000);
 
-    $(`[name='Price`).on('keyup', function () {
-        debugger;
+    $(`[name='Price]`).on('keyup', function () {
         if ($(`[name='Price`).val() != "") {
             //$('#subPrice').val($(`[name='Price`).val());
             $('[id=subPrice]').each(function () {
@@ -73,17 +71,14 @@ $(document).ready(function () {
         } else {
             $('[id=subPrice]').each(function () { $(this).val(0) })
         }
-
-
+    });
+    $(`[name='Quantity]`).on('focus', function () {
+        alert("AAAAAAAAAAAAaaa");
     });
 
 });
 
-function removeEle(el) {
-    $(el).closest('tr').remove();
-    idIncrementer--;
 
-};
 //swall call was here
 
 function timeCount() {
@@ -123,56 +118,73 @@ setTimeout(function () {
 }, 1000);
 
 function AddingItems(data) {
-    debugger;
     if (itemsObj.length == 0) {
         itemsObj.push(data);
-        var markup = `<tr role="row animate__animated animate__backInLeft" class="odd">
-               <td>`+ idIncrementer + `</td>
-               <td><input class="form-control form-control-sm text-start" type='text' value='`+ data.name + `' name='Name[` + i + `]' disabled></td>
-               <td><input class="form-control form-control-sm text-start" type='number' id='subPrice' name='Price[`+ i + `]' value='` + data.price + `'  disabled></td>
-               <td><input class="form-control form-control-sm text-start" type='number' name='Qunatity[`+ i + `]' min='1' value="` + data.quantity + `" disabled style='width:100px;'></ td >
-               <td><button onclick="removeEle(this)"; class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>
-               </tr>`;
-        $("table tbody").append(markup);
+        AppendRow(data);
     } else {
         //need another condition here when item not duplicated and not available 
-
+        debugger;
         itemsObj.forEach(function (arrayItem) {
             if (arrayItem.name == data.name) {
                 arrayItem.quantity += 1;
-                $(`[name='Qunatity[` + (arrayItem.id-1) + `]']`).val(arrayItem.quantity);
+                $(`[name='Quantity[` + (arrayItem.id - 1) + `]']`).val(arrayItem.quantity);
                 //var s = $(`[name='Qunatity[0]']`);
                 //var o = $(`[name='Qunatity[0]']`).val(5);
 
             } else {
                 itemsObj.push(data);
-                var markup = `<tr role="row animate__animated animate__backInLeft" class="odd">
-               <td>`+ idIncrementer + `</td>
-               <td><input class="form-control form-control-sm text-start" type='text' value='`+ data.name + `' name='Name[` + i + `]' disabled></td>
-               <td><input class="form-control form-control-sm text-start" type='number' id='subPrice' name='Price[`+ i + `]' value='` + data.price + `'  disabled></td>
-               <td><input class="form-control form-control-sm text-start" type='number' name='Qunatity[`+ i + `]' min='1' value="` + data.quantity + `" disabled style='width:100px;'></ td >
-               <td><button onclick="removeEle(this)"; class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>
-               </tr>`;
-                $("table tbody").append(markup);
+                AppendRow(data);
             }
         });
     }
+    function removeEle(el) {
+        if (confirm("Are you sure you want to delete this item...?")) {
+            var s = $(el).closest('tr');
+            debugger;
+            var name = s[0].cells[1].firstElementChild.value;
+            var price = s[0].cells[2].firstElementChild.value;
+            var quantity = s[0].cells[3].firstElementChild.value;
+            var elName = s[0].cells[3].firstElementChild.name;
+            //delete item from itemObj
+            itemsObj.forEach(function (arrayItem) {
+                debugger;
+                if (arrayItem.name == name && arrayItem.quantity >= 2) {
+                    arrayItem.quantity -= 1;
+                    $(`[name='` + elName + `']`).val(arrayItem.quantity);
+                    CountTotalQuantity();
+                    ComputeTotalPrice();
+                } else {
+                    var h = itemsObj;
+                    arrayItem.quantity -= 1;
+                    CountTotalQuantity();
+                    ComputeTotalPrice();
+                    itemsObj = itemsObj.filter(function (el) { return el.quantity != 0 });
+                    $(el).closest('tr').remove();
+                }
+            });
+
+            return false;
+        } else
+            return false;
+
+        idIncrementer--;
+
+    };
 
     //totalQ += (arrayItem.quantity);
     //console.log(totalQ);
     //document.querySelector('#kt_file_manager_items_counter').innerText = totalQ;
 }
 function CountTotalQuantity() {
-    totalQ = 0;
+    totalQuantity = 0;
     itemsObj.forEach(function (arrayItem) {
-        totalQ += (arrayItem.quantity);
-        console.log(totalQ);
-        document.querySelector('#kt_file_manager_items_counter').innerText = totalQ;
+        totalQuantity += (arrayItem.quantity);
+        console.log(totalQuantity);
+        document.querySelector('#kt_file_manager_items_counter').innerText = totalQuantity;
     });
 }
 
 function ComputeTotalPrice() {
-    debugger
     totalPrice = 0;
     itemsObj.forEach(function (arrayItem) {
         totalPrice += (arrayItem.price * arrayItem.quantity);
@@ -185,6 +197,16 @@ function ComputeTotalPrice() {
     //    document.querySelector('#total_price').innerText = totalPrice;
 
     //}
+}
+function AppendRow(data) {
+    var markup = `<tr role="row animate__animated animate__backInLeft" class="odd">
+               <td>`+ idIncrementer + `</td>
+               <td><input class="form-control form-control-sm text-start" type='text' value='`+ data.name + `' name='Name[` + i + `]' disabled></td>
+               <td><input class="form-control form-control-sm text-start" type='number' id='subPrice' name='Price[`+ i + `]' value='` + data.price + `'  disabled></td>
+               <td><input class="form-control form-control-sm text-start" type='number' name='Quantity[`+ i + `]' min='1' value="` + data.quantity + `" disabled style='width:100px;'></ td >
+               <td><button onclick="return removeEle(this)"; class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+               </tr>`;
+    $("table tbody").append(markup);
 }
 
 var _AjaxCall = {
@@ -204,6 +226,8 @@ var _AjaxCall = {
                     destroyTable = false;
                 }
                 CreateTRow(response.data);
+                $("#scanned-barcode").val("");
+                $("#scanned-barcode").focus();
                 alert('Data: ' + JSON.stringify(response));
             },
             error: function (request, error) {
