@@ -103,41 +103,78 @@ function timeCount() {
 };
 
 function CreateTRow(data) {
-    AddingItems(data);
+    _SalesFunctions.AddingItems(data);
     //itemsObj.push(data);
 
-    ComputeTotalPrice();
-    CountTotalQuantity();
+    _SalesFunctions.ComputeTotalPrice();
+    _SalesFunctions.CountTotalQuantity();
     idIncrementer++;
     i++;
 }
 
 setTimeout(function () {
-    ComputeTotalPrice();
+    _SalesFunctions.ComputeTotalPrice();
 
 }, 1000);
 
-function AddingItems(data) {
-    if (itemsObj.length == 0) {
-        itemsObj.push(data);
-        AppendRow(data);
-    } else {
-        //need another condition here when item not duplicated and not available 
-        debugger;
-        itemsObj.forEach(function (arrayItem) {
-            if (arrayItem.name == data.name) {
-                arrayItem.quantity += 1;
-                $(`[name='Quantity[` + (arrayItem.id - 1) + `]']`).val(arrayItem.quantity);
-                //var s = $(`[name='Qunatity[0]']`);
-                //var o = $(`[name='Qunatity[0]']`).val(5);
 
-            } else {
-                itemsObj.push(data);
-                AppendRow(data);
-            }
+var _SalesFunctions = {
+
+    AddingItems: function (data) {
+        if (itemsObj.length == 0) {
+            itemsObj.push(data);
+            _SalesFunctions.AppendRow(data);
+        } else {
+            //need another condition here when item not duplicated and not available 
+            debugger;
+            itemsObj.forEach(function (arrayItem) {
+                if (arrayItem.name == data.name) {
+                    arrayItem.quantity += 1;
+                    $(`[name='Quantity[` + (arrayItem.id - 1) + `]']`).val(arrayItem.quantity);
+                    //var s = $(`[name='Qunatity[0]']`);
+                    //var o = $(`[name='Qunatity[0]']`).val(5);
+
+                } else {
+                    itemsObj.push(data);
+                    _SalesFunctions.AppendRow(data);
+                }
+            });
+        }
+
+    },
+    CountTotalQuantity: function () {
+        totalQuantity = 0;
+        itemsObj.forEach(function (arrayItem) {
+            totalQuantity += (arrayItem.quantity);
+            console.log(totalQuantity);
+            document.querySelector('#kt_file_manager_items_counter').innerText = totalQuantity;
         });
-    }
-    function removeEle(el) {
+    },
+    ComputeTotalPrice: function () {
+        totalPrice = 0;
+        itemsObj.forEach(function (arrayItem) {
+            totalPrice += (arrayItem.price * arrayItem.quantity);
+            console.log(totalPrice);
+            document.querySelector('#total_price').innerText = totalPrice;
+        });
+    //for (var i = 0; i < itemsObj.length; i++) {
+    //    totalPrice += itemsObj[i].price;
+    //    console.log(totalPrice);
+    //    document.querySelector('#total_price').innerText = totalPrice;
+
+    //}
+    },
+    AppendRow: function (data) {
+        var markup = `<tr role="row animate__animated animate__backInLeft" class="odd">
+               <td>`+ idIncrementer + `</td>
+               <td><input class="form-control form-control-sm text-start" type='text' value='`+ data.name + `' name='Name[` + i + `]' disabled></td>
+               <td><input class="form-control form-control-sm text-start" type='number' id='subPrice' name='Price[`+ i + `]' value='` + data.price + `'  disabled></td>
+               <td><input class="form-control form-control-sm text-start" type='number' name='Quantity[`+ i + `]' min='1' value="` + data.quantity + `" disabled style='width:100px;'></ td >
+               <td><button onclick="return _SalesFunctions.RemoveEle(this)"; class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+               </tr>`;
+        $("table tbody").append(markup);
+    },
+    RemoveEle: function (el) {
         if (confirm("Are you sure you want to delete this item...?")) {
             var s = $(el).closest('tr');
             debugger;
@@ -151,91 +188,56 @@ function AddingItems(data) {
                 if (arrayItem.name == name && arrayItem.quantity >= 2) {
                     arrayItem.quantity -= 1;
                     $(`[name='` + elName + `']`).val(arrayItem.quantity);
-                    CountTotalQuantity();
-                    ComputeTotalPrice();
+                    _SalesFunctions.CountTotalQuantity();
+                    _SalesFunctions.ComputeTotalPrice();
                 } else {
                     var h = itemsObj;
                     arrayItem.quantity -= 1;
-                    CountTotalQuantity();
-                    ComputeTotalPrice();
+                    _SalesFunctions.CountTotalQuantity();
+                    _SalesFunctions.ComputeTotalPrice();
                     itemsObj = itemsObj.filter(function (el) { return el.quantity != 0 });
                     $(el).closest('tr').remove();
                 }
             });
 
+            --i;
+            --idIncrementer;
             return false;
         } else
             return false;
 
         idIncrementer--;
+    },
 
-    };
+};
 
-    //totalQ += (arrayItem.quantity);
-    //console.log(totalQ);
-    //document.querySelector('#kt_file_manager_items_counter').innerText = totalQ;
-}
-function CountTotalQuantity() {
-    totalQuantity = 0;
-    itemsObj.forEach(function (arrayItem) {
-        totalQuantity += (arrayItem.quantity);
-        console.log(totalQuantity);
-        document.querySelector('#kt_file_manager_items_counter').innerText = totalQuantity;
-    });
-}
-
-function ComputeTotalPrice() {
-    totalPrice = 0;
-    itemsObj.forEach(function (arrayItem) {
-        totalPrice += (arrayItem.price * arrayItem.quantity);
-        console.log(totalPrice);
-        document.querySelector('#total_price').innerText = totalPrice;
-    });
-    //for (var i = 0; i < itemsObj.length; i++) {
-    //    totalPrice += itemsObj[i].price;
-    //    console.log(totalPrice);
-    //    document.querySelector('#total_price').innerText = totalPrice;
-
-    //}
-}
-function AppendRow(data) {
-    var markup = `<tr role="row animate__animated animate__backInLeft" class="odd">
-               <td>`+ idIncrementer + `</td>
-               <td><input class="form-control form-control-sm text-start" type='text' value='`+ data.name + `' name='Name[` + i + `]' disabled></td>
-               <td><input class="form-control form-control-sm text-start" type='number' id='subPrice' name='Price[`+ i + `]' value='` + data.price + `'  disabled></td>
-               <td><input class="form-control form-control-sm text-start" type='number' name='Quantity[`+ i + `]' min='1' value="` + data.quantity + `" disabled style='width:100px;'></ td >
-               <td><button onclick="return removeEle(this)"; class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>
-               </tr>`;
-    $("table tbody").append(markup);
-}
-
-var _AjaxCall = {
-    Call: function (barcode_id) {
-        $.ajax({
-            url: 'https://localhost:7099/en/Admin/Sales/GetItem',
-            type: 'GET',
-            data: {
-                "id": barcode_id
-            },
-            contentType: "application/json; charset = utf-8",
-            datatype: "json",
-            success: function (response) {
-                debugger;
-                if (destroyTable) {
-                    $('#SalesInvoice').DataTable().clear().destroy();
-                    destroyTable = false;
+    var _AjaxCall = {
+        Call: function (barcode_id) {
+            $.ajax({
+                url: 'https://localhost:7099/en/Admin/Sales/GetItem',
+                type: 'GET',
+                data: {
+                    "id": barcode_id
+                },
+                contentType: "application/json; charset = utf-8",
+                datatype: "json",
+                success: function (response) {
+                    debugger;
+                    if (destroyTable) {
+                        $('#SalesInvoice').DataTable().clear().destroy();
+                        destroyTable = false;
+                    }
+                    CreateTRow(response.data);
+                    $("#scanned-barcode").val("");
+                    $("#scanned-barcode").focus();
+                    alert('Data: ' + JSON.stringify(response));
+                },
+                error: function (request, error) {
+                    debugger;
+                    $("#scanned-barcode").val("");
+                    $("#scanned-barcode").focus();
+                    alert("Request: " + JSON.stringify(request.responseText));
                 }
-                CreateTRow(response.data);
-                $("#scanned-barcode").val("");
-                $("#scanned-barcode").focus();
-                alert('Data: ' + JSON.stringify(response));
-            },
-            error: function (request, error) {
-                debugger;
-                $("#scanned-barcode").val("");
-                $("#scanned-barcode").focus();
-                alert("Request: " + JSON.stringify(request.responseText));
-            }
-        });
+            });
+        }
     }
-}
