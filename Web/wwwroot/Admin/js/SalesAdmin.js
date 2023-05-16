@@ -5,6 +5,7 @@ var itemsObj = [];
 var i = 0;
 var totalPrice = 0;
 var totalQuantity = 0;
+var tableIndex = 0;
 
 $(document).ready(function () {
     var tableCleared = true;
@@ -50,8 +51,7 @@ function CreateTRow(data) {
     _SalesFunctions.AddingItems(data);
     _SalesFunctions.ComputeTotalPrice();
     _SalesFunctions.CountTotalQuantity();
-    idIncrementer++;
-    i++;
+    
 }
 
 var _SalesFunctions = {
@@ -62,22 +62,21 @@ var _SalesFunctions = {
             _SalesFunctions.AppendRow(data);
         } else {
             //need another condition here when item not duplicated and not available 
-            debugger;
             //itemsObj.forEach(function (arrayItem) {
             for (var i = 0; i < itemsObj.length; i++) {
-
-                //var existsObj = itemsObj.filter(function (el) { return el.name == itemsObj[i].name });
-                var existsObj = itemsObj.filter(function (el) {
-                    if (el.name == itemsObj[i].name && el.price == itemsObj[i].price) {
-                        console.log("false");
-                        return false;
-                    }
-                    else {
-                        console.log("true");
+                var existsObj = itemsObj.filter(function (el, index) {
+                    if (el.name == data.name && el.price == data.price) {
+                        debugger;
+                        console.log("true", index);
+                        tableIndex = index;
                         return true;
                     }
+                    else {
+                        debugger;
+                        console.log("false",index);
+                        return false;
+                    }
                 });
-
                 //if (existsObj.length != 0 && itemsObj[i].name == data.name && itemsObj[i].price != data.price) {
                 //    itemsObj[i].quantity += 1;
                 //    $(`[name='Quantity[` + (itemsObj[i].id - 1) + `]']`).val(itemsObj[i].quantity);
@@ -92,20 +91,17 @@ var _SalesFunctions = {
                 //    break;
                 //}
 
-                if (itemsObj[i].name == data.name && itemsObj[i].price == data.price ) {
+                if (existsObj.length!=0 && itemsObj[i].name == data.name && itemsObj[i].price == data.price ) {
                     debugger;
                     itemsObj[i].quantity += 1;
-                    $(`[name='Quantity[` + (itemsObj[i].id - 1) + `]']`).val(itemsObj[i].quantity);
+                    $(`[name='Quantity[` + tableIndex + `]']`).val(itemsObj[i].quantity);
                     break;
-                    //var s = $(`[name='Qunatity[0]']`);
-                    //var o = $(`[name='Qunatity[0]']`).val(5);
-
-                } else if (itemsObj[i].name == data.name && itemsObj[i].price != data.price) {
-                    debugger;
-                    itemsObj.push(data);
-                    _SalesFunctions.AppendRow(data);
-                    break;
-                } else if (itemsObj[i].name != data.name) {
+                //} else if (itemsObj[i].name == data.name && itemsObj[i].price != data.price) {
+                //    debugger;
+                //    itemsObj.push(data);
+                //    _SalesFunctions.AppendRow(data);
+                //    break;
+                } else if (existsObj.length==0) {
                     debugger;
                     itemsObj.push(data);
                     _SalesFunctions.AppendRow(data);
@@ -149,6 +145,8 @@ var _SalesFunctions = {
                <td><button onclick="return _SalesFunctions.RemoveEle(this)"; class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>
                </tr>`;
         $("table tbody").append(markup);
+        idIncrementer++;
+        i++;
     },
     RemoveEle: function (el) {
         if (confirm("Are you sure you want to delete this item...?")) {
