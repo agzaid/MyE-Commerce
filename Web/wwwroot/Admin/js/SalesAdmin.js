@@ -51,7 +51,7 @@ function CreateTRow(data) {
     _SalesFunctions.AddingItems(data);
     _SalesFunctions.ComputeTotalPrice();
     _SalesFunctions.CountTotalQuantity();
-    
+
 }
 
 var _SalesFunctions = {
@@ -63,53 +63,35 @@ var _SalesFunctions = {
         } else {
             //need another condition here when item not duplicated and not available 
             //itemsObj.forEach(function (arrayItem) {
-            for (var i = 0; i < itemsObj.length; i++) {
-                var existsObj = itemsObj.filter(function (el, index) {
-                    if (el.name == data.name && el.price == data.price) {
-                        debugger;
-                        console.log("true", index);
-                        tableIndex = index;
-                        return true;
-                    }
-                    else {
-                        debugger;
-                        console.log("false",index);
-                        return false;
-                    }
-                });
-                //if (existsObj.length != 0 && itemsObj[i].name == data.name && itemsObj[i].price != data.price) {
-                //    itemsObj[i].quantity += 1;
-                //    $(`[name='Quantity[` + (itemsObj[i].id - 1) + `]']`).val(itemsObj[i].quantity);
-                //    break;
-                //} else if (existsObj.length == 0 && (itemsObj[i].name == data.name && itemsObj[i].price != data.price)) {
-                //    itemsObj.push(data);
-                //    _SalesFunctions.AppendRow(data);
-                //    break;
-                //} else {
-                //    itemsObj.push(data);
-                //    _SalesFunctions.AppendRow(data);
-                //    break;
-                //}
-
-                if (existsObj.length!=0 && itemsObj[i].name == data.name && itemsObj[i].price == data.price ) {
+            //for (var i = 0; i < itemsObj.length; i++) {
+            var existsObj = itemsObj.filter(function (el, index) {
+                if (el.name == data.name && el.price == data.price) {
                     debugger;
-                    itemsObj[i].quantity += 1;
-                    $(`[name='Quantity[` + tableIndex + `]']`).val(itemsObj[i].quantity);
-                    break;
-                //} else if (itemsObj[i].name == data.name && itemsObj[i].price != data.price) {
-                //    debugger;
-                //    itemsObj.push(data);
-                //    _SalesFunctions.AppendRow(data);
-                //    break;
-                } else if (existsObj.length==0) {
-                    debugger;
-                    itemsObj.push(data);
-                    _SalesFunctions.AppendRow(data);
-                    break;
-                } else {
-                    continue;
+                    //console.log("true", index);
+                    tableIndex = index;
+                    return true;
                 }
+                else {
+                    debugger;
+                    //console.log("false",index);
+                    return false;
+                }
+            });
+
+            if (existsObj.length != 0 && itemsObj[tableIndex].name == data.name && itemsObj[tableIndex].price == data.price) {
+                debugger;
+                itemsObj[tableIndex].quantity += 1;
+                $(`[name='Quantity[` + tableIndex + `]']`).val(itemsObj[tableIndex].quantity);
+                //break;
+            } else if (existsObj.length == 0) {
+                debugger;
+                itemsObj.push(data);
+                _SalesFunctions.AppendRow(data);
+                //break;
+            } else {
+                //continue;
             }
+            //}
             //});
         }
 
@@ -159,23 +141,23 @@ var _SalesFunctions = {
             //delete item from itemObj
             itemsObj.forEach(function (arrayItem) {
                 debugger;
-                if (arrayItem.name == name && arrayItem.quantity >= 2) {
+                if (arrayItem.name == name && arrayItem.price == price && arrayItem.quantity >= 2) {
                     arrayItem.quantity -= 1;
                     $(`[name='` + elName + `']`).val(arrayItem.quantity);
                     _SalesFunctions.CountTotalQuantity();
                     _SalesFunctions.ComputeTotalPrice();
-                } else {
+                } else if (arrayItem.name == name && arrayItem.price == price && arrayItem.quantity >= 1) {
                     var h = itemsObj;
                     arrayItem.quantity -= 1;
                     _SalesFunctions.CountTotalQuantity();
                     _SalesFunctions.ComputeTotalPrice();
                     itemsObj = itemsObj.filter(function (el) { return el.quantity != 0 });
                     $(el).closest('tr').remove();
+                    //idIncrementer--;
+                    i--;
                 }
             });
 
-            --i;
-            --idIncrementer;
             return false;
         } else
             return false;
