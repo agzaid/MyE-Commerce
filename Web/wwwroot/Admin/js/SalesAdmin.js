@@ -11,12 +11,12 @@ $(document).ready(function () {
     $("#scanned-barcode").focus();
     timeCount();
     _DataTable.Draw();
-    
+
     setTimeout(function () {
         $("#scanned-barcode").on('change', function (event) {
             event.preventDefault();
             _Barcode.Scan();
-            _AjaxCall.Call("1");
+            _AjaxCall.Call($("#scanned-barcode").val());
             //document.querySelector('#total_price').innerText = $("#scanned-barcode").val();
         });
     }, 1000);
@@ -63,18 +63,58 @@ var _SalesFunctions = {
         } else {
             //need another condition here when item not duplicated and not available 
             debugger;
-            itemsObj.forEach(function (arrayItem) {
-                if (arrayItem.name == data.name) {
-                    arrayItem.quantity += 1;
-                    $(`[name='Quantity[` + (arrayItem.id - 1) + `]']`).val(arrayItem.quantity);
+            //itemsObj.forEach(function (arrayItem) {
+            for (var i = 0; i < itemsObj.length; i++) {
+
+                //var existsObj = itemsObj.filter(function (el) { return el.name == itemsObj[i].name });
+                var existsObj = itemsObj.filter(function (el) {
+                    if (el.name == itemsObj[i].name && el.price == itemsObj[i].price) {
+                        console.log("false");
+                        return false;
+                    }
+                    else {
+                        console.log("true");
+                        return true;
+                    }
+                });
+
+                //if (existsObj.length != 0 && itemsObj[i].name == data.name && itemsObj[i].price != data.price) {
+                //    itemsObj[i].quantity += 1;
+                //    $(`[name='Quantity[` + (itemsObj[i].id - 1) + `]']`).val(itemsObj[i].quantity);
+                //    break;
+                //} else if (existsObj.length == 0 && (itemsObj[i].name == data.name && itemsObj[i].price != data.price)) {
+                //    itemsObj.push(data);
+                //    _SalesFunctions.AppendRow(data);
+                //    break;
+                //} else {
+                //    itemsObj.push(data);
+                //    _SalesFunctions.AppendRow(data);
+                //    break;
+                //}
+
+                if (itemsObj[i].name == data.name && itemsObj[i].price == data.price ) {
+                    debugger;
+                    itemsObj[i].quantity += 1;
+                    $(`[name='Quantity[` + (itemsObj[i].id - 1) + `]']`).val(itemsObj[i].quantity);
+                    break;
                     //var s = $(`[name='Qunatity[0]']`);
                     //var o = $(`[name='Qunatity[0]']`).val(5);
 
-                } else {
+                } else if (itemsObj[i].name == data.name && itemsObj[i].price != data.price) {
+                    debugger;
                     itemsObj.push(data);
                     _SalesFunctions.AppendRow(data);
+                    break;
+                } else if (itemsObj[i].name != data.name) {
+                    debugger;
+                    itemsObj.push(data);
+                    _SalesFunctions.AppendRow(data);
+                    break;
+                } else {
+                    continue;
                 }
-            });
+            }
+            //});
         }
 
     },

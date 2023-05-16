@@ -4,7 +4,6 @@ var _Barcode = {
         var barcode = "";
         var interval;
         document.addEventListener('keydown', function (evt) {
-            debugger;
             if (interval) {
                 clearInterval(interval);
             }
