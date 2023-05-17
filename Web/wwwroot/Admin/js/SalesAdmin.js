@@ -13,14 +13,14 @@ $(document).ready(function () {
     timeCount();
     _DataTable.Draw();
 
-    setTimeout(function () {
+    //setTimeout(function () {
         $("#scanned-barcode").on('change', function (event) {
             event.preventDefault();
             _Barcode.Scan();
             _AjaxCall.Call($("#scanned-barcode").val());
             //document.querySelector('#total_price').innerText = $("#scanned-barcode").val();
         });
-    }, 1000);
+    //}, 1000);
 
     $("#Tendered").on('keyup', function (event) {
         _ChangeTender.Calculate();
@@ -83,7 +83,7 @@ var _SalesFunctions = {
             if (existsObj.length != 0 && itemsObj[tableIndex].name == data.name && itemsObj[tableIndex].price == data.price) {
                 debugger;
                 itemsObj[tableIndex].quantity += 1;
-                $(`[name='Quantity[` + tableIndex + `]']`).val(itemsObj[tableIndex].quantity);
+                $(`[name='InvoiceItems[` + tableIndex + `].Quantity']`).val(itemsObj[tableIndex].quantity);
                 //break;
             } else if (existsObj.length == 0) {
                 debugger;
@@ -110,6 +110,7 @@ var _SalesFunctions = {
         itemsObj.forEach(function (arrayItem) {
             totalPrice += (arrayItem.price * arrayItem.quantity);
             document.querySelector('#total_price').innerText = totalPrice;
+            $("#TotalPrice").val(totalPrice);
         });
         //for (var i = 0; i < itemsObj.length; i++) {
         //    totalPrice += itemsObj[i].price;
@@ -120,9 +121,9 @@ var _SalesFunctions = {
     AppendRow: function (data) {
         var markup = `<tr role="row animate__animated animate__backInLeft" class="odd">
                <td>`+ idIncrementer + `</td>
-               <td><input class="form-control form-control-sm text-start" type='text' value='`+ data.name + `' name='Name[` + i + `]' disabled></td>
-               <td><input class="form-control form-control-sm text-start" type='number' id='subPrice' name='Price[`+ i + `]' value='` + data.price + `'  disabled></td>
-               <td><input class="form-control form-control-sm text-start" type='number' name='Quantity[`+ i + `]' min='1' value="` + data.quantity + `" disabled style='width:100px;'></ td >
+               <td><input class="form-control form-control-sm text-start" type='text' value='`+ data.name + `' name='InvoiceItems[` + i + `].Name' readonly ></td>
+               <td><input class="form-control form-control-sm text-start" type='number' id='subPrice' name='InvoiceItems[`+ i + `].Price' value='` + data.price + `'  readonly ></td>
+               <td><input class="form-control form-control-sm text-start" type='number' name='InvoiceItems[` + i + `].Quantity' min='1' value="` + data.quantity + `" readonly  style='width:100px;'></ td >
                <td><button onclick="return _SalesFunctions.RemoveEle(this)"; class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>
                </tr>`;
         $("table tbody").append(markup);
@@ -197,7 +198,6 @@ var _AjaxCall = {
         });
     }
 };
-
 
 var _ChangeTender = {
     Calculate: function () {

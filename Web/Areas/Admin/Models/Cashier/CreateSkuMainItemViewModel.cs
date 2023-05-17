@@ -21,6 +21,7 @@ namespace Web.Areas.Admin.Models.Cashier
                 Text = "--------------"
             });
         }
+
         [Required(ErrorMessage ="Please Enter Name...")]
         public string Name { get; set; }
         [Display(Name = "Barcode serial")]

@@ -53,6 +53,8 @@
             <div class="card-body text-center pt-0">
                 <h1 id="total_price">Total Price</h1>
                 <input asp-for="TotalPrice" class="form-control mb-2" hidden />
+                <input asp-for="InvoiceId" class="form-control mb-2" hidden />
+                @*<input name="InvoiceItems[0].Name" class="form-control mb-2" hidden value="11" />*@
             </div>
             <!--end::Card body-->
         </div>
@@ -64,7 +66,7 @@
                 <!--begin::Select2-->
                 <label class="required form-label" asp-for="Tendered"></label>
 
-                <input asp-for="Tendered" class="form-control mb-2" type="number" min="0" placeholder="Paid amount...." />
+                <input asp-for="Tendered" class="form-control mb-2" type="number" min="0" placeholder="Paid amount...." required />
                 <!--end::Select2-->
                 <!--begin::Description-->
                 <div class="text-muted fs-7">
@@ -77,10 +79,10 @@
                     <label class="required form-label" asp-for="Change"></label>
                     <!--end::Label-->
                     <!--begin::Input-->
-                    <input asp-for="Change" class="form-control mb-2" type="number" min="0" placeholder="Change...."  disabled/>
+                    <input asp-for="Change" class="form-control mb-2" type="number" min="0" placeholder="Change...." value="0" readonly />
                     <!--end::Input-->
                     <!--begin::Description-->
-                    <span asp-validation-for="Change" class="text-danger"></span>
+                    <span asp-validation-for="InvoiceItems[0].Name" class="text-danger"></span>
                     <!--end::Description-->
                 </div>
             </div>
@@ -174,6 +176,10 @@
                                     </tr>
                                 </thead>
                                 <tbody class="fw-bold">
+                                    <tr>
+                                        <td><input class="form-control form-control-sm text-start" type="number" value="22" name="Change" id="Change" hidden/></td>
+                                    </tr>
+
                                 </tbody>
                                 <tfoot>
                                     <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
@@ -196,6 +202,7 @@
             </div>
             <!--end::Tab pane-->
         </div>
+        <form />
         <!--end::Tab content-->
         <div class="d-flex justify-content-end">
             <!--begin::Button-->
@@ -230,7 +237,7 @@
 @section Scripts {
     <script src="~/admin/js/salesadmin.js" asp-append-version="true"></script>
     <script>
-      
+
     </script>
     }
 

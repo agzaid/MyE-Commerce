@@ -8,11 +8,16 @@ using Web.Areas.Admin.Models.Cashier;
 using Data.Entities.Enums;
 using Web.Controllers;
 using Web.Areas.Admin.Models.Sales;
+using Web.Areas.Admin.Models.Shop;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Data.Entities.Shop;
+using Repo.Migrations;
+using Data.Entities.Sales;
 
 namespace Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class SalesController : BaseController<SalesController>
+    public class SalesController : Controller
     {
         private readonly ISkuMainItemService _skuProductService;
         private readonly ICategoryService _categoryService;
@@ -25,6 +30,7 @@ namespace Web.Areas.Admin.Controllers
             _skuSubItemService = skuSubItemService;
         }
 
+        [HttpGet]
         public IActionResult Create(List<string> message)
         {
             var product = new CreateSalesInvoiceViewModel();
@@ -49,6 +55,39 @@ namespace Web.Areas.Admin.Controllers
             //ViewBag.records_create = 0;
 
             return View(product);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateAsync(CreateSalesInvoiceViewModel model)
+        {
+            var Message = new List<string>();
+            if (ModelState.IsValid)
+            {
+                var invoice = new Invoice()
+                {
+                    
+                };
+                //var product = new Product()
+                //{
+                //    ThumbnailImage = model.ThumbnailFormFile != null ? $"/Uploads/Products/{await model.ThumbnailFormFile.CreateFile("Products")}" : "",
+                //    CreatedDate = DateTime.UtcNow,
+                //    DisplayOrder = model.DisplayOrder,
+                //    ModifiedDate = DateTime.UtcNow,
+                //    Price = model.Price,
+                //    ProductName = model.ProductName,
+                //    Quantity = model.Quantity,
+                //    ShortDescription = model.ShortDescription,
+                //    Status = model.Status,
+                //};
+                //_productService.Insert(product);
+                Message.Add("Create");
+                return View("Create", new { message = Message });
+            }
+
+            Message.Add("Error");
+            return View("Create", new { message = Message });
+
         }
 
 

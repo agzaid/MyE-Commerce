@@ -2,6 +2,7 @@
 using Data.Entities;
 using Data.Entities.Address;
 using Data.Entities.Cashier;
+using Data.Entities.Sales;
 using Data.Entities.Shop;
 using Data.Entities.User;
 using Data.Mapping;
@@ -38,6 +39,8 @@ namespace Repo
         public DbSet<Customer> Customer { get; set; }
         public DbSet<SkuMainItem> SkuMainItem { get; set; }
         public DbSet<SkuSubItem> SkuSubItem { get; set; }
+        public DbSet<Invoice> Invoice { get; set; }
+        public DbSet<InvoiceItems> InvoiceItems { get; set; }
 
         //public DbSet<Order> Product { get; set; }
         //public DbSet<Order> Order { get; set; }
@@ -54,6 +57,8 @@ namespace Repo
             modelbuilder.MapShoppingCart();
             modelbuilder.MapCustomer();
             modelbuilder.MapSkuMainItem();
+            modelbuilder.MapInvoice();
+            modelbuilder.MapInvoiceItems();
             //modelbuilder.MapOrder();
             //modelbuilder.MapOrderDetails();
         }

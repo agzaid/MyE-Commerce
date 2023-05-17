@@ -1,5 +1,6 @@
 ﻿using Data.Entities.Address;
 using Data.Entities.Cashier;
+using Data.Entities.Sales;
 using Data.Entities.Shop;
 using Data.Entities.User;
 using Microsoft.EntityFrameworkCore;
@@ -63,6 +64,18 @@ namespace Data.Mapping
         public static void MapSkuSubItem(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<SkuSubItem>().HasKey(s => s.ID);
+            //modelBuilder.Entity<SkuSubItem>().HasIndex(u => u.BarCodeNumber).IsUnique();
+            //modelBuilder.Entity<ShoppingCart>().HasOne(s => s.AppUser).WithMany(s => s.ShoppingCarts).HasForeignKey(s => s.AppUserId).OnDelete(DeleteBehavior.Cascade); ;
+        }
+        public static void MapInvoice(this ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Invoice>().HasKey(s => s.ID);
+            //modelBuilder.Entity<SkuSubItem>().HasIndex(u => u.BarCodeNumber).IsUnique();
+            //modelBuilder.Entity<ShoppingCart>().HasOne(s => s.AppUser).WithMany(s => s.ShoppingCarts).HasForeignKey(s => s.AppUserId).OnDelete(DeleteBehavior.Cascade); ;
+        }
+        public static void MapInvoiceItems(this ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<InvoiceItems>().HasKey(s => s.ID);
             //modelBuilder.Entity<SkuSubItem>().HasIndex(u => u.BarCodeNumber).IsUnique();
             //modelBuilder.Entity<ShoppingCart>().HasOne(s => s.AppUser).WithMany(s => s.ShoppingCarts).HasForeignKey(s => s.AppUserId).OnDelete(DeleteBehavior.Cascade); ;
         }
