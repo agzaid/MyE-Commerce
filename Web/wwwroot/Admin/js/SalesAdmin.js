@@ -21,6 +21,10 @@ $(document).ready(function () {
             //document.querySelector('#total_price').innerText = $("#scanned-barcode").val();
         });
     }, 1000);
+
+    $("#Tendered").on('keyup', function (event) {
+        _ChangeTender.Calculate();
+    });
 });
 
 
@@ -67,13 +71,11 @@ var _SalesFunctions = {
             var existsObj = itemsObj.filter(function (el, index) {
                 if (el.name == data.name && el.price == data.price) {
                     debugger;
-                    //console.log("true", index);
                     tableIndex = index;
                     return true;
                 }
                 else {
                     debugger;
-                    //console.log("false",index);
                     return false;
                 }
             });
@@ -100,7 +102,6 @@ var _SalesFunctions = {
         totalQuantity = 0;
         itemsObj.forEach(function (arrayItem) {
             totalQuantity += (arrayItem.quantity);
-            console.log(totalQuantity);
             document.querySelector('#kt_file_manager_items_counter').innerText = totalQuantity;
         });
     },
@@ -108,12 +109,10 @@ var _SalesFunctions = {
         totalPrice = 0;
         itemsObj.forEach(function (arrayItem) {
             totalPrice += (arrayItem.price * arrayItem.quantity);
-            console.log(totalPrice);
             document.querySelector('#total_price').innerText = totalPrice;
         });
         //for (var i = 0; i < itemsObj.length; i++) {
         //    totalPrice += itemsObj[i].price;
-        //    console.log(totalPrice);
         //    document.querySelector('#total_price').innerText = totalPrice;
 
         //}
@@ -152,7 +151,8 @@ var _SalesFunctions = {
                     _SalesFunctions.CountTotalQuantity();
                     _SalesFunctions.ComputeTotalPrice();
                     itemsObj = itemsObj.filter(function (el) { return el.quantity != 0 });
-                    $(el).closest('tr').remove();
+                    s.attr("hidden", "hidden");
+                    //$(el).closest('tr').remove();
                     //idIncrementer--;
                     i--;
                 }
@@ -196,4 +196,15 @@ var _AjaxCall = {
             }
         });
     }
-}
+};
+
+
+var _ChangeTender = {
+    Calculate: function () {
+        debugger;
+        var tender = $("#Tendered").val();
+        var change = $("#Change").val();
+        change = tender - totalPrice;
+        $("#Change").val(change);
+    }
+};

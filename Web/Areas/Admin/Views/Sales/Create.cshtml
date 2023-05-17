@@ -64,7 +64,7 @@
                 <!--begin::Select2-->
                 <label class="required form-label" asp-for="Tendered"></label>
 
-                <input asp-for="Tendered" class="form-control mb-2" placeholder="Paid amoount...." />
+                <input asp-for="Tendered" class="form-control mb-2" type="number" min="0" placeholder="Paid amount...." />
                 <!--end::Select2-->
                 <!--begin::Description-->
                 <div class="text-muted fs-7">
@@ -77,7 +77,7 @@
                     <label class="required form-label" asp-for="Change"></label>
                     <!--end::Label-->
                     <!--begin::Input-->
-                    <input asp-for="Change" class="form-control mb-2" placeholder="Change...." />
+                    <input asp-for="Change" class="form-control mb-2" type="number" min="0" placeholder="Change...."  disabled/>
                     <!--end::Input-->
                     <!--begin::Description-->
                     <span asp-validation-for="Change" class="text-danger"></span>
