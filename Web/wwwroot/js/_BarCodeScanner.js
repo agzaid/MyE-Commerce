@@ -1,13 +1,15 @@
 ﻿
 var _Barcode = {
     Scan: function () {
+        debugger;
         var barcode = "";
         var interval;
-        document.addEventListener('keydown', function (evt) {
+        $(document).on('keydown', function (evt) {
             if (interval) {
                 clearInterval(interval);
             }
             if (evt.code == 'Enter') {
+                evt.preventDefault();
                 if (barcode) {
                     handleBarcode(barcode);
                 }

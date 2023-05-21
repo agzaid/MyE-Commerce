@@ -50,6 +50,7 @@ namespace Services.Injection
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<ISkuMainItemService, SkuMainItemService>();
             services.AddScoped<ISkuSubItemService, SkuSubItemService>();
+            services.AddScoped<IInvoiceService, InvoiceService>();
 
             return services;
         }

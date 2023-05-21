@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -25,5 +26,29 @@ namespace Services.Injection
             }
             return IPAddress;
         }
+        //public static bool GenerateBarcode(string barcode)
+        //{
+        //    if (barcode != null)
+        //    {
+        //        using (MemoryStream memoryStream = new MemoryStream())
+        //        {
+        //            using (Bitmap bitMap = new(barcode.Length * 40, 80))
+        //            {
+        //                using (Graphics graphics = Graphics.FromImage(bitMap))
+        //                {
+        //                    Font oFont = new Font("IDAutomationHC39M", 16);
+        //                    PointF point = new PointF(2f, 2f);
+        //                    SolidBrush whiteBrush = new SolidBrush(Color.White);
+        //                    graphics.FillRectangle(whiteBrush, 0, 0, bitMap.Width, bitMap.Height);
+        //                    SolidBrush blackBrush = new SolidBrush(Color.DarkBlue);
+        //                    graphics.DrawString("*" + barcode + "*", oFont, blackBrush, point);
+        //                }
+        //                bitMap.Save(memoryStream, ImageFormat.Jpeg);
+        //                //ViewBag.BarcodeImage = "data:image/png;base64," + Convert.ToBase64String(memoryStream.ToArray());
+        //            }
+        //        }
+        //        return true;
+        //    }
+        //}
     }
 }

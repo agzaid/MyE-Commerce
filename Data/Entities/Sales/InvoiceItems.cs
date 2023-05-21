@@ -13,7 +13,9 @@ namespace Data.Entities.Sales
         public int Quantity { get; set; }
         public double Price { get; set; }
 
+        #region Navigation properties
         public int InvoiceID { get; set; }
         public Invoice Invoice { get; set; }
+        #endregion
     }
 }

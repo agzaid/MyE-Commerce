@@ -13,21 +13,30 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Data.Entities.Shop;
 using Repo.Migrations;
 using Data.Entities.Sales;
+using System.Drawing.Imaging;
+using System.Drawing;
+using IronBarCode;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class SalesController : Controller
+    public class SalesController : BaseController<SalesController>
     {
         private readonly ISkuMainItemService _skuProductService;
         private readonly ICategoryService _categoryService;
         private readonly ISkuSubItemService _skuSubItemService;
+        private readonly IInvoiceService _invoiceService;
+        private readonly IWebHostEnvironment _environment;
 
-        public SalesController(ISkuMainItemService skuProductService, ICategoryService categoryService, ISkuSubItemService skuSubItemService)
+        public SalesController(ISkuMainItemService skuProductService, ICategoryService categoryService, ISkuSubItemService skuSubItemService
+            , IInvoiceService invoiceService, IWebHostEnvironment environment)
         {
             _skuProductService = skuProductService;
             _categoryService = categoryService;
             _skuSubItemService = skuSubItemService;
+            _invoiceService = invoiceService;
+            _environment = environment;
         }
 
         [HttpGet]
@@ -66,27 +75,38 @@ namespace Web.Areas.Admin.Controllers
             {
                 var invoice = new Invoice()
                 {
-                    
+                    ID = 0,
+                    InvoiceNo = model.InvoiceNo,
+                    CustomerName = "",
+                    PhoneNo = "",
+                    Tax = 0,
+                    SubTotal = 0,
+                    Total = model.TotalPrice,
+                    CustomerAddress = "",
+                    TotalQuantity = model.TotalQuantity,
+                    InvoiceItems = new()
                 };
-                //var product = new Product()
-                //{
-                //    ThumbnailImage = model.ThumbnailFormFile != null ? $"/Uploads/Products/{await model.ThumbnailFormFile.CreateFile("Products")}" : "",
-                //    CreatedDate = DateTime.UtcNow,
-                //    DisplayOrder = model.DisplayOrder,
-                //    ModifiedDate = DateTime.UtcNow,
-                //    Price = model.Price,
-                //    ProductName = model.ProductName,
-                //    Quantity = model.Quantity,
-                //    ShortDescription = model.ShortDescription,
-                //    Status = model.Status,
-                //};
-                //_productService.Insert(product);
+                model.InvoiceItems.ForEach(x =>
+                {
+                    invoice.InvoiceItems.Add(new InvoiceItems()
+                    {
+                        Name = x.Name,
+                        Barcode = x.Barcode,
+                        Price = (double)x.Price,
+                        Quantity = (int)x.Quantity,
+                        Invoice = invoice,
+                        InvoiceID = invoice.ID
+                    });
+                });
+                var image = GenerateBarcode(model.InvoiceNo.ToString());
+                //_invoiceService.Insert(invoice);
+               
                 Message.Add("Create");
-                return View("Create", new { message = Message });
+                return View("Create", new CreateSalesInvoiceViewModel());
             }
 
             Message.Add("Error");
-            return View("Create", new { message = Message });
+            return View("Create");
 
         }
 
@@ -105,7 +125,8 @@ namespace Web.Areas.Admin.Controllers
                 Id = skuSubProduct.ID,
                 Name = skuSubProduct.SkuMainItem.Name,
                 Quantity = 1,
-                Price = (double)skuSubProduct.Price
+                Price = (double)skuSubProduct.Price,
+                Barcode= skuSubProduct.BarCodeNumber
             };
 
             return Ok(new { data = productTable });
@@ -145,6 +166,29 @@ namespace Web.Areas.Admin.Controllers
             return Ok(new { recordsFiltered = recordsTotal, recordsTotal, data = data });
         }
 
+        #region Helper Methods
 
+        string GenerateBarcode(string generateBarcode)
+        {
+            GeneratedBarcode barcode = IronBarCode.BarcodeWriter.CreateBarcode(generateBarcode, BarcodeWriterEncoding.Code128);
+            barcode.ResizeTo(400, 120);
+            barcode.AddBarcodeValueTextBelowBarcode();
+            // Styling a Barcode and adding annotation text
+            barcode.ChangeBarCodeColor(IronSoftware.Drawing.Color.Black);
+            barcode.SetMargins(10);
+            string path = Path.Combine(_environment.WebRootPath, "GeneratedBarcode");
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            string filePath = Path.Combine(_environment.WebRootPath, "GeneratedBarcode/barcode_"+ generateBarcode +".png");
+            barcode.SaveAsPng(filePath);
+            string fileName = Path.GetFileName(filePath);
+            string imageUrl = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}" + "/GeneratedBarcode/" + fileName;
+            string imageUrll = $"/GeneratedBarcode/barcode_/"+ generateBarcode +".png";
+            ViewBag.QrCodeUri = imageUrl;
+            return imageUrll;
+        }
+        #endregion
     }
 }

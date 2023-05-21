@@ -11,7 +11,7 @@
     <div class="page-title d-flex flex-column me-5 ms-lg-15">
         <!--begin::Title-->
         <h1 class=" text-dark fw-bolder fs-2 mb-0">
-            <span class="badge badge-danger display-1 p-2">Invoice</span> #@Model.InvoiceId
+            <span class="badge badge-danger display-1 p-2">Invoice</span> #@Model.InvoiceNo
         </h1>
         <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 pt-1">
             <li class="breadcrumb-item text-muted">
@@ -53,7 +53,7 @@
             <div class="card-body text-center pt-0">
                 <h1 id="total_price">Total Price</h1>
                 <input asp-for="TotalPrice" class="form-control mb-2" hidden />
-                <input asp-for="InvoiceId" class="form-control mb-2" hidden />
+                <input asp-for="InvoiceNo" class="form-control mb-2" hidden />
                 @*<input name="InvoiceItems[0].Name" class="form-control mb-2" hidden value="11" />*@
             </div>
             <!--end::Card body-->
@@ -79,10 +79,10 @@
                     <label class="required form-label" asp-for="Change"></label>
                     <!--end::Label-->
                     <!--begin::Input-->
-                    <input asp-for="Change" class="form-control mb-2" type="number" min="0" placeholder="Change...." value="0" readonly />
+                    <input asp-for="Change" class="form-control mb-2" type="number" min="0" pattern="/^[-]?\d*\.?\d{0,9}$/" placeholder="Change...." value="0" readonly />
                     <!--end::Input-->
                     <!--begin::Description-->
-                    <span asp-validation-for="InvoiceItems[0].Name" class="text-danger"></span>
+                    <span asp-validation-for="Change" class="text-danger"></span>
                     <!--end::Description-->
                 </div>
             </div>
@@ -152,6 +152,8 @@
                                 <!--begin::Folder Stats-->
                                 <div class="badge badge-lg badge-info">
                                     <span id="kt_file_manager_items_counter">0</span>&nbsp;&nbsp;&nbsp;&nbsp; items
+                                    <input asp-for="TotalQuantity" type="number" hidden />
+
                                 </div>
                                 <!--end::Folder Stats-->
                             </div>

@@ -14,12 +14,13 @@ $(document).ready(function () {
     _DataTable.Draw();
 
     //setTimeout(function () {
-        $("#scanned-barcode").on('change', function (event) {
-            event.preventDefault();
-            _Barcode.Scan();
-            _AjaxCall.Call($("#scanned-barcode").val());
-            //document.querySelector('#total_price').innerText = $("#scanned-barcode").val();
-        });
+    $("#scanned-barcode").on('change', function (event) {
+        debugger;
+        //event.preventDefault();
+        _Barcode.Scan();
+        _AjaxCall.Call($("#scanned-barcode").val());
+        //document.querySelector('#total_price').innerText = $("#scanned-barcode").val();
+    });
     //}, 1000);
 
     $("#Tendered").on('keyup', function (event) {
@@ -102,7 +103,8 @@ var _SalesFunctions = {
         totalQuantity = 0;
         itemsObj.forEach(function (arrayItem) {
             totalQuantity += (arrayItem.quantity);
-            document.querySelector('#kt_file_manager_items_counter').innerText = totalQuantity;
+            $('#kt_file_manager_items_counter')[0].innerText = totalQuantity;
+            $("#TotalQuantity").val(totalQuantity);
         });
     },
     ComputeTotalPrice: function () {
@@ -120,10 +122,10 @@ var _SalesFunctions = {
     },
     AppendRow: function (data) {
         var markup = `<tr role="row animate__animated animate__backInLeft" class="odd">
-               <td>`+ idIncrementer + `</td>
+               <td><input class="form-control form-control-sm text-start" type='text' value='`+ data.barcode + `' name='InvoiceItems[` + i + `].Barcode' readonly ></td>
                <td><input class="form-control form-control-sm text-start" type='text' value='`+ data.name + `' name='InvoiceItems[` + i + `].Name' readonly ></td>
                <td><input class="form-control form-control-sm text-start" type='number' id='subPrice' name='InvoiceItems[`+ i + `].Price' value='` + data.price + `'  readonly ></td>
-               <td><input class="form-control form-control-sm text-start" type='number' name='InvoiceItems[` + i + `].Quantity' min='1' value="` + data.quantity + `" readonly  style='width:100px;'></ td >
+               <td><input class="form-control form-control-sm text-start" type='number' name='InvoiceItems[` + i + `].Quantity' min='0' value="` + data.quantity + `" readonly  style='width:100px;'></ td >
                <td><button onclick="return _SalesFunctions.RemoveEle(this)"; class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>
                </tr>`;
         $("table tbody").append(markup);
@@ -131,9 +133,10 @@ var _SalesFunctions = {
         i++;
     },
     RemoveEle: function (el) {
+        debugger;
+        //el.preventDefault();
         if (confirm("Are you sure you want to delete this item...?")) {
             var s = $(el).closest('tr');
-            debugger;
             var name = s[0].cells[1].firstElementChild.value;
             var price = s[0].cells[2].firstElementChild.value;
             var quantity = s[0].cells[3].firstElementChild.value;
@@ -147,8 +150,10 @@ var _SalesFunctions = {
                     _SalesFunctions.CountTotalQuantity();
                     _SalesFunctions.ComputeTotalPrice();
                 } else if (arrayItem.name == name && arrayItem.price == price && arrayItem.quantity >= 1) {
+                    debugger;
                     var h = itemsObj;
-                    arrayItem.quantity -= 1;
+                    arrayItem.quantity--;
+                    $(`[name='` + elName + `']`).val(arrayItem.quantity);
                     _SalesFunctions.CountTotalQuantity();
                     _SalesFunctions.ComputeTotalPrice();
                     itemsObj = itemsObj.filter(function (el) { return el.quantity != 0 });
