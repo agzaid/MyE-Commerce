@@ -39,13 +39,22 @@ namespace Services.Cashier
 
         public void Insert(Invoice product)
         {
-            if (product != null)
+            try
             {
-                product.CreatedDate = DateTime.Now;
-                product.ModifiedDate = DateTime.Now;
-                repository.Insert(product);
+                if (product != null)
+                {
+                    product.CreatedDate = DateTime.Now;
+                    product.ModifiedDate = DateTime.Now;
+                    repository.Insert(product);
+                }
+                repository.SaveChanges();
             }
-            repository.SaveChanges();
+            catch (Exception ex)
+            {
+
+                throw ex.InnerException;
+            }
+            
         }
 
         public void Update(Invoice product)

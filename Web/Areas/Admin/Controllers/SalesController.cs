@@ -99,10 +99,19 @@ namespace Web.Areas.Admin.Controllers
                     });
                 });
                 var image = GenerateBarcode(model.InvoiceNo.ToString());
-                //_invoiceService.Insert(invoice);
-               
+                invoice.BarCode = image;
+                _invoiceService.Insert(invoice);
+                var columns = new List<string>()
+            {
+                 "Name",
+                "Price",
+                "Quantity",
+            };
+                ViewBag.columns = JsonSerializer.Serialize(columns);
+                ViewBag.stringColumns = columns;
+
                 Message.Add("Create");
-                return View("Create", new CreateSalesInvoiceViewModel());
+                return View( new CreateSalesInvoiceViewModel());
             }
 
             Message.Add("Error");
@@ -185,7 +194,7 @@ namespace Web.Areas.Admin.Controllers
             barcode.SaveAsPng(filePath);
             string fileName = Path.GetFileName(filePath);
             string imageUrl = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}" + "/GeneratedBarcode/" + fileName;
-            string imageUrll = $"/GeneratedBarcode/barcode_/"+ generateBarcode +".png";
+            string imageUrll = $"/GeneratedBarcode/barcode_"+ generateBarcode +".png";
             ViewBag.QrCodeUri = imageUrl;
             return imageUrll;
         }

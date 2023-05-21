@@ -64,7 +64,7 @@ namespace Repo.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("Address");
+                    b.ToTable("Address", (string)null);
                 });
 
             modelBuilder.Entity("Data.Entities.Address.Country", b =>
@@ -86,7 +86,7 @@ namespace Repo.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Country");
+                    b.ToTable("Country", (string)null);
                 });
 
             modelBuilder.Entity("Data.Entities.Address.UserAddress", b =>
@@ -104,7 +104,7 @@ namespace Repo.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("UsersAddresses");
+                    b.ToTable("UsersAddresses", (string)null);
                 });
 
             modelBuilder.Entity("Data.Entities.Cashier.SkuMainItem", b =>
@@ -146,7 +146,7 @@ namespace Repo.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("SkuMainItem");
+                    b.ToTable("SkuMainItem", (string)null);
                 });
 
             modelBuilder.Entity("Data.Entities.Cashier.SkuSubItem", b =>
@@ -182,7 +182,7 @@ namespace Repo.Migrations
 
                     b.HasIndex("SkuMainItemId");
 
-                    b.ToTable("SkuSubItem");
+                    b.ToTable("SkuSubItem", (string)null);
                 });
 
             modelBuilder.Entity("Data.Entities.Sales.Invoice", b =>
@@ -228,7 +228,7 @@ namespace Repo.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Invoice");
+                    b.ToTable("Invoice", (string)null);
                 });
 
             modelBuilder.Entity("Data.Entities.Sales.InvoiceItems", b =>
@@ -264,7 +264,7 @@ namespace Repo.Migrations
 
                     b.HasIndex("InvoiceID");
 
-                    b.ToTable("InvoiceItems");
+                    b.ToTable("InvoiceItems", (string)null);
                 });
 
             modelBuilder.Entity("Data.Entities.Shop.Category", b =>
@@ -295,7 +295,7 @@ namespace Repo.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Category");
+                    b.ToTable("Category", (string)null);
                 });
 
             modelBuilder.Entity("Data.Entities.Shop.Product", b =>
@@ -343,7 +343,7 @@ namespace Repo.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Product");
+                    b.ToTable("Product", (string)null);
                 });
 
             modelBuilder.Entity("Data.Entities.Shop.ShoppingCart", b =>
@@ -370,7 +370,7 @@ namespace Repo.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("ShoppingCart");
+                    b.ToTable("ShoppingCart", (string)null);
                 });
 
             modelBuilder.Entity("Data.Entities.Shop.ShoppingCartItem", b =>
@@ -402,7 +402,7 @@ namespace Repo.Migrations
 
                     b.HasIndex("ShoppingCartId");
 
-                    b.ToTable("ShoppingCartItem");
+                    b.ToTable("ShoppingCartItem", (string)null);
                 });
 
             modelBuilder.Entity("Data.Entities.User.AppUser", b =>
@@ -537,7 +537,7 @@ namespace Repo.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Customer");
+                    b.ToTable("Customer", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
