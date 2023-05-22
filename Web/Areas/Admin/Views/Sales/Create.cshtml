@@ -63,6 +63,10 @@
         <div class="card card-flush py-4">
             <!--begin::Card body-->
             <div class="card-body pt-0">
+                @if (ViewBag.byteBarCode != null)
+                {
+                    <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(ViewBag.byteBarCode))" />
+                }
                 <!--begin::Select2-->
                 <label class="required form-label" asp-for="Tendered"></label>
 
@@ -179,7 +183,7 @@
                                 </thead>
                                 <tbody class="fw-bold">
                                     <tr>
-                                        <td><input class="form-control form-control-sm text-start" type="number" value="22" name="Change" id="Change" hidden/></td>
+                                        <td><input class="form-control form-control-sm text-start" type="number" value="22" name="Change" id="Change" hidden /></td>
                                     </tr>
 
                                 </tbody>

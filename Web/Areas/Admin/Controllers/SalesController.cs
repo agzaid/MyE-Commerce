@@ -15,8 +15,9 @@ using Repo.Migrations;
 using Data.Entities.Sales;
 using System.Drawing.Imaging;
 using System.Drawing;
-using IronBarCode;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using ZXing.QrCode;
+using Services.Injection;
 
 namespace Web.Areas.Admin.Controllers
 {
@@ -98,8 +99,8 @@ namespace Web.Areas.Admin.Controllers
                         InvoiceID = invoice.ID
                     });
                 });
-                var image = GenerateBarcode(model.InvoiceNo.ToString());
-                invoice.BarCode = image;
+                var barcodeByte = CommonMethod.GenerateBarcode(model.InvoiceNo.ToString());
+                invoice.BarcodeByte = barcodeByte;
                 _invoiceService.Insert(invoice);
                 var columns = new List<string>()
             {
@@ -110,8 +111,9 @@ namespace Web.Areas.Admin.Controllers
                 ViewBag.columns = JsonSerializer.Serialize(columns);
                 ViewBag.stringColumns = columns;
 
-                Message.Add("Create");
-                return View( new CreateSalesInvoiceViewModel());
+                ViewBag.byteBarCode = barcodeByte;
+                ViewBag.Message = "Create";
+                return View(new CreateSalesInvoiceViewModel());
             }
 
             Message.Add("Error");
@@ -135,7 +137,7 @@ namespace Web.Areas.Admin.Controllers
                 Name = skuSubProduct.SkuMainItem.Name,
                 Quantity = 1,
                 Price = (double)skuSubProduct.Price,
-                Barcode= skuSubProduct.BarCodeNumber
+                Barcode = skuSubProduct.BarCodeNumber
             };
 
             return Ok(new { data = productTable });
@@ -177,27 +179,68 @@ namespace Web.Areas.Admin.Controllers
 
         #region Helper Methods
 
-        string GenerateBarcode(string generateBarcode)
-        {
-            GeneratedBarcode barcode = IronBarCode.BarcodeWriter.CreateBarcode(generateBarcode, BarcodeWriterEncoding.Code128);
-            barcode.ResizeTo(400, 120);
-            barcode.AddBarcodeValueTextBelowBarcode();
-            // Styling a Barcode and adding annotation text
-            barcode.ChangeBarCodeColor(IronSoftware.Drawing.Color.Black);
-            barcode.SetMargins(10);
-            string path = Path.Combine(_environment.WebRootPath, "GeneratedBarcode");
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-            string filePath = Path.Combine(_environment.WebRootPath, "GeneratedBarcode/barcode_"+ generateBarcode +".png");
-            barcode.SaveAsPng(filePath);
-            string fileName = Path.GetFileName(filePath);
-            string imageUrl = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}" + "/GeneratedBarcode/" + fileName;
-            string imageUrll = $"/GeneratedBarcode/barcode_"+ generateBarcode +".png";
-            ViewBag.QrCodeUri = imageUrl;
-            return imageUrll;
-        }
+        //string GenerateBarcode(string generateBarcode)
+        //{
+        //    GeneratedBarcode barcode = IronBarCode.BarcodeWriter.CreateBarcode(generateBarcode, BarcodeWriterEncoding.Code128);
+        //    barcode.ResizeTo(400, 120);
+        //    barcode.AddBarcodeValueTextBelowBarcode();
+        //    // Styling a Barcode and adding annotation text
+        //    barcode.ChangeBarCodeColor(IronSoftware.Drawing.Color.Black);
+        //    barcode.SetMargins(10);
+        //    string path = Path.Combine(_environment.WebRootPath, "GeneratedBarcode");
+        //    if (!Directory.Exists(path))
+        //    {
+        //        Directory.CreateDirectory(path);
+        //    }
+        //    string filePath = Path.Combine(_environment.WebRootPath, "GeneratedBarcode/barcode_"+ generateBarcode +".png");
+        //    barcode.SaveAsPng(filePath);
+        //    string fileName = Path.GetFileName(filePath);
+        //    string imageUrl = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}" + "/GeneratedBarcode/" + fileName;
+        //    string imageUrll = $"/GeneratedBarcode/barcode_"+ generateBarcode +".png";
+        //    ViewBag.QrCodeUri = imageUrl;
+        //    return imageUrll;
+        //}  
+        //byte[] GenerateBarcode(string generateBarcode)
+        //{
+        //    Byte[] byteArray;
+        //    var width = 250; // width of the Qr Code
+        //    var height = 50; // height of the Qr Code
+        //    var margin = 0;
+        //    var qrCodeWriter = new ZXing.BarcodeWriterPixelData
+        //    {
+        //        Format = ZXing.BarcodeFormat.CODABAR,
+        //        Options = new QrCodeEncodingOptions
+        //        {
+        //            Height = height,
+        //            Width = width,
+        //            Margin = margin
+        //        }
+        //    };
+        //    var pixelData = qrCodeWriter.Write(generateBarcode);
+
+        //    // creating a bitmap from the raw pixel data; if only black and white colors are used it makes no difference
+        //    // that the pixel data ist BGRA oriented and the bitmap is initialized with RGB
+        //    using (var bitmap = new System.Drawing.Bitmap(pixelData.Width, pixelData.Height, System.Drawing.Imaging.PixelFormat.Format32bppRgb))
+        //    {
+        //        using (var ms = new MemoryStream())
+        //        {
+        //            var bitmapData = bitmap.LockBits(new System.Drawing.Rectangle(0, 0, pixelData.Width, pixelData.Height), System.Drawing.Imaging.ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
+        //            try
+        //            {
+        //                // we assume that the row stride of the bitmap is aligned to 4 byte multiplied by the width of the image
+        //                System.Runtime.InteropServices.Marshal.Copy(pixelData.Pixels, 0, bitmapData.Scan0, pixelData.Pixels.Length);
+        //            }
+        //            finally
+        //            {
+        //                bitmap.UnlockBits(bitmapData);
+        //            }
+        //            // save to stream as PNG
+        //            bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+        //            byteArray = ms.ToArray();
+        //        }
+        //    }
+        //    return byteArray;
+        //}
         #endregion
     }
 }

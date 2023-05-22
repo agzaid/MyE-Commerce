@@ -7,7 +7,11 @@ var totalPrice = 0;
 var totalQuantity = 0;
 var tableIndex = 0;
 
-$(document).ready(function () {
+$(document).ready(function (ev) {
+    debugger;
+    if (ev.code == 'Enter') {
+        ev.preventDefault();
+    }
     var tableCleared = true;
     $("#scanned-barcode").focus();
     timeCount();
@@ -15,7 +19,9 @@ $(document).ready(function () {
 
     //setTimeout(function () {
     $("#scanned-barcode").on('change', function (event) {
-        debugger;
+        //if (event.code == 'Enter') {
+        //    event.preventDefault();
+        //}
         //event.preventDefault();
         _Barcode.Scan();
         _AjaxCall.Call($("#scanned-barcode").val());
@@ -24,6 +30,7 @@ $(document).ready(function () {
     //}, 1000);
 
     $("#Tendered").on('keyup', function (event) {
+        event.preventDefault();
         _ChangeTender.Calculate();
     });
 });

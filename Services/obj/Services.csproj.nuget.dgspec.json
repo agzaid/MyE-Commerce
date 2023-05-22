@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Programming\\Projects\\MVC\\AsianGoodies_v2\\Services\\Services.csproj": {}
+    "D:\\MyProject\\AsianStore\\Services\\Services.csproj": {}
   },
   "projects": {
-    "D:\\Programming\\Projects\\MVC\\AsianGoodies_v2\\Data\\Data.csproj": {
+    "D:\\MyProject\\AsianStore\\Data\\Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Programming\\Projects\\MVC\\AsianGoodies_v2\\Data\\Data.csproj",
+        "projectUniqueName": "D:\\MyProject\\AsianStore\\Data\\Data.csproj",
         "projectName": "Data",
-        "projectPath": "D:\\Programming\\Projects\\MVC\\AsianGoodies_v2\\Data\\Data.csproj",
-        "packagesPath": "C:\\Users\\Agzaid\\.nuget\\packages\\",
-        "outputPath": "D:\\Programming\\Projects\\MVC\\AsianGoodies_v2\\Data\\obj\\",
+        "projectPath": "D:\\MyProject\\AsianStore\\Data\\Data.csproj",
+        "packagesPath": "C:\\Users\\AhmedGamal\\.nuget\\packages\\",
+        "outputPath": "D:\\MyProject\\AsianStore\\Data\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Agzaid\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\AhmedGamal\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -87,17 +87,17 @@
         }
       }
     },
-    "D:\\Programming\\Projects\\MVC\\AsianGoodies_v2\\Repo\\Repo.csproj": {
+    "D:\\MyProject\\AsianStore\\Repo\\Repo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Programming\\Projects\\MVC\\AsianGoodies_v2\\Repo\\Repo.csproj",
+        "projectUniqueName": "D:\\MyProject\\AsianStore\\Repo\\Repo.csproj",
         "projectName": "Repo",
-        "projectPath": "D:\\Programming\\Projects\\MVC\\AsianGoodies_v2\\Repo\\Repo.csproj",
-        "packagesPath": "C:\\Users\\Agzaid\\.nuget\\packages\\",
-        "outputPath": "D:\\Programming\\Projects\\MVC\\AsianGoodies_v2\\Repo\\obj\\",
+        "projectPath": "D:\\MyProject\\AsianStore\\Repo\\Repo.csproj",
+        "packagesPath": "C:\\Users\\AhmedGamal\\.nuget\\packages\\",
+        "outputPath": "D:\\MyProject\\AsianStore\\Repo\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Agzaid\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\AhmedGamal\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -166,17 +166,17 @@
         }
       }
     },
-    "D:\\Programming\\Projects\\MVC\\AsianGoodies_v2\\Services\\Services.csproj": {
+    "D:\\MyProject\\AsianStore\\Services\\Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Programming\\Projects\\MVC\\AsianGoodies_v2\\Services\\Services.csproj",
+        "projectUniqueName": "D:\\MyProject\\AsianStore\\Services\\Services.csproj",
         "projectName": "Services",
-        "projectPath": "D:\\Programming\\Projects\\MVC\\AsianGoodies_v2\\Services\\Services.csproj",
-        "packagesPath": "C:\\Users\\Agzaid\\.nuget\\packages\\",
-        "outputPath": "D:\\Programming\\Projects\\MVC\\AsianGoodies_v2\\Services\\obj\\",
+        "projectPath": "D:\\MyProject\\AsianStore\\Services\\Services.csproj",
+        "packagesPath": "C:\\Users\\AhmedGamal\\.nuget\\packages\\",
+        "outputPath": "D:\\MyProject\\AsianStore\\Services\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Agzaid\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\AhmedGamal\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -190,11 +190,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\Programming\\Projects\\MVC\\AsianGoodies_v2\\Data\\Data.csproj": {
-                "projectPath": "D:\\Programming\\Projects\\MVC\\AsianGoodies_v2\\Data\\Data.csproj"
+              "D:\\MyProject\\AsianStore\\Data\\Data.csproj": {
+                "projectPath": "D:\\MyProject\\AsianStore\\Data\\Data.csproj"
               },
-              "D:\\Programming\\Projects\\MVC\\AsianGoodies_v2\\Repo\\Repo.csproj": {
-                "projectPath": "D:\\Programming\\Projects\\MVC\\AsianGoodies_v2\\Repo\\Repo.csproj"
+              "D:\\MyProject\\AsianStore\\Repo\\Repo.csproj": {
+                "projectPath": "D:\\MyProject\\AsianStore\\Repo\\Repo.csproj"
               }
             }
           }
@@ -243,9 +243,17 @@
               "target": "Package",
               "version": "[6.0.7, )"
             },
+            "System.Drawing.Common": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
             "System.Linq.Dynamic.Core": {
               "target": "Package",
               "version": "[1.2.19, )"
+            },
+            "ZXing.Net": {
+              "target": "Package",
+              "version": "[0.16.9, )"
             }
           },
           "imports": [

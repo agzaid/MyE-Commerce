@@ -17,7 +17,7 @@ namespace Data.Entities.Sales
         public int? TotalQuantity { get; set; }
         public double? SubTotal { get; set; }
         public double? Tax { get; set; }
-        public string BarCode { get; set; }
+        public byte[] BarcodeByte { get; set; }
 
         public List<InvoiceItems> InvoiceItems { get; set; } = new List<InvoiceItems>();
 

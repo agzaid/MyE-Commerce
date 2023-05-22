@@ -157,7 +157,7 @@ var _DataTable = {
                     break;
 
                 default:
-                    toastr.info('Empty');
+                    toastr.info('Empty from datatable js');
             }
         }
 
