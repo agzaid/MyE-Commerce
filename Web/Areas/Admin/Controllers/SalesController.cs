@@ -76,6 +76,9 @@ namespace Web.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    //remove 0 quantity items
+                    //insert updated items to database
+
                     #region skuSubItems
                     //var e = model.InvoiceItems.Select(s => s.Barcode).ToList();
                     var skuSubItems = _skuSubItemService.GetMany(s => true, null).ToList();
@@ -89,6 +92,7 @@ namespace Web.Areas.Admin.Controllers
                         item.Status = SkuItemStatus.sold;
                     }
                     var updated = filtered;
+
                     //var filteredd = allVenues.ExceptBy(blockedVenues.Select(x => x.VenueID), venue => venue.ID);
 
                     #endregion
