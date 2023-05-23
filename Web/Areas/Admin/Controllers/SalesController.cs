@@ -79,7 +79,8 @@ namespace Web.Areas.Admin.Controllers
                 var skuSubItems = _skuSubItemService.GetMany(s => true, null).ToList();
 
                 var filtered = skuSubItems
-                   .Where(x => model.InvoiceItems.Any(s => s.Barcode == x.BarCodeNumber) && x.Status == SkuItemStatus.available).OrderByDescending(s=>true).ToList();
+                   .Where(x => model.InvoiceItems.Any(s => s.Barcode == x.BarCodeNumber) && x.Status == SkuItemStatus.available)
+                   .OrderByDescending(s=>true).ToList();
 
                 //var filteredd = allVenues.ExceptBy(blockedVenues.Select(x => x.VenueID), venue => venue.ID);
 
