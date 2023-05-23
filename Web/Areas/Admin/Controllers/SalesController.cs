@@ -74,6 +74,18 @@ namespace Web.Areas.Admin.Controllers
             var Message = new List<string>();
             if (ModelState.IsValid)
             {
+                #region skuSubItems
+                var e = model.InvoiceItems.Select(s => s.Barcode).ToList();
+                var skuSubItems = _skuSubItemService.GetMany(s => true, null).ToList();
+
+                var filtered = skuSubItems
+                   .Where(x => model.InvoiceItems.Any(s => s.Barcode == x.BarCodeNumber) && x.Status == SkuItemStatus.available).OrderByDescending(s=>true).ToList();
+
+                //var filteredd = allVenues.ExceptBy(blockedVenues.Select(x => x.VenueID), venue => venue.ID);
+
+                #endregion 
+
+                #region invoice
                 var invoice = new Invoice()
                 {
                     ID = 0,
@@ -102,6 +114,7 @@ namespace Web.Areas.Admin.Controllers
                 var barcodeByte = CommonMethod.GenerateBarcode(model.InvoiceNo.ToString());
                 invoice.BarcodeByte = barcodeByte;
                 _invoiceService.Insert(invoice);
+                #endregion
                 var columns = new List<string>()
             {
                  "Name",
