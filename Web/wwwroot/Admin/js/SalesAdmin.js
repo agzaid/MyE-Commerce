@@ -14,15 +14,17 @@ $(document).ready(function (ev) {
     }
     var tableCleared = true;
     $("#scanned-barcode").focus();
+    $("#Tendered").prop('readonly', true);
+
     timeCount();
     _DataTable.Draw();
 
     //setTimeout(function () {
     $("#scanned-barcode").on('change', function (event) {
+        //event.preventDefault();
         //if (event.code == 'Enter') {
         //    event.preventDefault();
         //}
-        //event.preventDefault();
         _Barcode.Scan();
         _AjaxCall.Call($("#scanned-barcode").val());
         //document.querySelector('#total_price').innerText = $("#scanned-barcode").val();
@@ -72,6 +74,7 @@ var _SalesFunctions = {
         if (itemsObj.length == 0) {
             itemsObj.push(data);
             _SalesFunctions.AppendRow(data);
+            $("#Tendered").prop('readonly', false);
         } else {
             //need another condition here when item not duplicated and not available 
             //itemsObj.forEach(function (arrayItem) {
@@ -132,7 +135,7 @@ var _SalesFunctions = {
                <td><input class="form-control form-control-sm text-start" type='text' value='`+ data.barcode + `' name='InvoiceItems[` + i + `].Barcode' readonly ></td>
                <td><input class="form-control form-control-sm text-start" type='text' value='`+ data.name + `' name='InvoiceItems[` + i + `].Name' readonly ></td>
                <td><input class="form-control form-control-sm text-start" type='number' id='subPrice' name='InvoiceItems[`+ i + `].Price' value='` + data.price + `'  readonly ></td>
-               <td><input class="form-control form-control-sm text-start" type='number' name='InvoiceItems[` + i + `].Quantity' min='0' value="` + data.quantity + `" readonly  style='width:100px;'></ td >
+               <td class="d-flex align-items-center"><input class="form-control form-control-sm text-start" type='number' name='InvoiceItems[` + i + `].Quantity' min='0' value="` + 1 + `" readonly max='` + data.maxQuantity + `' style='width:100px;'><span> Max(` + data.maxQuantity +`)<span/></ td >
                <td><button onclick="return _SalesFunctions.RemoveEle(this)"; class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>
                </tr>`;
         $("table tbody").append(markup);

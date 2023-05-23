@@ -72,62 +72,76 @@ namespace Web.Areas.Admin.Controllers
         public async Task<IActionResult> CreateAsync(CreateSalesInvoiceViewModel model)
         {
             var Message = new List<string>();
-            if (ModelState.IsValid)
+            try
             {
-                #region skuSubItems
-                var e = model.InvoiceItems.Select(s => s.Barcode).ToList();
-                var skuSubItems = _skuSubItemService.GetMany(s => true, null).ToList();
-
-                var filtered = skuSubItems
-                   .Where(x => model.InvoiceItems.Any(s => s.Barcode == x.BarCodeNumber) && x.Status == SkuItemStatus.available)
-                   .OrderByDescending(s=>true).ToList();
-
-                //var filteredd = allVenues.ExceptBy(blockedVenues.Select(x => x.VenueID), venue => venue.ID);
-
-                #endregion 
-
-                #region invoice
-                var invoice = new Invoice()
+                if (ModelState.IsValid)
                 {
-                    ID = 0,
-                    InvoiceNo = model.InvoiceNo,
-                    CustomerName = "",
-                    PhoneNo = "",
-                    Tax = 0,
-                    SubTotal = 0,
-                    Total = model.TotalPrice,
-                    CustomerAddress = "",
-                    TotalQuantity = model.TotalQuantity,
-                    InvoiceItems = new()
-                };
-                model.InvoiceItems.ForEach(x =>
-                {
-                    invoice.InvoiceItems.Add(new InvoiceItems()
+                    #region skuSubItems
+                    //var e = model.InvoiceItems.Select(s => s.Barcode).ToList();
+                    var skuSubItems = _skuSubItemService.GetMany(s => true, null).ToList();
+
+                    var filtered = skuSubItems
+                       .Where(x => model.InvoiceItems.Any(s => s.Barcode == x.BarCodeNumber) && x.Status == SkuItemStatus.available)
+                       .OrderByDescending(s => true).ToList();
+
+                    foreach (var item in filtered)
                     {
-                        Name = x.Name,
-                        Barcode = x.Barcode,
-                        Price = (double)x.Price,
-                        Quantity = (int)x.Quantity,
-                        Invoice = invoice,
-                        InvoiceID = invoice.ID
-                    });
-                });
-                var barcodeByte = CommonMethod.GenerateBarcode(model.InvoiceNo.ToString());
-                invoice.BarcodeByte = barcodeByte;
-                _invoiceService.Insert(invoice);
-                #endregion
-                var columns = new List<string>()
-            {
-                 "Name",
-                "Price",
-                "Quantity",
-            };
-                ViewBag.columns = JsonSerializer.Serialize(columns);
-                ViewBag.stringColumns = columns;
+                        item.Status = SkuItemStatus.sold;
+                    }
+                    var updated = filtered;
+                    //var filteredd = allVenues.ExceptBy(blockedVenues.Select(x => x.VenueID), venue => venue.ID);
 
-                ViewBag.byteBarCode = barcodeByte;
-                ViewBag.Message = "Create";
-                return View(new CreateSalesInvoiceViewModel());
+                    #endregion
+
+                    #region invoice
+                    var invoice = new Invoice()
+                    {
+                        ID = 0,
+                        InvoiceNo = model.InvoiceNo,
+                        CustomerName = "",
+                        PhoneNo = "",
+                        Tax = 0,
+                        SubTotal = 0,
+                        Total = model.TotalPrice,
+                        CustomerAddress = "",
+                        TotalQuantity = model.TotalQuantity,
+                        InvoiceItems = new()
+                    };
+                    model.InvoiceItems.ForEach(x =>
+                    {
+                        invoice.InvoiceItems.Add(new InvoiceItems()
+                        {
+                            Name = x.Name,
+                            Barcode = x.Barcode,
+                            Price = (double)x.Price,
+                            Quantity = (int)x.Quantity,
+                            Invoice = invoice,
+                            InvoiceID = invoice.ID
+                        });
+                    });
+                    var barcodeByte = CommonMethod.GenerateBarcode(model.InvoiceNo.ToString());
+                    invoice.BarcodeByte = barcodeByte;
+                    _invoiceService.Insert(invoice);
+                    #endregion
+                    var columns = new List<string>()
+                        {
+                             "Name",
+                            "Price",
+                            "Quantity",
+                        };
+                    ViewBag.columns = JsonSerializer.Serialize(columns);
+                    ViewBag.stringColumns = columns;
+
+                    ViewBag.byteBarCode = barcodeByte;
+                    ViewBag.Message = "Create";
+                    return View(new CreateSalesInvoiceViewModel());
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
             }
 
             Message.Add("Error");
@@ -140,16 +154,18 @@ namespace Web.Areas.Admin.Controllers
         public async Task<IActionResult> GetItem(string id)
         {
             var skuSubProduct = await _skuSubItemService.GetOne(s => s.BarCodeNumber == id, new List<string>() { "SkuMainItem" });
+            var quantitySameProducts = _skuSubItemService.GetMany(s=>s.BarCodeNumber==id,null).ToList();
             if (skuSubProduct == null)
             {
                 return NotFound("Item not found...!!!");
             }
 
-            var productTable = new ProductSalesTable()
+            var productTable = new ProductSalesTableViewModel()
             {
                 Id = skuSubProduct.ID,
                 Name = skuSubProduct.SkuMainItem.Name,
                 Quantity = 1,
+                MaxQuantity = quantitySameProducts.Count(),
                 Price = (double)skuSubProduct.Price,
                 Barcode = skuSubProduct.BarCodeNumber
             };
