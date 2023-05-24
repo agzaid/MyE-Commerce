@@ -155,7 +155,7 @@ var _SalesFunctions = {
             itemsObj.forEach(function (arrayItem) {
                 debugger;
                 if (arrayItem.name == name && arrayItem.price == price && arrayItem.quantity >= 2) {
-                    arrayItem.quantity -= 1;
+                    arrayItem.quantity --;
                     $(`[name='` + elName + `']`).val(arrayItem.quantity);
                     _SalesFunctions.CountTotalQuantity();
                     _SalesFunctions.ComputeTotalPrice();

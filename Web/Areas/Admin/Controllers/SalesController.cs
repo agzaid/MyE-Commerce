@@ -76,12 +76,14 @@ namespace Web.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    //remove 0 quantity items
+                    //remove 0 quantity items ===> done
                     //insert updated items to database
 
                     #region skuSubItems
                     //var e = model.InvoiceItems.Select(s => s.Barcode).ToList();
                     var skuSubItems = _skuSubItemService.GetMany(s => true, null).ToList();
+
+                    var newList = model.InvoiceItems.RemoveAll(s => (s.Quantity == 0));
 
                     var filtered = skuSubItems
                        .Where(x => model.InvoiceItems.Any(s => s.Barcode == x.BarCodeNumber) && x.Status == SkuItemStatus.available)
