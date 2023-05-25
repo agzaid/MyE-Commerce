@@ -83,7 +83,7 @@ namespace Web.Areas.Admin.Controllers
                     //var e = model.InvoiceItems.Select(s => s.Barcode).ToList();
                     var skuSubItems = _skuSubItemService.GetMany(s => true, null).ToList();
 
-                    var newList = model.InvoiceItems.RemoveAll(s => (s.Quantity == 0));
+                    model.InvoiceItems.RemoveAll(s => (s.Quantity == 0));
 
                     var filtered = skuSubItems
                        .Where(x => model.InvoiceItems.Any(s => s.Barcode == x.BarCodeNumber) && x.Status == SkuItemStatus.available)
@@ -92,8 +92,8 @@ namespace Web.Areas.Admin.Controllers
                     foreach (var item in filtered)
                     {
                         item.Status = SkuItemStatus.sold;
+                        _skuSubItemService.Update(item);
                     }
-                    var updated = filtered;
 
                     //var filteredd = allVenues.ExceptBy(blockedVenues.Select(x => x.VenueID), venue => venue.ID);
 
