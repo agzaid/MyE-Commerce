@@ -85,9 +85,14 @@ namespace Web.Areas.Admin.Controllers
 
                     model.InvoiceItems.RemoveAll(s => (s.Quantity == 0));
 
-                    var filtered = skuSubItems
-                       .Where(x => model.InvoiceItems.Any(s => s.Barcode == x.BarCodeNumber) && x.Status == SkuItemStatus.available)
-                       .OrderByDescending(s => true).ToList();
+                    var filtered = new List<SkuSubItem>();
+                    model.InvoiceItems.ForEach(s =>
+                    {
+                        filtered.AddRange(skuSubItems
+                        .Where(x => model.InvoiceItems.Any(s => s.Barcode == x.BarCodeNumber && s.Price == x.Price) && x.Status == SkuItemStatus.available)
+                        .OrderByDescending(s => true).Take((int)s.Quantity));
+                        
+                    });
 
                     foreach (var item in filtered)
                     {
@@ -160,7 +165,7 @@ namespace Web.Areas.Admin.Controllers
         public async Task<IActionResult> GetItem(string id)
         {
             var skuSubProduct = await _skuSubItemService.GetOne(s => s.BarCodeNumber == id, new List<string>() { "SkuMainItem" });
-            var quantitySameProducts = _skuSubItemService.GetMany(s=>s.BarCodeNumber==id,null).ToList();
+            var quantitySameProducts = _skuSubItemService.GetMany(s => s.BarCodeNumber == id, null).Where(s => s.Status == SkuItemStatus.available).ToList();
             if (skuSubProduct == null)
             {
                 return NotFound("Item not found...!!!");

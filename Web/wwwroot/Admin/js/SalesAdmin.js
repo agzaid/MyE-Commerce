@@ -135,7 +135,7 @@ var _SalesFunctions = {
                <td><input class="form-control form-control-sm text-start" type='text' value='`+ data.barcode + `' name='InvoiceItems[` + i + `].Barcode' readonly ></td>
                <td><input class="form-control form-control-sm text-start" type='text' value='`+ data.name + `' name='InvoiceItems[` + i + `].Name' readonly ></td>
                <td><input class="form-control form-control-sm text-start" type='number' id='subPrice' name='InvoiceItems[`+ i + `].Price' value='` + data.price + `'  readonly ></td>
-               <td class="d-flex align-items-center"><input class="form-control form-control-sm text-start" type='number' name='InvoiceItems[` + i + `].Quantity' min='0' value="` + 1 + `" readonly max='` + data.maxQuantity + `' style='width:100px;'><span> Max(` + data.maxQuantity +`)<span/></ td >
+               <td class="d-flex align-items-center"><input class="form-control form-control-sm text-start" type='number' name='InvoiceItems[` + i + `].Quantity' min='0' value="` + 1 + `" readonly max='` + data.maxQuantity + `' style='width:100px;' pattern="/^[-]?\d*\.?\d{1,9}$/"><span style="color:red"> Max(`+ data.maxQuantity +`)<span/></ td >
                <td><button onclick="return _SalesFunctions.RemoveEle(this)"; class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>
                </tr>`;
         $("table tbody").append(markup);
