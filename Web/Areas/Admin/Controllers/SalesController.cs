@@ -54,10 +54,10 @@ namespace Web.Areas.Admin.Controllers
             };
             ViewBag.columns = JsonSerializer.Serialize(columns);
             ViewBag.stringColumns = columns;
-            ViewBag.callJavascriptFunc = "Invoice Created";
-            var barcodeByte = CommonMethod.GenerateBarcode("213432523");
-            ViewBag.Base64String = "data:image/png;base64," + Convert.ToBase64String(barcodeByte, 0, barcodeByte.Length);
-            ViewBag.byteBarCode = barcodeByte;
+            //ViewBag.callJavascriptFunc = "Invoice Created";
+            //var barcodeByte = CommonMethod.GenerateBarcode("213432523");
+            //ViewBag.Base64String = "data:image/png;base64," + Convert.ToBase64String(barcodeByte, 0, barcodeByte.Length);
+            //ViewBag.byteBarCode = barcodeByte;
 
             return View(product);
         }
