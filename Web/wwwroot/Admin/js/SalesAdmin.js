@@ -34,6 +34,7 @@ $(document).ready(function (ev) {
     $("#Tendered").on('keyup', function (event) {
         event.preventDefault();
         _ChangeTender.Calculate();
+        //_Swal.BasicAlert();
     });
 });
 

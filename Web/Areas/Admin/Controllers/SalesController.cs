@@ -18,6 +18,7 @@ using System.Drawing;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using ZXing.QrCode;
 using Services.Injection;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Web.Areas.Admin.Controllers
 {
@@ -44,14 +45,7 @@ namespace Web.Areas.Admin.Controllers
         public IActionResult Create(List<string> message)
         {
             var product = new CreateSalesInvoiceViewModel();
-            //var product = new CreateSkuMainItemViewModel();
-            //var categories = _categoryService.GetMany(s => true, new List<string>());
-            //product.ListOfCategories = categories.Select(s => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem()
-            //{
-            //    Text = s.Name,
-            //    Value = s.ID.ToString(),
-            //}).ToList();
-            //product.Status = RecordStatus.Published;
+
             var columns = new List<string>()
             {
                  "Name",
@@ -60,9 +54,10 @@ namespace Web.Areas.Admin.Controllers
             };
             ViewBag.columns = JsonSerializer.Serialize(columns);
             ViewBag.stringColumns = columns;
-
-            //ViewBag.records = _skuProductService.GetMany(s => true, null).Count();
-            //ViewBag.records_create = 0;
+            ViewBag.callJavascriptFunc = "Invoice Created";
+            var barcodeByte = CommonMethod.GenerateBarcode("213432523");
+            ViewBag.Base64String = "data:image/png;base64," + Convert.ToBase64String(barcodeByte, 0, barcodeByte.Length);
+            ViewBag.byteBarCode = barcodeByte;
 
             return View(product);
         }
@@ -91,7 +86,7 @@ namespace Web.Areas.Admin.Controllers
                         filtered.AddRange(skuSubItems
                         .Where(x => model.InvoiceItems.Any(s => s.Barcode == x.BarCodeNumber && s.Price == x.Price) && x.Status == SkuItemStatus.available)
                         .OrderByDescending(s => true).Take((int)s.Quantity));
-                        
+
                     });
 
                     foreach (var item in filtered)
@@ -131,6 +126,8 @@ namespace Web.Areas.Admin.Controllers
                         });
                     });
                     var barcodeByte = CommonMethod.GenerateBarcode(model.InvoiceNo.ToString());
+                    //ViewBag.Base64String = "data:image/png;base64," + Convert.ToBase64String(barcodeByte, 0, barcodeByte.Length);
+
                     invoice.BarcodeByte = barcodeByte;
                     _invoiceService.Insert(invoice);
                     #endregion
@@ -143,8 +140,9 @@ namespace Web.Areas.Admin.Controllers
                     ViewBag.columns = JsonSerializer.Serialize(columns);
                     ViewBag.stringColumns = columns;
 
-                    ViewBag.byteBarCode = barcodeByte;
-                    ViewBag.Message = "Create";
+                    ViewBag.Base64String = "data:image/png;base64," + Convert.ToBase64String(barcodeByte, 0, barcodeByte.Length);
+                    ViewBag.callJavascriptFunc = "Invoice Successfully Created";
+                    //ViewBag.Message = "Create";
                     return View(new CreateSalesInvoiceViewModel());
                 }
 

@@ -37,5 +37,20 @@
         if (formValues) {
             Swal.fire(JSON.stringify(formValues))
         }
-    }
+    },
+    BasicAlert: function (message) {
+        Swal.fire(
+            message,
+            'You clicked the button!',
+            'success'
+        );
+    },
+    AlertWithImage: function (message, barcode) {
+        debugger;
+        Swal.fire(
+            message,
+            '<img src="' + barcode + '" />',
+            'success'
+        );
+    } ,
 }

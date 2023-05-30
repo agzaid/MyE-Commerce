@@ -63,10 +63,10 @@
         <div class="card card-flush py-4">
             <!--begin::Card body-->
             <div class="card-body pt-0">
-                @if (ViewBag.byteBarCode != null)
+               @* @if (ViewBag.byteBarCode != null)
                 {
-                    <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(ViewBag.byteBarCode))" />
-                }
+                    <img src="@ViewBag.Base64String" />
+                }*@
                 <!--begin::Select2-->
                 <label class="required form-label" asp-for="Tendered"></label>
 
@@ -243,7 +243,13 @@
 @section Scripts {
     <script src="~/admin/js/salesadmin.js" asp-append-version="true"></script>
     <script>
-
+        function myJavaScriptMethod(valueFromMVC,barcode) {
+            
+            _Swal.AlertWithImage(valueFromMVC,barcode)
+        }
+        if ('@ViewBag.callJavascriptFunc' != "") {
+            myJavaScriptMethod('@ViewBag.callJavascriptFunc', '@ViewBag.Base64String');
+        }
     </script>
     }
 
