@@ -147,9 +147,9 @@ namespace Web.Areas.Admin.Controllers
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception ex) when (ex.Message != null)
             {
-
+                Logger.LogError(ex.Message, ex);
                 throw;
             }
 

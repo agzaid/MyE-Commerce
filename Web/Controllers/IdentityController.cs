@@ -96,16 +96,19 @@ namespace Web.Controllers
                     if (result.Succeeded)
                     {
                         TempData["Message"] = "Success";
+                        Logger.LogWarning((EventId)200, "User Successfully logged in on {date}", DateTime.Now);
                         return RedirectToAction("Index", "Home");
                     }
                     else
                     {
                         TempData["Message"] = "Failed";
+                        Logger.LogError((EventId)404,"User Failed to login on {date}", DateTime.Now);
                         ModelState.AddModelError("Login", "Login Failed");
                     }
                 }
                 catch (Exception ex)
                 {
+                    Logger.LogError(ex.Message, ex);
                     ModelState.AddModelError("Login", string.Join("", ex.InnerException));
                     return RedirectToAction("Index", "Home");
                     throw;
