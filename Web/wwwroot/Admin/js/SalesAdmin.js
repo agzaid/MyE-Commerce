@@ -107,6 +107,14 @@ var _SalesFunctions = {
             }
             //}
             //});
+            //$("#validateQuant").change(function () {
+            //    if ($('#validateQuant').val() < -1 || $('#validateQuant').val() > 1) {
+            //        $('#errorMsg').show();
+            //    }
+            //    else {
+            //        $('#errorMsg').hide();
+            //    }
+            //});
         }
 
     },
@@ -132,11 +140,16 @@ var _SalesFunctions = {
         //}
     },
     AppendRow: function (data) {
+        //var cVal = data.maxQuantity >= cVal ? 1 : 0;
         var markup = `<tr role="row animate__animated animate__backInLeft" class="odd">
                <td><input class="form-control form-control-sm text-start" type='text' value='`+ data.barcode + `' name='InvoiceItems[` + i + `].Barcode' readonly ></td>
                <td><input class="form-control form-control-sm text-start" type='text' value='`+ data.name + `' name='InvoiceItems[` + i + `].Name' readonly ></td>
                <td><input class="form-control form-control-sm text-start" type='number' id='subPrice' name='InvoiceItems[`+ i + `].Price' value='` + data.price + `'  readonly ></td>
-               <td class="d-flex align-items-center"><input class="form-control form-control-sm text-start" type='number' name='InvoiceItems[` + i + `].Quantity' min='0' value="` + 1 + `" readonly max='` + data.maxQuantity + `' style='width:100px;' pattern="/^[-]?\d*\.?\d{1,9}$/"><span style="color:red"> Max(`+ data.maxQuantity +`)<span/></ td >
+               <td class="d-flex align-items-center"><input type="number" id="InvoiceItems[` + i + `].Quantity" class="form-control form-control-sm text-start" name='InvoiceItems[` + i + `].Quantity' min='0' value="` + 1 + `" max='` + data.maxQuantity + `' style='width:100px;' 
+                    pattern="/^[-]?\d*\.?\d{1,9}$/" readonly>
+                    <span style="color:red"> Max(`+ data.maxQuantity +`)<span/>
+                    <span id="errorMsg" style="display:none;">you can give score -10 to +10 only</span>
+                </ td >
                <td><button onclick="return _SalesFunctions.RemoveEle(this)"; class="btn btn-icon btn-active-danger btn-outline btn-outline-default btn-icon-primary btn-active-icon-gray-700" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>
                </tr>`;
         $("table tbody").append(markup);
